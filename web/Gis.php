@@ -74,34 +74,28 @@ $application = "cs_gis_dev_framework";
 													<td colspan="3" align="left"><b style="color:#FF0000;"><u>ค้นหาข้อมูลการบิน</u></b></td>
 												</tr>-->
 												<tr>
-													<td>radius</td>
+													<td>Local 1</td>
 													<td>:&nbsp;</td>
-													<td><input id="radius" type="text" value="50" size="15">feets.</td>
+													<td><input id="lat1" type="text" value="" placeholder="lat" size="15" style="margin-left:40px"></td>
+													<td><input id="lon1" type="text" value="" placeholder="lon" size="15" style="margin-left:-20px"></td>
 												 </tr>	
 												 <tr>
-													<td>วันเริ่มต้น</td>
+												 	<td>Local 2</td>
 													<td>:&nbsp;</td>
-													<td><input id="startdate" type="text"  value="" size="10"/></td>
+													<td><input id="lat2" type="text" value="" placeholder="lat" size="15" style="margin-left:40px"></td>
+													<td><input id="lon2" type="text" value="" placeholder="lon" size="15" style="margin-left:-20px"></td>
 												 </tr>
 												 <tr>
-													<td>วันสิ้นสุด </td>
+												 	<td>Local 3</td>
 													<td>:&nbsp;</td>
-													<td><input id="enddate" type="text"  value="" size="10"/></td>
+													<td><input id="lat3" type="text" value="" placeholder="lat" size="15" style="margin-left:40px"></td>
+													<td><input id="lon3" type="text" value="" placeholder="lon" size="15" style="margin-left:-20px"></td>
 												 </tr>
 												  <tr>
-													<td>Fill Color </td>
+												  	<td>Local 4</td>
 													<td>:&nbsp;</td>
-													<td><input id='fillColor' style="color:#000000" value="rgba(255,0,0,0.5)" data-jscolor=""></td>
-												 </tr>
-												  <tr>
-													<td>Outline Color </td>
-													<td>:&nbsp;</td>
-													<td><input id='outlineColor' style="color:#000000" value="rgba(255,255,0,0.5)" data-jscolor=""></td>
-												 </tr>
-												  <tr>
-													<td>Outline width </td>
-													<td>:&nbsp;</td>
-													<td><input id='outlineWidth' style="color:#000000" value="1.0"></td>
+													<td><input id="lat4" type="text" value="" placeholder="lat" size="15" style="margin-left:40px"></td>
+													<td><input id="lon4" type="text" value="" placeholder="lon" size="15" style="margin-left:-20px"></td>
 												 </tr>
 												 <tr>
 													<td colspan = "3" align="center">
