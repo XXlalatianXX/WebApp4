@@ -39,14 +39,12 @@ $application = "cs_gis_dev_framework";
 			<br class=”clear-all”>
 		</div>
 		<!-------------Left menu Section----------------->
-		<div id="verticalLineLeft">	
-			<a href='#' id="btnData1"><img src="images/data1_icon.png" ></a><br>	
+		<div id="verticalLineLeft">		
 			<a href='#' id="btnData2"><img src="images/search_icon.png" ></a><br>
 			<div style="display:none"><a href='#' id="btnData3"><img src="images/Statistics.png" ></a><br></div>
 			<?php if($_SESSION['Level'] == "Administrator" || $_SESSION['Level'] == "Editor") {?>
 			<a href='#' id="btnData4"><img src="images/Management.png" ></a><br>
 			<?php }?>
-			<a href='#' id="btnData5"><img src="images/legend_icon.png" ></a><br>
 		</div>
 		<!-------------Right menu Section---------------->
 		<div id="verticalLineRight">	
@@ -59,31 +57,7 @@ $application = "cs_gis_dev_framework";
 		<!-------------Map Section-------------------->
 		<div id="map" style="position:relative;width:100%; height:100%;border:0px solid #000;">
 			<div class="toggler">
-				<!-------------Left Side Menu-------------------->
-					<div id="divData1Container" class="divCOP" style="width:30%;height:90%;top:20px;left:18px;">
-						<h5 id="slideData1" style="margin:0; padding:4px 0px 5px 5px; text-align:right; background-image:url(images/bg_header_cop_div.png); background-repeat:repeat; color:#EFEFEF; cursor:pointer; font-size:1em;">ข้อมูล<b style="color:#FF0000;margin:0px 5px 0px 8px; font-size:1.3em;">x</b></h5>
-						<div id="data" style="margin-left:2px;overflow-y:auto;overflow-x:hidden;">
-							<div id="tabs1" style="font-size:0.9em;">
-								<ul>
-									<li><a href="#tabs1-1">Information</a></li>
-								</ul>
-								<div id="tabs1-1">
-									<div>
-										<div id="siteHeaderDiv" class="divBG"></div>
-										<!--<div id="sitePagesDiv"></div>-->
-										<table id="tSiteResult" cellspacing="2" cellspacing="3" border='0' style="width:100%">
-											<thead>
-												<tr id='trhead' >
-											</thead>
-											<tbody>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>							
-						</div>
-					</div>
-					
+				<!-------------Left Side Menu-------------------->					
 					<div id="divData2Container" class="divCOP" style="width:30%;height:90%;top:20px;left:18px;">
 						<h5 id="slideData2" style="margin:0; padding:4px 0px 5px 5px; text-align:right; background-image:url(images/bg_header_cop_div.png); background-repeat:repeat; color:#EFEFEF; cursor:pointer; font-size:1em;">Search <b style="color:#FF0000;margin:0px 5px 0px 8px; font-size:1.3em;">x</b></h5>
 						<div id="search" style="margin-left:5px;overflow-y:auto;overflow-x:hidden;">						
@@ -233,23 +207,7 @@ $application = "cs_gis_dev_framework";
 								</div>
 							</div>	
 						</div>
-					</div>
-					
-					<div id="divData5Container" class="divCOP" style="width:30%;height:90%;top:20px;left:18px;">
-						<h5 id="slideData5" style="margin:0; padding:4px 0px 5px 5px; text-align:right; background-image:url(images/bg_header_cop_div.png); background-repeat:repeat; color:#EFEFEF; cursor:pointer; font-size:1em;">สัญลักษณ์<b style="color:#FF0000;margin:0px 5px 0px 8px; font-size:1.3em;">x</b></h5>
-						<div id="legend" style="margin-left:5px;overflow-y:auto;overflow-x:hidden;">
-							
-							<!--<div id="tabs5" style="font-size:0.9em;">
-								<ul>
-									<li><a href="#tabs5-1">สัญลักษณ์</a></li>
-									<li><a href="#tabs5-2">พื้นที่สำคัญ</a></li>
-								</ul>
-								<div id="tabs5-1"></div>
-								<div id="tabs5-2"></div>
-							</div>-->	
-							
-						</div>
-					</div>						
+					</div>				
 				<!-------------Right Side Menu-------------------->
 					<div id="divBaseMapContainer" class="divCOP" style="top:40px;right:18px;">
 						<h5 id="slideBaseMap" style="margin:0; padding:4px 0px 5px 5px; text-align:left; background-image:url(images/bg_header_cop_div.png); background-repeat:repeat; color:#EFEFEF; cursor:pointer; font-size:1em;"><b style="color:#FF0000;margin:0px 8px 0px 2px; font-size:1.3em;">x</b> Online BaseMap</h5>								
