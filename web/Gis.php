@@ -80,24 +80,6 @@ $application = "cs_gis_dev_framework";
 													<td><input id="lon1" type="text" value="" placeholder="lon" size="15" style="margin-left:-20px"></td>
 												 </tr>	
 												 <tr>
-												 	<td>Local 2</td>
-													<td>:&nbsp;</td>
-													<td><input id="lat2" type="text" value="" placeholder="lat" size="15" style="margin-left:40px"></td>
-													<td><input id="lon2" type="text" value="" placeholder="lon" size="15" style="margin-left:-20px"></td>
-												 </tr>
-												 <tr>
-												 	<td>Local 3</td>
-													<td>:&nbsp;</td>
-													<td><input id="lat3" type="text" value="" placeholder="lat" size="15" style="margin-left:40px"></td>
-													<td><input id="lon3" type="text" value="" placeholder="lon" size="15" style="margin-left:-20px"></td>
-												 </tr>
-												  <tr>
-												  	<td>Local 4</td>
-													<td>:&nbsp;</td>
-													<td><input id="lat4" type="text" value="" placeholder="lat" size="15" style="margin-left:40px"></td>
-													<td><input id="lon4" type="text" value="" placeholder="lon" size="15" style="margin-left:-20px"></td>
-												 </tr>
-												 <tr>
 													<td colspan = "5" align="center">
 														<div visibility=hidden >///</div>
 													</td>
