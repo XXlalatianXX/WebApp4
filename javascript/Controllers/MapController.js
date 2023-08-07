@@ -87,10 +87,10 @@ require([
 	
 	dojo.addClass(customPopup.domNode, "modernGrey");
 	
-	var xCenter = 100.5;
-	var yCenter = 12.9;
+	var xCenter = 103.068852;
+	var yCenter = 16.219067;
 
-	map = new Map("map", { logo:false,basemap: "national-geographic", center: [xCenter, yCenter], zoom: 6 , sliderPosition:"top-right",infoWindow: customPopup });
+	map = new Map("map", { logo:false,basemap: "national-geographic", center: [xCenter, yCenter], zoom: 8 , sliderPosition:"top-right",infoWindow: customPopup });
 		
 	// Moveable infoWindows
 	var handle = query(".title", map.infoWindow.domNode)[0];
