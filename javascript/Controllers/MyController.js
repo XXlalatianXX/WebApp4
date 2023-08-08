@@ -25,23 +25,34 @@ function searchMyForm(){
 }
 
 function searchCor(){
-	var wing1Lat = 14.934309;
-	var wing1Lon = 102.080567;
-	var wing21Lat = 15.251905;
-	var wing21Lon = 104.870980;
-	var wing23Lat = 17.386890;
-	var wing23Lon = 102.787364;
+
+	var wing1 = [14.934309,102.080567];	// lat,lon
+	var wing21 = [15.251905,104.870980];
+	var wing23 = [17.386890,102.787364];
+
 	var lon1 = $("#lon1").val();
 	var lat1 = $('#lat1').val();
 	alert($("#startdate").val());
 	drawGraphicPoint(newLayer,[lon1,lat1]);
-	drawGraphicPoint(newLayer,[wing1Lon,wing1Lat]);
-	$("#showDistance").html(getDistanceFromLatLonInKm(lon1,lat1,wing1Lon,wing1Lat));
+
+	drawGraphicPoint(newLayer,[wing1[1],wing1[0]]);
+	drawGraphicPoint(newLayer,[wing21[1],wing21[0]]);
+	drawGraphicPoint(newLayer,[wing23[1],wing23[0]]);
+
+	drawGraphicText("Wing 1",newLayer,[wing1[1],wing1[0]],[255,0,0],0)
+	drawGraphicText("Wing 21",newLayer,[wing21[1],wing21[0]],[255,0,0],0)
+	drawGraphicText("Wing 23",newLayer,[wing23[1],wing23[0]],[255,0,0],0)
+	drawGraphicText("P",newLayer,[lon1,lat1],[255,0,0],0)
+
+	$("#showDistance1").html(getDistanceFromLatLonInKm(lon1,lat1,wing1[1],wing1[0]));
+	$("#showDistance2").html(getDistanceFromLatLonInKm(lon1,lat1,wing21[1],wing21[0]));
+	$("#showDistance3").html(getDistanceFromLatLonInKm(lon1,lat1,wing23[1],wing23[0]));
 }
 
 function clearMyForm(){
 	//alert($("#startdate").val());
-	$("#startdate").val("");
+	$("#lon1").val("");
+	$("#lat1").val("");
 }
 
 function drawGraphicPolyLine(graphicLayer,coordinates,lineColor,lineWidth){
