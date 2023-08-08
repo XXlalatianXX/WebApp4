@@ -93,8 +93,29 @@ $application = "cs_gis_dev_framework";
 													</td>
 												 </tr>
 												 <tr>
+													<td colspan = "5" align="center">
+														<div visibility=hidden >///</div>
+													</td>
+												 </tr>
+												 <tr>
+												 	<td>W1 to p</td>
+													 <td>:&nbsp;</td>
 													<td colspan = "3" align="center">
-														<div id = "showDistance"></div>
+														<div id = "showDistance1"></div>
+													</td>
+												 </tr>
+												 <tr>
+												 	<td>W21 to p</td>
+													 <td>:&nbsp;</td>
+													<td colspan = "3" align="center">
+														<div id = "showDistance2"></div>
+													</td>
+												 </tr>
+												 <tr>
+												 	<td>W23 to p</td>
+													 <td>:&nbsp;</td>
+													<td colspan = "3" align="center">
+														<div id = "showDistance3"></div>
 													</td>
 												 </tr>
 											</table>										
