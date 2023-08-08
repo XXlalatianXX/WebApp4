@@ -20,6 +20,23 @@ function searchMyForm(){
 	drawGraphicPolyLine(newLayer,coordinates,outlineColor,outlineWidth);
 	drawGraphicPoint(newLayer,[96.479004,17.772065]);
 	$("#showDistance").html(getDistanceFromLatLonInKm(17.772065,96.479004,16.828040,103.751953));
+
+	
+}
+
+function searchCor(){
+	var wing1Lat = 14.934309;
+	var wing1Lon = 102.080567;
+	var wing21Lat = 15.251905;
+	var wing21Lon = 104.870980;
+	var wing23Lat = 17.386890;
+	var wing23Lon = 102.787364;
+	var lon1 = $("#lon1").val();
+	var lat1 = $('#lat1').val();
+	alert($("#startdate").val());
+	drawGraphicPoint(newLayer,[lon1,lat1]);
+	drawGraphicPoint(newLayer,[wing1Lon,wing1Lat]);
+	$("#showDistance").html(getDistanceFromLatLonInKm(lon1,lat1,wing1Lon,wing1Lat));
 }
 
 function clearMyForm(){
@@ -75,6 +92,29 @@ function drawGraphicPoint(graphicLayer,coordinate){
 
 		var point = new Point(coordinate,new SpatialReference({ wkid:4326 }));
 		var sms = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_SQUARE, 10,
+			new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+			new Color([255,0,0]), 1),
+			new Color([0,255,0,0.25]));
+		
+		graphicLayer.add(new esri.Graphic(point,sms));
+	});
+}
+
+function drawGraphicPointLarge(graphicLayer,coordinate){
+	require([
+	  "esri/geometry/Point", 
+	  "esri/SpatialReference",
+	  "esri/symbols/SimpleMarkerSymbol", 
+	  "esri/symbols/SimpleLineSymbol", 
+	  "dojo/_base/Color" 
+	], function(Point,
+		SpatialReference,
+		SimpleMarkerSymbol, 
+		SimpleLineSymbol, 
+		Color ) {
+
+		var point = new Point(coordinate,new SpatialReference({ wkid:4326 }));
+		var sms = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 50,
 			new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
 			new Color([255,0,0]), 1),
 			new Color([0,255,0,0.25]));
