@@ -32,6 +32,7 @@ $application = "cs_gis_dev_framework";
 				<img src="images/header_left.png" class="img-responsive" >
 			</div>
 			<div id="header_center"><img src="images/header_center.png" class="img-responsive"></div>
+			<div id="header2_center"><img src="images/NKRAFA2.png" class="img-responsive"></div>
 			<div id="header_right">
 				<span class="span_login">ยินดีต้อนรับ : <?php echo $_SESSION['Info'];?></span>
 				<a href="../logout.php" style="text-decoration:none;"><img src="images/log_off.png" id="logoff" style="position:absolute; top:0;right:0;z-index:3;" class="img-responsive"></a>

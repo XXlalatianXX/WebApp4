@@ -319,6 +319,16 @@ html, body { height: 100%; width: 100%; margin: 0; padding: 0; overflow:hidden;}
 	top:0;
 	z-index: 2;
 }
+#header2_center{
+	position: absolute;
+	width: 2.5%;
+	height: 2.5%;
+	left:50%;
+	margin-left:-21px;
+	margin-top:4px;
+	
+	z-index: 3;
+}
 #header_right {
 	position: absolute;
 	top:0;
