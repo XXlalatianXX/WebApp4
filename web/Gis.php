@@ -100,22 +100,22 @@ $application = "cs_gis_dev_framework";
 												 <tr>
 												 	<td>W1 to p</td>
 													 <td>:&nbsp;</td>
-													<td colspan = "3" align="center">
-														<div id = "showDistance1"></div>
+													<td>
+														<div id = "showDistance"></div>
 													</td>
 												 </tr>
 												 <tr>
 												 	<td>W21 to p</td>
 													 <td>:&nbsp;</td>
-													<td colspan = "3" align="center">
-														<div id = "showDistance2"></div>
+													<td>
+														<div id = "showDistance1"></div>
 													</td>
 												 </tr>
 												 <tr>
 												 	<td>W23 to p</td>
 													 <td>:&nbsp;</td>
-													<td colspan = "3" align="center">
-														<div id = "showDistance3"></div>
+													<td>
+														<div id = "showDistance2"></div>
 													</td>
 												 </tr>
 											</table>										

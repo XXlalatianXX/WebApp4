@@ -44,9 +44,9 @@ function searchCor(){
 	drawGraphicText("Wing 23",newLayer,[wing23[1],wing23[0]],[255,0,0],0)
 	drawGraphicText("P",newLayer,[lon1,lat1],[255,0,0],0)
 
-	$("#showDistance1").html(getDistanceFromLatLonInKm(lon1,lat1,wing1[1],wing1[0]));
-	$("#showDistance2").html(getDistanceFromLatLonInKm(lon1,lat1,wing21[1],wing21[0]));
-	$("#showDistance3").html(getDistanceFromLatLonInKm(lon1,lat1,wing23[1],wing23[0]));
+	$("#showDistance").html(getDistanceFromLatLonInKm(lon1,lat1,wing1[1],wing1[0]));
+	$("#showDistance1").html(getDistanceFromLatLonInKm(lon1,lat1,wing21[1],wing21[0]));
+	$("#showDistance2").html(getDistanceFromLatLonInKm(lon1,lat1,wing23[1],wing23[0]));
 }
 
 function clearMyForm(){
