@@ -76,9 +76,10 @@ $application = "cs_gis_dev_framework";
 												<tr>
 													<td>Local 1</td>
 													<td>:&nbsp;</td>
-													<td><input id="lat1" type="text" value="" placeholder="lat" size="15" style="margin-left:40px"></td>
-													<td><input id="lon1" type="text" value="" placeholder="lon" size="15" style="margin-left:-20px"></td>
+													<td><input id="lon1" type="text" value="" placeholder="lon" size="15" style="margin-left:40px"></td>
+													<td><input id="lat1" type="text" value="" placeholder="lat" size="15" style="margin-left:-20px"></td>
 												 </tr>	
+
 												 <tr>
 													<td colspan = "5" align="center">
 														<div visibility=hidden >///</div>
@@ -86,9 +87,9 @@ $application = "cs_gis_dev_framework";
 												 </tr>
 												 <tr>
 													<td colspan = "6" align="center">
-														<input type="button" onclick = "searchMyForm()" value="ค้นหา"></button>
+														<input type="button" onclick = "searchCor()" value="ค้นหา"></button>
 														<input type="button" onclick = "clearMyForm()" value="เคลียร์"></button>
-														<input type="button" onclick = "" value="แสดงกองบิน" style="width:25%;background-color:blue">
+														<input type="button" onclick = "showWing()" value="แสดงกองบิน" style="width:25%;background-color:blue">
 													</td>
 												 </tr>
 												 <tr>
