@@ -77,13 +77,23 @@ $application = "cs_gis_dev_framework";
 												<tr>
 													<td>Local 1</td>
 													<td>:&nbsp;</td>
-													<td><input id="lon1" type="text" value="" placeholder="lon" size="15" style="margin-left:40px"></td>
-													<td><input id="lat1" type="text" value="" placeholder="lat" size="15" style="margin-left:-20px"></td>
+													<td><input id="lon1" type="text" value="" placeholder="lon" size="15" style="margin-left:30px"></td>
+													<td><input id="lat1" type="text" value="" placeholder="lat" size="15" style="margin-left:-100px"></td>
 												 </tr>	
 
 												 <tr>
 													<td colspan = "5" align="center">
-														<div visibility=hidden >///</div>
+														<div style="visibility:hidden" >///</div>
+													</td>
+												 </tr>
+												 <tr>
+												 	<td>Outline Color</td>
+													<td>   :&nbsp;</td>
+													<td><input id='outlineColor' style="color:#000000;margin-left:30px" value="rgba(255,255,0,0.8)" data-jscolor="" ></td>
+												 </tr>	
+												 <tr>
+													<td colspan = "5" align="center">
+														<div style="visibility:hidden" >///</div>
 													</td>
 												 </tr>
 												 <tr>
@@ -95,28 +105,28 @@ $application = "cs_gis_dev_framework";
 												 </tr>
 												 <tr>
 													<td colspan = "5" align="center">
-														<div visibility=hidden >///</div>
+														<div style="visibility:hidden" >///</div>
 													</td>
 												 </tr>
 												 <tr>
-												 	<td>W1 to p</td>
+												 	<td>W1 to P</td>
 													 <td>:&nbsp;</td>
 													<td>
-														<div id = "showDistance"></div>
+														<div id = "showDistance" style="margin-left:40px"></div>
 													</td>
 												 </tr>
 												 <tr>
-												 	<td>W21 to p</td>
+												 	<td>W21 to P</td>
 													 <td>:&nbsp;</td>
 													<td>
-														<div id = "showDistance1"></div>
+														<div id = "showDistance1" style="margin-left:40px"></div>
 													</td>
 												 </tr>
 												 <tr>
-												 	<td>W23 to p</td>
+												 	<td>W23 to P</td>
 													 <td>:&nbsp;</td>
 													<td>
-														<div id = "showDistance2"></div>
+														<div id = "showDistance2" style="margin-left:40px"></div>
 													</td>
 												 </tr>
 											</table>										
