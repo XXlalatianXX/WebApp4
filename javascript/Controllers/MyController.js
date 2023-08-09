@@ -25,6 +25,9 @@ function searchMyForm(){
 }
 
 function searchCor(){
+	alert($("#startdate").val());
+	var outlineColor = $("#outlineColor").val();
+	var outlineWidth = 3.0;
 
 	var wing1 = [14.934309,102.080567];	// lat,lon
 	var wing21 = [15.251905,104.870980];
@@ -32,12 +35,20 @@ function searchCor(){
 
 	var lon1 = $("#lon1").val();
 	var lat1 = $('#lat1').val();
-	alert($("#startdate").val());
-	drawGraphicPoint(newLayer,[lon1,lat1]);
 
+	var coordinates1 = [[[lon1,lat1],[wing1[1],wing1[0]]]];
+	var coordinates2 = [[[lon1,lat1],[wing21[1],wing21[0]]]];
+	var coordinates3 = [[[lon1,lat1],[wing23[1],wing23[0]]]];
+	
+	drawGraphicPoint(newLayer,[lon1,lat1]);
 	drawGraphicPoint(newLayer,[wing1[1],wing1[0]]);
 	drawGraphicPoint(newLayer,[wing21[1],wing21[0]]);
 	drawGraphicPoint(newLayer,[wing23[1],wing23[0]]);
+
+	drawGraphicPolyLine(newLayer,coordinates1,outlineColor,outlineWidth);
+	drawGraphicPolyLine(newLayer,coordinates2,outlineColor,outlineWidth);
+	drawGraphicPolyLine(newLayer,coordinates3,outlineColor,outlineWidth);
+	
 
 	drawGraphicText("Wing 1",newLayer,[wing1[1],wing1[0]],[255,0,0],0)
 	drawGraphicText("Wing 21",newLayer,[wing21[1],wing21[0]],[255,0,0],0)
