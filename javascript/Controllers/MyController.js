@@ -6,8 +6,6 @@ function(GraphicsLayer){
 
 	newLayer = new GraphicsLayer();
 	map.addLayer(newLayer);
-	
-	drawGraphicText("Hello! Phummipat",newLayer,[101.027344,11.148594],[255,0,0],0);
 });
 
 function searchMyForm(){
