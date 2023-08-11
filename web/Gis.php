@@ -206,7 +206,7 @@ $application = "cs_gis_dev_framework";
 											<tr>
 												<td colspan = "3" align="center">
 													<input type="button" onclick = "onSaveUser()" value="บันทึก">
-													<input type="button" onclick = "onClearUser()" value="บันทึก">
+													<input type="button" onclick = "onClearUser()" value="เคลียร์">
 												</td>
 											</tr>
 										</table>										
