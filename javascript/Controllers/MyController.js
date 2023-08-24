@@ -1,4 +1,8 @@
 var newLayer;
+const wing1 = [14.934309,102.080567];	// lat,lon
+const wing21 = [15.251905,104.870980];
+const wing23 = [17.386890,102.787364];
+
 require(["esri/layers/GraphicsLayer","dojo/domReady!"], 
 function(GraphicsLayer){	
 	$( "#startdate" ).focusin(function(){onDatePicker("#startdate")});
@@ -18,15 +22,9 @@ function searchMyForm(){
 	drawGraphicPolyLine(newLayer,coordinates,outlineColor,outlineWidth);
 	drawGraphicPoint(newLayer,[96.479004,17.772065]);
 	$("#showDistance").html(getDistanceFromLatLonInKm(17.772065,96.479004,16.828040,103.751953));
-
-	
 }
 
 function showWing(){
-	var wing1 = [14.934309,102.080567];	// lat,lon
-	var wing21 = [15.251905,104.870980];
-	var wing23 = [17.386890,102.787364];
-
 	drawGraphicPoint(newLayer,[wing1[1],wing1[0]]);
 	drawGraphicPoint(newLayer,[wing21[1],wing21[0]]);
 	drawGraphicPoint(newLayer,[wing23[1],wing23[0]]);
@@ -40,10 +38,6 @@ function searchCor(){
 	alert($("#startdate").val());
 	var outlineColor = $("#outlineColor").val();
 	var outlineWidth = 3.0;
-
-	var wing1 = [14.934309,102.080567];	// lat,lon
-	var wing21 = [15.251905,104.870980];
-	var wing23 = [17.386890,102.787364];
 
 	var lon1 = $("#lon1").val();
 	var lat1 = $('#lat1').val();
