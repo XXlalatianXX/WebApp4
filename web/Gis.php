@@ -93,11 +93,6 @@ $application = "cs_gis_dev_framework";
 													</td>
 												 </tr>
 												 <tr>
-												 	<td>Outline Color</td>
-													<td>   :&nbsp;</td>
-													<td><input id='outlineColor' style="color:#000000;margin-left:30px" value="rgba(255,0,0,0.8)" data-jscolor="" ></td>
-												 </tr>	
-												 <tr>
 													<td colspan = "5" align="center">
 														<div style="visibility:hidden" >///</div>
 													</td>
