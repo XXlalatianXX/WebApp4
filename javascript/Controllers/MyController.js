@@ -59,9 +59,9 @@ function searchCor(){
 	
 	drawGraphicPoint(newLayer,[lon1,lat1]);
 
-	drawGraphicPolyLine(newLayer,coordinates1,outlineColor,outlineWidth);
-	drawGraphicPolyLine(newLayer,coordinates2,outlineColor,outlineWidth);
-	drawGraphicPolyLine(newLayer,coordinates3,outlineColor,outlineWidth);
+	drawGraphicPolyLine(newLayer,coordinates1,"rgba(255,0,0,0.8)",outlineWidth);	// red line
+	drawGraphicPolyLine(newLayer,coordinates2,"rgba(255,0,0,0.8)",outlineWidth);
+	drawGraphicPolyLine(newLayer,coordinates3,"rgba(255,0,0,0.8)",outlineWidth);
 	
 	drawGraphicText("P",newLayer,[lon1,lat1],[255,0,0],0)
 
