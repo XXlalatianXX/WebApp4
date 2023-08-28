@@ -35,13 +35,14 @@ function searchMyForm(){
 }
 
 function showWing(){
-	drawGraphicPoint(newLayer,[wing1[1],wing1[0]]);
-	drawGraphicPoint(newLayer,[wing21[1],wing21[0]]);
-	drawGraphicPoint(newLayer,[wing23[1],wing23[0]]);
+	drawGraphicPoint(newLayer,[wing1.lon,wing1.lat]);
+	drawGraphicPoint(newLayer,[wing21.lon,wing21.lat]);
+	drawGraphicPoint(newLayer,[wing23.lon,wing23.lat]);
 
-	drawGraphicText("Wing 1",newLayer,[wing1[1],wing1[0]],[255,0,0],0)
-	drawGraphicText("Wing 21",newLayer,[wing21[1],wing21[0]],[255,0,0],0)
-	drawGraphicText("Wing 23",newLayer,[wing23[1],wing23[0]],[255,0,0],0)
+	drawGraphicText("Wing 1",newLayer,[wing1.lon,wing1.lat],[255,0,0],0)
+	drawGraphicText("Wing 21",newLayer,[wing21.lon,wing21.lat],[255,0,0],0)
+	drawGraphicText("Wing 23",newLayer,[wing23.lon,wing23.lat],[255,0,0],0)
+	console.log("hello");
 }
 
 function searchCor(){
@@ -52,9 +53,9 @@ function searchCor(){
 	var lon1 = $("#lon1").val();
 	var lat1 = $('#lat1').val();
 
-	var coordinates1 = [[[lon1,lat1],[wing1[1],wing1[0]]]];
-	var coordinates2 = [[[lon1,lat1],[wing21[1],wing21[0]]]];
-	var coordinates3 = [[[lon1,lat1],[wing23[1],wing23[0]]]];
+	var coordinates1 = [[[lon1,lat1],[wing1.lon,wing1.lat]]];
+	var coordinates2 = [[[lon1,lat1],[wing21.lon,wing21.lat]]];
+	var coordinates3 = [[[lon1,lat1],[wing23.lon,wing23.lat]]];
 	
 	drawGraphicPoint(newLayer,[lon1,lat1]);
 
@@ -64,9 +65,9 @@ function searchCor(){
 	
 	drawGraphicText("P",newLayer,[lon1,lat1],[255,0,0],0)
 
-	$("#showDistance").html(getDistanceFromLatLonInKm(lon1,lat1,wing1[1],wing1[0]));
-	$("#showDistance1").html(getDistanceFromLatLonInKm(lon1,lat1,wing21[1],wing21[0]));
-	$("#showDistance2").html(getDistanceFromLatLonInKm(lon1,lat1,wing23[1],wing23[0]));
+	$("#showDistance").html(getDistanceFromLatLonInKm(lon1,lat1,wing1.lon,wing1.lat));
+	$("#showDistance1").html(getDistanceFromLatLonInKm(wing21.lon,wing21.lat));
+	$("#showDistance2").html(getDistanceFromLatLonInKm(lon1,lat1,wing23.lon,wing23.lat));
 }
 
 function clearMyForm(){
