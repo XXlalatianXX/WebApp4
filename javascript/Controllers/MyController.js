@@ -1,7 +1,17 @@
 var newLayer;
-const wing1 = [14.934309,102.080567];	// lat,lon
-const wing21 = [15.251905,104.870980];
-const wing23 = [17.386890,102.787364];
+const wing1 = {
+	lat: 14.934309,
+	lon: 102.080567
+};
+const wing21 = {
+	lat: 15.251905,
+	lon: 104.870980
+};
+const wing23 = {
+	lat: 17.386890,
+	lon: 102.787364
+};
+
 
 require(["esri/layers/GraphicsLayer","dojo/domReady!"], 
 function(GraphicsLayer){	
