@@ -1,4 +1,5 @@
 var newLayer;
+
 const wing1 = {
 	lat: 14.934309,
 	lon: 102.080567
@@ -12,6 +13,8 @@ const wing23 = {
 	lon: 102.787364
 };
 
+var part1 =  {};
+const route = {};
 
 require(["esri/layers/GraphicsLayer","dojo/domReady!"], 
 function(GraphicsLayer){	
@@ -21,6 +24,44 @@ function(GraphicsLayer){
 	newLayer = new GraphicsLayer();
 	map.addLayer(newLayer);
 });
+
+function cal(){
+	const warehouses = [
+		{ name: "A", lat: 14.934309, lon: 102.080567 }, // wing1
+		{ name: "B", lat: 15.251905, lon: 104.870980 }, // wing21
+		{ name: "C", lat: 17.386890, lon: 102.787364 }  // wing23
+	  ];
+
+	/*
+	const destinations = [
+		{ name: "1", lat: parseFloat($("#lat1").val()), lon: parseFloat($("#lon1").val()) },
+		{ name: "2", lat: parseFloat($("#lat2").val()), lon: parseFloat($("#lon2").val()) }
+	  ];
+	*/
+
+	const destinations = [
+		{ name: "1", lat: 102.614435, lon: 15.144884 },
+		{ name: "2", lat: 104.241308, lon: 15.099618 },
+		{ name: "3", lat: 102.385211, lon: 17.391212 }
+	]
+
+	CalPart1();
+
+	function CalPart1(){
+			// Loop through each warehouse
+		for (const warehouse of warehouses) {
+			// Loop through each destination
+			for (const destination of destinations) {
+			const key = `${warehouse.name}${destination.name}`;
+			const distance = getDistanceFromLatLonInKm(
+				warehouse.lat, warehouse.lon, destination.lat, destination.lon
+			);
+			part1[key] = distance;
+			}
+		}
+		console.log(part1); //Output the distances object
+	};
+}
 
 function searchMyForm(){
 	alert($("#startdate").val());
