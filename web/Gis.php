@@ -93,7 +93,7 @@ $application = "cs_gis_dev_framework";
 												 <tr>
 													<td colspan = "6" align="center">
 														<input type="button" onclick = "searchCor()" value="ค้นหา"></button>
-														<input type="button" onclick = "clearMyForm()" value="เคลียร์"></button>
+														<input type="button" onclick = "cal()" value="เคลียร์"></button>
 														<input type="button" onclick = "showWing()" value="แสดงกองบิน" style="width:25%;background-color:blue">
 													</td>
 												 </tr>
