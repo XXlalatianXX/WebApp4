@@ -47,7 +47,6 @@ function showWing(){
 
 function searchCor(){
 	alert($("#startdate").val());
-	var outlineColor = $("#outlineColor").val();
 	var outlineWidth = 3.0;
 
 	var lon1 = $("#lon1").val();
@@ -66,7 +65,7 @@ function searchCor(){
 	drawGraphicText("P",newLayer,[lon1,lat1],[255,0,0],0)
 
 	$("#showDistance").html(getDistanceFromLatLonInKm(lon1,lat1,wing1.lon,wing1.lat));
-	$("#showDistance1").html(getDistanceFromLatLonInKm(wing21.lon,wing21.lat));
+	$("#showDistance1").html(getDistanceFromLatLonInKm(lon1,lat1,wing21.lon,wing21.lat));
 	$("#showDistance2").html(getDistanceFromLatLonInKm(lon1,lat1,wing23.lon,wing23.lat));
 }
 
