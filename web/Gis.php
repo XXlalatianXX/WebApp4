@@ -75,11 +75,46 @@ $application = "cs_gis_dev_framework";
 													<td colspan="3" align="left"><b style="color:#FF0000;"><u>ค้นหาข้อมูลการบิน</u></b></td>
 												</tr>-->
 												<tr>
+													<td type="text" style="text-align:center">ละติจูด</td>
+													<td type="text" style="text-align:center">ลอนติจูด</td>
+													<td type="text" style="text-align:center">จำนวนคนที่ต้องรับ</td>
+													<td type="text" style="text-align:center">จำนวนคนนอนเปลสนาม</td>
+													</tr>
+												<tr>
+													
+													<td>
+													<input type="text" name="lat[]"placeholder="lat" class="form-control lat_list" style="font-size: 10px;">
+													</td>
+													<td>
+													<input type="text" name="lon[]"placeholder="lon" class="form-control lon_list" style="font-size: 10px;">
+													</td>
+													<td>
+													<input type="text" name="person"placeholder="person"class="form-control num_person" style="font-size: 10px;">
+													</td>
+													<td>
+													<input type="text" name="stretchers"placeholder="0-11 คน"class="form-control num_stretchers" style="font-size: 10px; width:100%;">
+													</td>
+													<td>
+													<button type="button" name="add" id="add" class="btn btn-success">Add More</button>        
+													</td>
+												</tr>
+												<tr>
+													<td id="lat_field" style="color:white;"></td>
+													<td id="lon_field" style="color:white;"></td>
+													<td id="person_field" style="color:white;"></td>
+													<td id="stretcher_field" style="color:white;"></td>
+
+													</tr>
+													<tr>
+													<td><button type="button" id="submit" style="color:black;">ตกลง</button></td>
+												</tr>
+            
+												<!-- <tr>
 													<td>Local 1</td>
 													<td>:&nbsp;</td>
 													<td><input id="lon1" type="text" value="" placeholder="lon" size="15" style="margin-left:30px;width:120px"></td>
 													<td><input id="lat1" type="text" value="" placeholder="lat" size="15" style="margin-left:-60px;width:120px"></td>
-												 </tr>	
+												 </tr>	 -->
 												 <tr>
 													<td colspan = "5" align="center">
 														<div style="visibility:hidden" >///</div>
@@ -519,6 +554,21 @@ $application = "cs_gis_dev_framework";
       togglePanelMenuLeft("#divToolContainer","slide");
     });
   });
-  
+	$(document).ready(function()
+		{
+		let i =1;
+	$("#add").click(function(){
+		i++;
+		$('#lon_field').append('<tr class="row'+i+'"><td><input type="text" name="lon[]" class="form-control lon_list"></td><td></td></tr>' )
+		$('#lat_field').append('<tr class="row'+i+'"><td><input type="text" name="lat[]" class="form-control lat_list"></td></tr>' )
+		$('#person_field').append('<tr class="row'+i+'"><td><input type="text" name="person" class="form-control num_person"></td></tr>' )
+		$('#stretcher_field').append('<tr class="row'+i+'"><td><input type="text" name="stretchers" class="form-control num_stretchers"></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td></tr>' )
+
+	})
+	$(document).on('click','.btn_remove',function(){
+		let botton_id = $(this).attr('id');
+		$('.row'+botton_id+'').remove();
+	});
+  });
  
  </script>
