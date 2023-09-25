@@ -32,7 +32,7 @@ function vrpuse() {
     console.log("=================combineResults=================");
     console.log(combine);
 
-    drawAll(combine,Destination,Warehouse);
+    drawAll(combine,destSplited,Warehouse);
     console.log("=====================drawallpoint======================");
     
 
