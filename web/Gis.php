@@ -78,22 +78,21 @@ $application = "cs_gis_dev_framework";
 												<tr>
 													<td type="text" style="text-align:center">ละติจูด</td>
 													<td type="text" style="text-align:center">ลอนติจูด</td>
-													<td type="text" style="text-align:center">จำนวนคนที่ต้องรับ</td>
-													<td type="text" style="text-align:center">จำนวนคนนอนเปลสนาม</td>
+													<td type="text" style="text-align:center">จำนวนคน</td>
+													<td type="text" style="text-align:center">จำนวนเปลสนาม</td>
 													</tr>
 												<tr>
-													
 													<td>
-													<input type="text" name="lat[]"placeholder="lat" class="form-control lat_list" style="font-size: 10px;">
+													<input type="text" name="lat[]" placeholder="ละติจูด" class="form-control lat_list" style="font-size: 10px;">
 													</td>
 													<td>
-													<input type="text" name="lon[]"placeholder="lon" class="form-control lon_list" style="font-size: 10px;">
+													<input type="text" name="lon[]" placeholder="ลองจิจูด" class="form-control lon_list" style="font-size: 10px;">
 													</td>
 													<td>
-													<input type="text" name="person"placeholder="person"class="form-control num_person" style="font-size: 10px;">
+													<input type="text" name="person" placeholder="คน" class="form-control num_person" style="font-size: 10px;">
 													</td>
 													<td>
-													<input type="text" name="stretchers"placeholder="0-11 คน"class="form-control num_stretchers" style="font-size: 10px; width:100%;">
+													<input type="text" name="stretchers" placeholder="เปลสนาม"class="form-control num_stretchers" style="font-size: 10px; width:100%;">
 													</td>
 													<td>
 													<button type="button" name="add" id="add" class="btn btn-success">Add More</button>        
@@ -104,6 +103,7 @@ $application = "cs_gis_dev_framework";
 													<td id="lon_field" style="color:white;"></td>
 													<td id="person_field" style="color:white;"></td>
 													<td id="stretcher_field" style="color:white;"></td>
+													<td id="button_field" style="color:red;"></td>
 
 													</tr>
 													<tr>
@@ -560,11 +560,11 @@ $application = "cs_gis_dev_framework";
 		let i =1;
 	$("#add").click(function(){
 		i++;
-		$('#lon_field').append('<tr class="row'+i+'"><td><input type="text" name="lon[]" class="form-control lon_list"></td><td></td></tr>' )
-		$('#lat_field').append('<tr class="row'+i+'"><td><input type="text" name="lat[]" class="form-control lat_list"></td></tr>' )
-		$('#person_field').append('<tr class="row'+i+'"><td><input type="text" name="person" class="form-control num_person"></td></tr>' )
-		$('#stretcher_field').append('<tr class="row'+i+'"><td><input type="text" name="stretchers" class="form-control num_stretchers"></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td></tr>' )
-
+		$('#lon_field').append('<tr class="row'+i+'"><td><input type="text" name="lon[]" placeholder="ละติจูด" class="form-control lon_list"></td><td></td></tr>' )
+		$('#lat_field').append('<tr class="row'+i+'"><td><input type="text" name="lat[]" placeholder="ลองจิจูด" class="form-control lat_list"></td></tr>' )
+		$('#person_field').append('<tr class="row'+i+'"><td><input type="text" name="คน" placeholder="คน" class="form-control num_person"></td></tr>' )
+		$('#stretcher_field').append('<tr class="row'+i+'"><td><input type="text" name="เปลสนาม" placeholder="เปลสนาม" class="form-control num_stretchers"></td><td>' )
+		$('#button_field').append('<tr class="row'+i+'"><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button>')
 	})
 	$(document).on('click','.btn_remove',function(){
 		let botton_id = $(this).attr('id');
