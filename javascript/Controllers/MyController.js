@@ -76,14 +76,9 @@ function searchMyForm(){
 }
 
 function showWing(){
-	drawGraphicPoint(newLayer,[wing1.lon,wing1.lat]);
-	drawGraphicPoint(newLayer,[wing21.lon,wing21.lat]);
-	drawGraphicPoint(newLayer,[wing23.lon,wing23.lat]);
-
-	drawGraphicText("Wing 1",newLayer,[wing1.lon,wing1.lat],[255,0,0],0)
-	drawGraphicText("Wing 21",newLayer,[wing21.lon,wing21.lat],[255,0,0],0)
-	drawGraphicText("Wing 23",newLayer,[wing23.lon,wing23.lat],[255,0,0],0)
-	console.log("hello");
+	drawGraphicText("Wing 1",newLayer,[wing1.lon,wing1.lat],[0,0,255],0)
+	drawGraphicText("Wing 21",newLayer,[wing21.lon,wing21.lat],[0,0,255],0)
+	drawGraphicText("Wing 23",newLayer,[wing23.lon,wing23.lat],[0,0,255],0)
 }
 
 function searchCor(){
