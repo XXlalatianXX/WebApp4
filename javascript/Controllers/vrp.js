@@ -558,9 +558,18 @@ function drawAll(fromCombined,Destination,Warehouse){
             const warehouse = Warehouse.find(item => item.name === warehouseName);
 
             if (dest && warehouse) {
-                let coordinate = [[[warehouse.lon, warehouse.lat],[dest.lon,dest.lat]]];
 
-                drawGraphicPolyLine(newLayer, coordinate, "rgba(255,0,0,0.8)", outlineWidth);	// red line
+                if (matches[1] === "A1"){
+                    let coordinate = [[[warehouse.lon, warehouse.lat],[dest.lon,dest.lat]]];
+                    drawGraphicPolyLine(newLayer, coordinate, "rgba(255,0,0,0.8)", outlineWidth);	// red line
+                }else if (matches[1] === "A2"){
+                    let coordinate = [[[warehouse.lon, warehouse.lat],[dest.lon,dest.lat]]];
+                    drawGraphicPolyLine(newLayer, coordinate, "rgba(255,255,0,0.8)", outlineWidth);	// red line
+                }else if (matches[1] === "A3"){
+                    let coordinate = [[[warehouse.lon, warehouse.lat],[dest.lon,dest.lat]]];
+                    drawGraphicPolyLine(newLayer, coordinate, "rgba(0,255,255,0.8)", outlineWidth);	// red line
+                }
+                
 
             }
         }
