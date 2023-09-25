@@ -10,10 +10,11 @@ $host_ip = "localhost";
 $application = "cs_gis_dev_framework";
 
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
+	<!-- <script type="javascript" src="../cs_gis_dev_framework/javascript/jsLPSolver-master/src/solver.js"></script> -->
+	<script src="https://unpkg.com/javascript-lp-solver/prod/solver.js"></script>
  	<meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
@@ -337,6 +338,7 @@ $application = "cs_gis_dev_framework";
 <script src="../javascript/Controllers/TrackController.js"></script>
 <script src="../javascript/Controllers/UserController.js"></script>
 <script src="../javascript/Controllers/MyController.js"></script>
+<script src="../javascript/Controllers/vrp.js"></script>
 
 <script src="../javascript/Controllers/DrawingPanel.js"></script>
 <script src="../javascript/Controllers/DrawingManager.js"></script>
