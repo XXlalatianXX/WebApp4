@@ -60,7 +60,7 @@ $application = "cs_gis_dev_framework";
 		<div id="map" style="position:relative;width:100%; height:100%;border:0px solid #000;">
 			<div class="toggler">
 				<!-------------Left Side Menu-------------------->					
-					<div id="divData2Container" class="divCOP" style="width:30%;height:90%;top:20px;left:18px;">
+					<div id="divData2Container" class="divCOP" style="width:40%;height:90%;top:20px;left:18px;">
 						<h5 id="slideData2" style="margin:0; padding:4px 0px 5px 5px; text-align:right; background-image:url(images/bg_header_cop_div.png); background-repeat:repeat; color:#EFEFEF; cursor:pointer; font-size:1em;">Search <b style="color:#FF0000;margin:0px 5px 0px 8px; font-size:1.3em;">x</b></h5>
 						<div id="search" style="margin-left:5px;overflow-y:auto;overflow-x:hidden;">						
 							<div id="tabs2" style="font-size:0.9em;">
