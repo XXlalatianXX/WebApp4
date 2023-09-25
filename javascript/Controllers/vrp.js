@@ -529,10 +529,10 @@ function drawAll(fromCombined,Destination,Warehouse){
             if ( warehouse ){
                 console.log("Create warehouse point =================");
                 drawGraphicPointWarehouse(newLayer, [warehouse.lon, warehouse.lat]);
-                drawGraphicText(key,newLayer,[warehouse.lon, warehouse.lat],[0,0,255],0)
             }
         }
     }
+    showWing();
 
     for (const dest of Destination){
         const key = Object.values(dest)[0];
