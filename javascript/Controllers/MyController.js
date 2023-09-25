@@ -172,7 +172,7 @@ function drawGraphicPoint(graphicLayer,coordinate){
 	});
 }
 
-function drawGraphicPointLarge(graphicLayer,coordinate){
+function drawGraphicPointWarehouse(graphicLayer,coordinate){
 	require([
 	  "esri/geometry/Point", 
 	  "esri/SpatialReference",
