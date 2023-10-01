@@ -61,11 +61,11 @@ function solveVRP(customers, depots, vehicleCapacity) {
     const depot3 = depots[2];
     //customers.splice(0, 3); // Remove the first three elements (depots) from the list of customers
 
-    const vehicleCapacity1 = vehicleCapacity;
+    const vehicleCapacity1 = vehicleCapacity;   // Copy from vehicleCapacity
     const vehicleCapacity2 = vehicleCapacity;
     const vehicleCapacity3 = vehicleCapacity;
     //console.log(vehicleCapacity1);
-    const vehicles1 = [];
+    const vehicles1 = [];   // From warehouse 1
     const vehicles2 = [];
     const vehicles3 = [];
     const unassignedCustomers = [...customers];
@@ -89,7 +89,6 @@ function solveVRP(customers, depots, vehicleCapacity) {
 
         //while ((currentCapacity1 < vehicleCapacity1) || (currentCapacity2 < vehicleCapacity2)) {
         while (true) {
-            //console.log("66666");
             const { nearestCustomer: nearestCustomer1, distance: distance1 } = findNearestCustomer(currentCustomer1, unassignedCustomers);
             const { nearestCustomer: nearestCustomer2, distance: distance2 } = findNearestCustomer(currentCustomer2, unassignedCustomers);
             const { nearestCustomer: nearestCustomer3, distance: distance3 } = findNearestCustomer(currentCustomer3, unassignedCustomers);
@@ -102,7 +101,7 @@ function solveVRP(customers, depots, vehicleCapacity) {
             } else {
                 if ((currentCapacity1 + nearestCustomer1.demand > vehicleCapacity1) && (currentCapacity2 + nearestCustomer2.demand > vehicleCapacity2) &&
                     (currentCapacity3 + nearestCustomer3.demand > vehicleCapacity3)) {
-                    console.log("=============Over Capavity============");
+                    //console.log("=============Over Capavity============");
                     break;
                 }
                 if ((currentCapacity1 + nearestCustomer1.demand <= vehicleCapacity1) && (currentCapacity2 + nearestCustomer2.demand <= vehicleCapacity2) &&
@@ -217,36 +216,110 @@ const customers = [
     // Add more customers here
 ];
 
-const vehicleCapacity = 11; // Capacity of each vehicle
+function clikRunVrp() {
+    const vehicleCapacity = 11; // Capacity of each vehicle
 
-// vehicle1 is from warehouse 1
-// vehicle2 is from warehouse 2
-// vehicle3 is from warehouse 3
-const { vehicles1: vehicle1, vehicles2: vehicle2, vehicles3: vehicle3 } = solveVRP(customers, depots, vehicleCapacity);
-//console.log("From Depot 1",vehicle1);
-//console.log("From Depot 2",vehicle2);
-//console.log("From Depot 3",vehicle3);
+    // vehicle1 is from warehouse 1
+    // vehicle2 is from warehouse 2
+    // vehicle3 is from warehouse 3
+    const { vehicles1: vehicle1, vehicles2: vehicle2, vehicles3: vehicle3 } = solveVRP(customers, depots, vehicleCapacity);
+    //console.log("From Depot 1",vehicle1);
+    //console.log("From Depot 2",vehicle2);
+    //console.log("From Depot 3",vehicle3);
 
-
-const customersInRoutes1 = vehicle1.map((vehicle) =>
+    
+    const customersInRoutes1 = vehicle1.map((vehicle) =>
         vehicle.route.map((customer) => customer.id)
-);
+    );
+    
+    //const customersInRoutes1 = [[2, 1, 3], [4], []];
 
-const customersInRoutes2 = vehicle2.map((vehicle) =>
-    vehicle.route.map((customer) => customer.id)
-);
-const customersInRoutes3 = vehicle3.map((vehicle) =>
-    vehicle.route.map((customer) => customer.id)
-);
-console.log("Route from depot 1", customersInRoutes1);
-//console.log("Route from depot 2",customersInRoutes2);
-//console.log("Route from depot 3",customersInRoutes3);
+    
+    const customersInRoutes2 = vehicle2.map((vehicle) =>
+        vehicle.route.map((customer) => customer.id)
+    );
+    const customersInRoutes3 = vehicle3.map((vehicle) =>
+        vehicle.route.map((customer) => customer.id)
+    );
+    
+    console.log("Route from depot 1", customersInRoutes1);
+    console.log("Route from depot 2",customersInRoutes2);
+    console.log("Route from depot 3",customersInRoutes3);
 
 
-const {totalArray: totalDistanceArray1, totalDistance: totalDistance1} = TotalDIstanceAllRoute(depots[0], customersInRoutes1);
-console.log(totalDistanceArray1,totalDistance1);
-//console.log(checkRoute);
+    const { totalArray: totalDistanceArray1, totalDistance: totalDistance1 } = TotalDIstanceAllRoute(depots[0], customersInRoutes1);
+    console.log(totalDistanceArray1, totalDistance1);
 
+    drawAllPoint();
+    drawRouteLine(depots[0], customersInRoutes1);
+    drawRouteLine(depots[1], customersInRoutes2);
+    drawRouteLine(depots[2], customersInRoutes3);
+}
+function drawAllPoint() {
+    for (const cust of customers) {
+        drawGraphicPoint(newLayer, [cust.lon, cust.lat]);
+    }
+    for (const depot of depots) {
+        drawGraphicPointWarehouse(newLayer, [depot.lon, depot.lat]);
+    }
+    console.log("Draw all point");
+
+}
+function drawRouteLine(Depot, CustomerInRoute) {
+    currentPoint = null;
+    var outlineWidth = 3.0;
+    for (const cust of CustomerInRoute) {
+        if (cust.length === 0) {
+            console.log("Empty...");
+            break;
+        } else {
+            for (const inCust of cust) {
+                if (cust.indexOf(inCust) === cust.indexOf(cust[0])) {       // Case depot -> point 1
+                    for (const customer of customers) {
+                        const id = customer.id;
+                        if (id == inCust) {
+                            let coordinates = [[[Depot.lon, Depot.lat], [customer.lon, customer.lat]]];
+                            drawGraphicPolyLine(newLayer, coordinates, "rgba(255,0,0,0.8)", outlineWidth);	// red line
+                            currentPoint = id;
+                        }
+                    }
+                } else if (cust.indexOf(inCust) === (cust.length - 1)) {    // Case -> last point
+                    for (const customer of customers) {
+                        const id = customer.id;
+                        if (inCust == id) {
+                            let coordinates = [[[Depot.lon, Depot.lat], [customer.lon, customer.lat]]];
+                            drawGraphicPolyLine(newLayer, coordinates, "rgba(255,0,0,0.8)", outlineWidth);	// red line
+                            for (const customerCurrent of customers) {
+                                const idCurrent = customerCurrent.id;
+                                if (idCurrent === currentPoint) {   // Check that now index of CurrentPoint is same in customers
+                                    let coordinates = [[[customer.lon, customer.lat], [customerCurrent.lon, customerCurrent.lat]]];
+                                    drawGraphicPolyLine(newLayer, coordinates, "rgba(255,0,0,0.8)", outlineWidth);	// red line
+                                    currentPoint = inCust;
+                                    console.log("Point to Point");
+                                }
+                            }
+                        }
+                    }
+                } else {                                                    // Case point -> point
+                    for (const customer of customers) {
+                        const id = customer.id;
+                        if (id === inCust) {    // Check that now index is same in customers
+                            for (const customerCurrent of customers) {
+                                const idCurrent = customerCurrent.id;
+                                if (idCurrent === currentPoint) {   // Check that now index of CurrentPoint is same in customers
+                                    let coordinates = [[[customer.lon, customer.lat], [customerCurrent.lon, customerCurrent.lat]]];
+                                    drawGraphicPolyLine(newLayer, coordinates, "rgba(255,0,0,0.8)", outlineWidth);	// red line
+                                    currentPoint = inCust;
+                                    console.log("Point to Point");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
     let totalDistanceArray = [];    // the sequnce of array will tell the round of each index.
@@ -257,7 +330,21 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
         if (cust.length === 0) {
             console.log("Empty...");
             break;
-        } else {
+        }else if (cust.length === 1){
+            console.log("Have 1 Point");
+            for (const inCust of cust) {
+                if (cust.indexOf(inCust) === cust.indexOf(cust[0])) {       // Case depot -> point 1
+                    for (const customer of customers) {
+                        const id = customer.id;
+                        if (id == inCust) {
+                            let distance = calculateDistance(Depot, customer);
+                            totalDistance += (distance*2);
+                            console.log("Dist from Depot to point ",id ,"and return to Depot", distance*2);
+                        }
+                    }
+                }
+            }
+        }else{
             for (const inCust of cust) {
                 if (cust.indexOf(inCust) === cust.indexOf(cust[0])) {       // Case depot -> point 1
                     for (const customer of customers) {
@@ -265,6 +352,7 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
                         if (id == inCust) {
                             let distance = calculateDistance(Depot, customer)
                             totalDistance += distance;
+                            console.log("Dist from Depot to point ",id , distance)
                             currentPoint = id;
                         }
                     }
@@ -274,6 +362,15 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
                         if (inCust == id) {
                             let distance = calculateDistance(customer, Depot);
                             totalDistance += distance;
+                            console.log("Dist from Last point ",id ," to Depot ", distance)
+                            for (const customerCurrent of customers) {
+                                const idCurrent = customerCurrent.id;
+                                if (idCurrent === currentPoint) {   // Check that now index of CurrentPoint is same in customers
+                                    let distance = calculateDistance(customer, customerCurrent);
+                                    totalDistance += distance;
+                                    console.log("Dist from Current point",id ," to Last point", idCurrent, distance);
+                                }
+                            }
                         }
                     }
                 } else {                                                    // Case point -> point
@@ -285,6 +382,7 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
                                 if (idCurrent === currentPoint) {   // Check that now index of CurrentPoint is same in customers
                                     let distance = calculateDistance(customerCurrent, customer);
                                     totalDistance += distance;
+                                    console.log("Dist Current",currentPoint, "to point ",id , distance);
                                     currentPoint = inCust;
                                 }
                             }
