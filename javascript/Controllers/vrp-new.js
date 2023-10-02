@@ -212,7 +212,7 @@ const customers = [
     new Customer(2, 102.614435, 15.144884, 5),  // 2
     new Customer(3, 104.241308, 15.099618, 11),  // 3
     new Customer(4, 102.575274, 16.754043, 4),  // 4
-    new Customer(5, 103.473032, 16.772337, 8)   // 5
+    new Customer(5, 103.473032, 16.772337, 11)   // 5
     // Add more customers here
 ];
 
@@ -251,10 +251,23 @@ function clikRunVrp() {
     console.log(totalDistanceArray1, totalDistance1);
 
     drawAllPoint();
+    drawAllNamePoint();
     drawRouteLine(depots[0], customersInRoutes1);
     drawRouteLine(depots[1], customersInRoutes2);
     drawRouteLine(depots[2], customersInRoutes3);
 }
+
+function drawAllNamePoint(){
+    drawGraphicText("Wing 1",newLayer,[depots[0].lon,depots[0].lat],[0,0,255],0)
+	drawGraphicText("Wing 21",newLayer,[depots[1].lon,depots[1].lat],[0,0,255],0)
+	drawGraphicText("Wing 23",newLayer,[depots[2].lon,depots[2].lat],[0,0,255],0)
+
+    for ( const nameCust of customers){
+        let text = "P " + nameCust.id;
+        drawGraphicText(text,newLayer,[nameCust.lon,nameCust.lat],[0,0,255],0);
+    }
+}
+
 function drawAllPoint() {
     for (const cust of customers) {
         drawGraphicPoint(newLayer, [cust.lon, cust.lat]);
