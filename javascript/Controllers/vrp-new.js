@@ -217,6 +217,7 @@ const customers = [
 ];
 
 function clikRunVrp() {
+
     const vehicleCapacity = 11; // Capacity of each vehicle
 
     // vehicle1 is from warehouse 1
@@ -228,13 +229,9 @@ function clikRunVrp() {
     //console.log("From Depot 3",vehicle3);
 
     
-    const customersInRoutes1 = vehicle1.map((vehicle) =>
+    const customersInRoutes1 = vehicle1.map((vehicle) =>    //const customersInRoutes1 = [[2, 1, 3], [4], []];
         vehicle.route.map((customer) => customer.id)
     );
-    
-    //const customersInRoutes1 = [[2, 1, 3], [4], []];
-
-    
     const customersInRoutes2 = vehicle2.map((vehicle) =>
         vehicle.route.map((customer) => customer.id)
     );

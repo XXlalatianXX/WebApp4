@@ -126,7 +126,7 @@ $application = "cs_gis_dev_framework";
 												 </tr>
 												 <tr>
 													<td colspan = "6" align="center">
-														<input type="button" onclick = "vrpuse()" value="ค้นหา"></button>
+														<input type="button" onclick = "clikRunVrp()" value="ค้นหา"></button>
 														<input type="button" onclick = "cal()" value="เคลียร์"></button>
 													</td>
 												 </tr>
