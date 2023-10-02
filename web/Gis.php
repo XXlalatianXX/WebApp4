@@ -102,10 +102,8 @@ $application = "cs_gis_dev_framework";
 													<td id="person_field" style="color:white;"></td>
 													<td id="stretcher_field" style="color:white;"></td>
 													<td id="button_field" style="color:red;"></td>
-
 													</tr>
 													<tr>
-													<td><button type="button" id="submit" style="color:black;">ตกลง</button></td>
 												</tr>
             
 												<!-- <tr>
@@ -128,32 +126,6 @@ $application = "cs_gis_dev_framework";
 													<td colspan = "6" align="center">
 														<input type="button" onclick = "clikRunVrp()" value="ค้นหา"></button>
 														<input type="button" onclick = "cal()" value="เคลียร์"></button>
-													</td>
-												 </tr>
-												 <tr>
-													<td colspan = "5" align="center">
-														<div style="visibility:hidden" >///</div>
-													</td>
-												 </tr>
-												 <tr>
-												 	<td>W1 to P</td>
-													 <td>:&nbsp;</td>
-													<td>
-														<div id = "showDistance" style="margin-left:40px"></div>
-													</td>
-												 </tr>
-												 <tr>
-												 	<td>W21 to P</td>
-													 <td>:&nbsp;</td>
-													<td>
-														<div id = "showDistance1" style="margin-left:40px"></div>
-													</td>
-												 </tr>
-												 <tr>
-												 	<td>W23 to P</td>
-													 <td>:&nbsp;</td>
-													<td>
-														<div id = "showDistance2" style="margin-left:40px"></div>
 													</td>
 												 </tr>
 											</table>										
