@@ -207,15 +207,71 @@ const depots = [
 ];
 
 // Example usage
+/*  // Original
 const customers = [
     new Customer(1, 103.468000, 15.103200, 6),  // 1
     new Customer(2, 102.614435, 15.144884, 5),  // 2
     new Customer(3, 104.241308, 15.099618, 11),  // 3
     new Customer(4, 102.575274, 16.754043, 4),  // 4
-    new Customer(5, 103.473032, 16.772337, 11)   // 5
+    new Customer(5, 103.473032, 16.772337, 7)   // 5
+    // Add more customers here
+];
+*/
+/*  // Event 1
+const customers = [
+    new Customer(1, 102.848165, 16.385090, 3),  // 1
+    new Customer(2, 102.543969, 15.574469, 5),  // 2
+    new Customer(3, 103.477906, 16.758493, 6),  // 3
+    new Customer(4, 104.374485, 16.308275, 6),  // 4
+    new Customer(5, 104.870806, 15.595031, 2)   // 5
+    // Add more customers here
+];
+/*
+
+/*  // Event 2
+const customers = [
+    new Customer(1, 102.784124, 15.553905, 7),  // 1
+    new Customer(2, 103.093657, 14.956655, 4),  // 2
+    new Customer(3, 104.145004, 15.157644, 4),  // 3
+    new Customer(4, 103.355160, 16.395330, 5),  // 4
+    new Customer(5, 104.315781, 16.477229, 3)   // 5
+    // Add more customers here
+];
+*/
+/*  // Event 3
+const customers = [
+    new Customer(1, 105.367127, 15.023672, 5),  // 1
+    new Customer(2, 104.635988, 15.867286, 5),  // 2
+    new Customer(3, 104.294433, 17.589593, 6),  // 3
+    new Customer(4, 103.395112, 17.590998, 5),  // 4
+    new Customer(5, 102.576651, 16.730289, 2)   // 5
+    // Add more customers here
+];
+*/  
+/*  // Event 4
+const customers = [
+    new Customer(1, 103.518653, 16.414531, 3),  // 1
+    new Customer(2, 103.745146, 16.676055, 4),  // 2
+    new Customer(3, 103.626752, 16.038902, 5),  // 3
+    new Customer(4, 103.117144, 16.043849, 6),  // 4
+    new Customer(5, 103.276718, 15.652651, 3)   // 5
+    // Add more customers here
+];
+*/  // Event 5
+const customers = [
+    new Customer(1, 103.708625, 17.644240, 7),  // 1
+    new Customer(2, 103.955817, 16.220169, 7),  // 2
+    new Customer(3, 103.499885, 15.385060, 5),  // 3
+    new Customer(4, 102.533088, 16.130482, 4),  // 4
+    new Customer(5, 103.164802, 17.125261, 5)   // 5
     // Add more customers here
 ];
 
+function clickPoing(){
+    drawAllPoint();
+    drawAllNamePoint();
+}
+ 
 function clikRunVrp() {
 
     const vehicleCapacity = 11; // Capacity of each vehicle
