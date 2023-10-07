@@ -359,7 +359,7 @@ function clikRunVrp() {
     const { totalArray: totalDistanceArray2, totalDistance: totalDistance2 } = TotalDIstanceAllRoute(depots[1], customersInRoutes2);
     const { totalArray: totalDistanceArray3, totalDistance: totalDistance3 } = TotalDIstanceAllRoute(depots[2], customersInRoutes3);
     //console.log(totalDistanceArray1, totalDistance1);
-    let allDistance = totalDistance1 + totalDistance2 + totalDistance3;
+    var allDistance = totalDistance1 + totalDistance2 + totalDistance3;
     console.log("Total Distance of All route : ",allDistance, "KM.")
 
     drawAllPoint();
@@ -367,7 +367,17 @@ function clikRunVrp() {
     drawRouteLine(depots[0], customersInRoutes1);
     drawRouteLine(depots[1], customersInRoutes2);
     drawRouteLine(depots[2], customersInRoutes3);
+
+    // Block to display Results
+    var resultDiv = document.getElementById("results"),
+    distanceElem = document.getElementById("distance-result")
+
+    resultDiv.style.display = "block";  // set to can visibility
+    distanceElem.innerHTML = allDistance;
+
 }
+
+
 
 function drawAllNamePoint(){
     drawGraphicText("Wing 1",newLayer,[depots[0].lon,depots[0].lat],[0,0,255],0)

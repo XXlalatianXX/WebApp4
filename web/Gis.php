@@ -105,29 +105,28 @@ $application = "cs_gis_dev_framework";
 													</tr>
 													<tr>
 												</tr>
-            
-												<!-- <tr>
-													<td>Local 1</td>
-													<td>:&nbsp;</td>
-													<td><input id="lon1" type="text" value="" placeholder="lon" size="15" style="margin-left:30px;width:120px"></td>
-													<td><input id="lat1" type="text" value="" placeholder="lat" size="15" style="margin-left:-60px;width:120px"></td>
-												 </tr>	 -->
-												 <tr>
+												<tr>
 													<td colspan = "5" align="center">
 														<div style="visibility:hidden" >///</div>
 													</td>
 												 </tr>
-												 <tr>
-													<td colspan = "5" align="center">
-														<div style="visibility:hidden" >///</div>
-													</td>
-												 </tr>
-												 <tr>
+												<tr>
 													<td colspan = "6" align="center">
 														<input type="button" onclick = "clikRunVrp()" value="ค้นหา"></button>
-														<input type="button" onclick = "cal()" value="เคลียร์"></button>
+														<input type="button" onclick = "clickPoing()" value="เคลียร์"></button>
 													</td>
 												 </tr>
+												<tr>
+													<td colspan = "1">
+														<div id="results" style="display : none;">
+															<h3>Result</h3>
+															<p>Total Distance : <span id="distance-result" style="display: inline; color: yellow"></span> km.</p>
+															<p>Route :</p>
+															<ol id="routes-result"></ol>
+														</div>
+													</td>			
+												</tr>
+
 											</table>										
 										</div>
 										<div id="acasSearchPagesDiv"></div>
