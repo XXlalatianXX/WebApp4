@@ -1,10 +1,10 @@
 class Customer {
-    constructor(id, lon, lat, stretchDemand, personDemand) {
+    constructor(id, lat, lon, personDemand, stretchDemand) {
         this.id = id;
-        this.lon = lon;
         this.lat = lat;
-        this.stretchDemand = stretchDemand;
+        this.lon = lon;
         this.personDemand = personDemand;
+        this.stretchDemand = stretchDemand;
     }
 }
 
