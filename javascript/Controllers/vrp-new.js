@@ -110,22 +110,22 @@ function solveMDVRP(customers, depots) {
             else {
                 //============================================== Block to set Capacity Dynamic Type =========================================
                 // Check Capacity from Warehouse 1
-                if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand == 0) && (currentPersonCapacity1 + nearestCustomer1.personDemand <= 28)) {    //case JustPerson
+                if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand == 0) && (currentPersonCapacity1 + nearestCustomer1.personDemand <= 28)) {
                     stretchCapacity1 = 0;
                     personCapacity1 = 28;
-                } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 1) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 2) && // case Mini
+                } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 1) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 2) &&
                     (currentPersonCapacity1 + nearestCustomer1.personDemand <= 22)) {
                     stretchCapacity1 = 2;
                     personCapacity1 = 22;
-                } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 3) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 5) && // case Medium
+                } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 3) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 5) &&
                     (currentPersonCapacity1 + nearestCustomer1.personDemand <= 16)) {
                     stretchCapacity1 = 5;
                     personCapacity1 = 16;
-                } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 6) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 8) && // case High
+                } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 6) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 8) &&
                     (currentPersonCapacity1 + nearestCustomer1.personDemand <= 10)) {
                     stretchCapacity1 = 8;
                     personCapacity1 = 10;
-                } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 9) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 11) && // case Max
+                } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 9) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 11) &&
                     (currentPersonCapacity1 + nearestCustomer1.personDemand <= 4)) {
                     stretchCapacity1 = 11;
                     personCapacity1 = 4;
@@ -134,22 +134,22 @@ function solveMDVRP(customers, depots) {
                 }
 
                 // Check Capacity from Warehouse 2
-                if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand == 0) && (currentPersonCapacity2 + nearestCustomer2.personDemand <= 28)) {    //case JustPerson
+                if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand == 0) && (currentPersonCapacity2 + nearestCustomer2.personDemand <= 28)) {
                     stretchCapacity2 = 0;
                     personCapacity2 = 28;
-                } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 1) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 2) && // case Mini
+                } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 1) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 2) &&
                     (currentPersonCapacity2 + nearestCustomer2.personDemand <= 22)) {
                     stretchCapacity2 = 2;
                     personCapacity2 = 22;
-                } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 3) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 5) && // case Medium
+                } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 3) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 5) &&
                     (currentPersonCapacity2 + nearestCustomer2.personDemand <= 16)) {
                     stretchCapacity2 = 5;
                     personCapacity2 = 16;
-                } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 6) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 8) && // case High
+                } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 6) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 8) &&
                     (currentPersonCapacity2 + nearestCustomer2.personDemand <= 10)) {
                     stretchCapacity2 = 8;
                     personCapacity2 = 10;
-                } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 9) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 11) && // case Max
+                } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 9) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 11) &&
                     (currentPersonCapacity2 + nearestCustomer2.personDemand <= 4)) {
                     stretchCapacity2 = 11;
                     personCapacity2 = 4;
@@ -158,22 +158,22 @@ function solveMDVRP(customers, depots) {
                 }
 
                 // Check Capacity from Warehouse 3
-                if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand == 0) && (currentPersonCapacity3 + nearestCustomer3.personDemand <= 28)) {    //case JustPerson
+                if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand == 0) && (currentPersonCapacity3 + nearestCustomer3.personDemand <= 28)) {
                     stretchCapacity3 = 0;
                     personCapacity3 = 28;
-                } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 1) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 2) && // case Mini
+                } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 1) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 2) &&
                     (currentPersonCapacity3 + nearestCustomer3.personDemand <= 22)) {
                     stretchCapacity3 = 2;
                     personCapacity3 = 22;
-                } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 3) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 5) && // case Medium
+                } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 3) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 5) &&
                     (currentPersonCapacity3 + nearestCustomer3.personDemand <= 16)) {
                     stretchCapacity3 = 5;
                     personCapacity3 = 16;
-                } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 6) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 8) && // case High
+                } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 6) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 8) &&
                     (currentPersonCapacity3 + nearestCustomer3.personDemand <= 10)) {
                     stretchCapacity3 = 8;
                     personCapacity3 = 10;
-                } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 9) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 11) && // case Max
+                } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 9) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 11) &&
                     (currentPersonCapacity3 + nearestCustomer3.personDemand <= 4)) {
                     stretchCapacity3 = 11;
                     personCapacity3 = 4;
