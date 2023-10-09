@@ -318,13 +318,14 @@ function solveMDVRP(customers, depots) {
 }
 
 const depots = [
-    new Customer(1, 102.080567, 14.934309), // Depot 1   1  Korat
-    new Customer(2, 105.080567, 15.934309), // Depot 2   21 Ubon
-    new Customer(3, 102.787364, 17.386890), // Depot 3   23 Udon
+    new Depot(1, 102.080567, 14.934309), // Depot 1   1  Korat
+    new Depot(2, 105.080567, 15.934309), // Depot 2   21 Ubon
+    new Depot(3, 102.787364, 17.386890), // Depot 3   23 Udon
 ];
 
 // Example usage
-  // Original
+// Original
+/*
 const customers = [
     new Customer(1, 103.468000, 15.103200, 1,1),  // 1
     new Customer(2, 102.614435, 15.144884, 1, 1),  // 2
