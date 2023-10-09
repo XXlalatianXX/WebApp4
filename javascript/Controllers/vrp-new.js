@@ -323,19 +323,6 @@ const depots = [
     new Depot(3, 102.787364, 17.386890), // Depot 3   23 Udon
 ];
 
-// Example usage
-// Original
-/*
-const customers = [
-    new Customer(1, 103.468000, 15.103200, 1,1),  // 1
-    new Customer(2, 102.614435, 15.144884, 1, 1),  // 2
-    new Customer(3, 104.241308, 15.099618, 1, 1),  // 3
-    new Customer(4, 102.575274, 16.754043, 2, 2),  // 4
-    new Customer(5, 103.473032, 16.772337, 3, 2)   // 5
-    // Add more customers here
-];
-*/
-
 let customers = [];
 
 function clikRunVrp() {
@@ -355,7 +342,6 @@ function clikRunVrp() {
             const value = collection[j].value;
             // alert(value)
             if (value != "") {
-                //data[j][column[i]] = value;
                 data[j][column[i]] = parseFloat(value); // Have to parse to Number before use in Class
             }
             else {
@@ -368,13 +354,15 @@ function clikRunVrp() {
         }
     }
     for (let i = 0; i < data.length; i++) {
-        console.log(i + 1);
+        //console.log(i + 1);
         CustInput.push(new Customer(i + 1, data[i]["lat_list"], data[i]["lon_list"], data[i]["num_person"], data[i]["num_stretchers"]));
+    
     }
 
     customers = CustInput;
     
     console.log("Customer =========================", customers);
+  
 
     // vehicle1 is from warehouse 1
     // vehicle2 is from warehouse 2
@@ -398,9 +386,10 @@ function clikRunVrp() {
     const { totalArray: totalDistanceArray1, totalDistance: totalDistance1 } = TotalDIstanceAllRoute(depots[0], customersInRoutes1);
     const { totalArray: totalDistanceArray2, totalDistance: totalDistance2 } = TotalDIstanceAllRoute(depots[1], customersInRoutes2);
     const { totalArray: totalDistanceArray3, totalDistance: totalDistance3 } = TotalDIstanceAllRoute(depots[2], customersInRoutes3);
-    //console.log(totalDistanceArray1, totalDistance1);
-    var allDistance = totalDistance1 + totalDistance2 + totalDistance3;
-    console.log("Total Distance of All route : ",allDistance, "KM.")
+    console.log("Total Distance Depot 1 : ",totalDistance1, "KM.");
+    console.log("Total Distance Depot 2 : ",totalDistance2, "KM.");
+    console.log("Total Distance Depot 3 : ",totalDistance3, "KM.");
+    //console.log("Total Distance of All route : ",totalDistance1 + totalDistance2 + totalDistance3, "KM.");
 
     drawAllPoint();
     drawAllNamePoint();
@@ -413,7 +402,7 @@ function clikRunVrp() {
     distanceElem = document.getElementById("distance-result")
 
     resultDiv.style.display = "block";  // set to can visibility
-    distanceElem.innerHTML = allDistance;
+    distanceElem.innerHTML = totalDistance1 + totalDistance2 + totalDistance3;
 
 }
 
@@ -437,7 +426,7 @@ function drawAllPoint() {
     for (const depot of depots) {
         drawGraphicPointWarehouse(newLayer, [depot.lon, depot.lat]);
     }
-    console.log("Draw all point");
+    //console.log("Draw all point");
 
 }
 function drawRouteLine(Depot, CustomerInRoute) {
@@ -445,8 +434,8 @@ function drawRouteLine(Depot, CustomerInRoute) {
     var outlineWidth = 3.0;
     for (const cust of CustomerInRoute) {
         if (cust.length === 0) {
-            console.log("Empty...");
-            break;
+            //console.log("Empty...");
+            continue;
         } else {
             for (const inCust of cust) {
                 if (cust.indexOf(inCust) === cust.indexOf(cust[0])) {       // Case depot -> point 1
@@ -470,7 +459,7 @@ function drawRouteLine(Depot, CustomerInRoute) {
                                     let coordinates = [[[customer.lon, customer.lat], [customerCurrent.lon, customerCurrent.lat]]];
                                     drawGraphicPolyLine(newLayer, coordinates, "rgba(255,0,0,0.8)", outlineWidth);	// red line
                                     currentPoint = inCust;
-                                    console.log("Point to Point");
+                                    //console.log("Point to Point");
                                 }
                             }
                         }
@@ -485,7 +474,7 @@ function drawRouteLine(Depot, CustomerInRoute) {
                                     let coordinates = [[[customer.lon, customer.lat], [customerCurrent.lon, customerCurrent.lat]]];
                                     drawGraphicPolyLine(newLayer, coordinates, "rgba(255,0,0,0.8)", outlineWidth);	// red line
                                     currentPoint = inCust;
-                                    console.log("Point to Point");
+                                    //console.log("Point to Point");
                                 }
                             }
                         }
@@ -503,10 +492,10 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
     for (const cust of CustomerInRoute) {
         let totalDistance = 0;
         if (cust.length === 0) {
-            console.log("Empty...");
-            break;
+            //console.log("Empty...");
+            continue;
         }else if (cust.length === 1){
-            console.log("Have 1 Point");
+            //console.log("Have 1 Point");
             for (const inCust of cust) {
                 if (cust.indexOf(inCust) === cust.indexOf(cust[0])) {       // Case depot -> point 1
                     for (const customer of customers) {
@@ -514,7 +503,7 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
                         if (id == inCust) {
                             let distance = calculateDistance(Depot, customer);
                             totalDistance += (distance*2);
-                            console.log("Dist from Depot to point ",id ,"and return to Depot", distance*2);
+                            //console.log("Dist from Depot to point ",id ,"and return to Depot", distance*2);
                         }
                     }
                 }
@@ -527,7 +516,7 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
                         if (id == inCust) {
                             let distance = calculateDistance(Depot, customer)
                             totalDistance += distance;
-                            console.log("Dist from Depot to point ",id , distance)
+                            //console.log("Dist from Depot to point ",id , distance)
                             currentPoint = id;
                         }
                     }
@@ -537,13 +526,13 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
                         if (inCust == id) {
                             let distance = calculateDistance(customer, Depot);
                             totalDistance += distance;
-                            console.log("Dist from Last point ",id ," to Depot ", distance)
+                            //console.log("Dist from Last point ",id ," to Depot ", distance)
                             for (const customerCurrent of customers) {
                                 const idCurrent = customerCurrent.id;
                                 if (idCurrent === currentPoint) {   // Check that now index of CurrentPoint is same in customers
                                     let distance = calculateDistance(customer, customerCurrent);
                                     totalDistance += distance;
-                                    console.log("Dist from Current point",id ," to Last point", idCurrent, distance);
+                                    //console.log("Dist from Current point",id ," to Last point", idCurrent, distance);
                                 }
                             }
                         }
@@ -557,7 +546,7 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
                                 if (idCurrent === currentPoint) {   // Check that now index of CurrentPoint is same in customers
                                     let distance = calculateDistance(customerCurrent, customer);
                                     totalDistance += distance;
-                                    console.log("Dist Current",currentPoint, "to point ",id , distance);
+                                    //console.log("Dist Current",currentPoint, "to point ",id , distance);
                                     currentPoint = inCust;
                                 }
                             }
