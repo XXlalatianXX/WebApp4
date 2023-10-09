@@ -334,8 +334,47 @@ const customers = [
     new Customer(5, 103.473032, 16.772337, 3, 2)   // 5
     // Add more customers here
 ];
- 
+*/
+
+let customers = [];
+
 function clikRunVrp() {
+    
+    const CustInput = [];
+    let c = 0;
+    column = ["lat_list", "lon_list", "num_person", "num_stretchers"];
+    const row = { lat_list: 0, lon_list: 0, num_person: 0, num_stretchers: 0 };
+    const data = [];
+    for (let i = 0; i < document.getElementsByClassName("lon_list").length; i++) {
+        const clone = { ...row };
+        data.push(clone);
+    }
+    for (let i = 0; i < column.length; i++) {
+        const collection = document.getElementsByClassName(column[i]);
+        for (let j = 0; j < collection.length; j++) {
+            const value = collection[j].value;
+            // alert(value)
+            if (value != "") {
+                //data[j][column[i]] = value;
+                data[j][column[i]] = parseFloat(value); // Have to parse to Number before use in Class
+            }
+            else {
+                c = 1;
+                break
+            }
+        }
+        if (c == 1) {
+            break
+        }
+    }
+    for (let i = 0; i < data.length; i++) {
+        console.log(i + 1);
+        CustInput.push(new Customer(i + 1, data[i]["lat_list"], data[i]["lon_list"], data[i]["num_person"], data[i]["num_stretchers"]));
+    }
+
+    customers = CustInput;
+    
+    console.log("Customer =========================", customers);
 
     // vehicle1 is from warehouse 1
     // vehicle2 is from warehouse 2
