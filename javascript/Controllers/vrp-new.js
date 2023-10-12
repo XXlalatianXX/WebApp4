@@ -399,23 +399,58 @@ function clikRunVrp() {
 
     // Block to display Results
     var resultDiv = document.getElementById("results"),
-    distanceElem = document.getElementById("distance-result")
+        distanceElem = document.getElementById("distance-result")
 
     resultDiv.style.display = "block";  // set to can visibility
     distanceElem.innerHTML = totalDistance1 + totalDistance2 + totalDistance3;
-
 }
 
+function UnlimitedInput() {
 
+    CustInputs = [];
 
-function drawAllNamePoint(){
-    drawGraphicText("Wing 1",newLayer,[depots[0].lon,depots[0].lat],[0,0,255],0)
-	drawGraphicText("Wing 21",newLayer,[depots[1].lon,depots[1].lat],[0,0,255],0)
-	drawGraphicText("Wing 23",newLayer,[depots[2].lon,depots[2].lat],[0,0,255],0)
+    let c = 0;
+    column = ["lat_list", "lon_list", "num_person", "num_stretchers"];
+    const row = { lat_list: 0, lon_list: 0, num_person: 0, num_stretchers: 0 };
+    const data = [];
+    for (let i = 0; i < document.getElementsByClassName("lon_list").length; i++) {
+        const clone = { ...row };
+        data.push(clone);
+    }
 
-    for ( const nameCust of customers){
+    for (let i = 0; i < column.length; i++) {
+        const collection = document.getElementsByClassName(column[i]);
+        for (let j = 0; j < collection.length; j++) {
+            const value = collection[j].value;
+            // alert(value)
+            if (value != "") {
+                data[j][column[i]] = parseFloat(value); // Have to parse to Number before use in Class
+            }
+            else {
+                c = 1;
+                break
+            }
+        }
+        if (c == 1) {
+            break
+        }
+    }
+    for (let i = 0; i < data.length; i++) {
+        //console.log(i + 1);
+        CustInputs.push(new Customer(i + 1, data[i]["lat_list"], data[i]["lon_list"], data[i]["num_person"], data[i]["num_stretchers"]));
+    }
+
+    return CustInputs;
+}
+
+function drawAllNamePoint() {
+    drawGraphicText("Wing 1", newLayer, [depots[0].lon, depots[0].lat], [0, 0, 255], 0)
+    drawGraphicText("Wing 21", newLayer, [depots[1].lon, depots[1].lat], [0, 0, 255], 0)
+    drawGraphicText("Wing 23", newLayer, [depots[2].lon, depots[2].lat], [0, 0, 255], 0)
+
+    for (const nameCust of customers) {
         let text = "P " + nameCust.id;
-        drawGraphicText(text,newLayer,[nameCust.lon,nameCust.lat],[0,0,255],0);
+        drawGraphicText(text, newLayer, [nameCust.lon, nameCust.lat], [0, 0, 255], 0);
     }
 }
 
