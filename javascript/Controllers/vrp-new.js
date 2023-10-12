@@ -338,6 +338,8 @@ function clikRunVrp() {
         for (const CustIn of CustInput) {
             if ((CustIn.lat == "") && (CustIn.lon == "") && (CustIn.stretchDemand == "") && (CustIn.personDemand == "")){
                 alert(`Please Enter Data ... id : ${CustIn.id}`);
+                inputIsValid = false;
+                break;
             }
 
             if ((CustIn.stretchDemand == 0) && (CustIn.personDemand <= 28)) {
