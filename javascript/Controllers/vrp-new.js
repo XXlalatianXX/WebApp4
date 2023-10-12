@@ -326,44 +326,50 @@ const depots = [
 let customers = [];
 
 function clikRunVrp() {
-    
-    const CustInput = [];
-    let c = 0;
-    column = ["lat_list", "lon_list", "num_person", "num_stretchers"];
-    const row = { lat_list: 0, lon_list: 0, num_person: 0, num_stretchers: 0 };
-    const data = [];
-    for (let i = 0; i < document.getElementsByClassName("lon_list").length; i++) {
-        const clone = { ...row };
-        data.push(clone);
-    }
-    for (let i = 0; i < column.length; i++) {
-        const collection = document.getElementsByClassName(column[i]);
-        for (let j = 0; j < collection.length; j++) {
-            const value = collection[j].value;
-            // alert(value)
-            if (value != "") {
-                data[j][column[i]] = parseFloat(value); // Have to parse to Number before use in Class
+
+    // Block to check Input is correct Pattern ...
+    let CustInput = [];
+    do {
+        CustInput = UnlimitedInput();
+        //console.log("CustInput Before: ", CustInput);
+
+        let inputIsValid = true;
+
+        for (const CustIn of CustInput) {
+            if ((CustIn.lat == "") && (CustIn.lon == "") && (CustIn.stretchDemand == "") && (CustIn.personDemand == "")){
+                alert(`Please Enter Data ... id : ${CustIn.id}`);
             }
-            else {
-                c = 1;
-                break
+
+            if ((CustIn.stretchDemand == 0) && (CustIn.personDemand <= 28)) {
+                continue;
+            } else if ((CustIn.stretchDemand >= 1) && (CustIn.stretchDemand <= 2) &&
+                (CustIn.personDemand <= 22)) {
+                continue;
+            } else if ((CustIn.stretchDemand >= 3) && (CustIn.stretchDemand <= 5) &&
+                (CustIn.personDemand <= 16)) {
+                continue;
+            } else if ((CustIn.stretchDemand >= 6) && (CustIn.stretchDemand <= 8) &&
+                (CustIn.personDemand <= 10)) {
+                continue;
+            } else if ((CustIn.stretchDemand >= 9) && (CustIn.stretchDemand <= 11) &&
+                (CustIn.personDemand <= 4)) {
+                continue;
+            } else {
+                console.log("CustIn Wrong : ", CustIn);
+                alert(`***** Data ${CustIn.id} was wrong *****\nPlease input new data`);
+                alert(`Enter Data like this condition ...\n\nif  stretcher==0  -->  person<=28\n if  1<=stretcher<=2  -->  person<=22\nif  3<=stretcher<=5  -->  person<=16\nif  6<=stretcher<=8  --> person<=10\nif  9<=stretcher<=11  -->  person<=4`)
+                inputIsValid = false;
+                break;
             }
         }
-        if (c == 1) {
-            break
+        if (inputIsValid){
+            break;
         }
-    }
-    for (let i = 0; i < data.length; i++) {
-        //console.log(i + 1);
-        CustInput.push(new Customer(i + 1, data[i]["lat_list"], data[i]["lon_list"], data[i]["num_person"], data[i]["num_stretchers"]));
-    
-    }
+    } while (!inputIsValid);
 
     customers = CustInput;
-    
     console.log("Customer =========================", customers);
-  
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
     // vehicle1 is from warehouse 1
     // vehicle2 is from warehouse 2
     // vehicle3 is from warehouse 3
