@@ -80,7 +80,7 @@ function solveMDVRP(customers, depots) {
         var vehicle1 = new Vehicle(vehicles1.length + 1, stretchCapacity1, personCapacity1);    // Use var cause of can change out of block...
         var vehicle2 = new Vehicle(vehicles2.length + 1, stretchCapacity2, personCapacity2);
         var vehicle3 = new Vehicle(vehicles3.length + 1, stretchCapacity3, personCapacity3);
-        
+
         var currentStretchCapacity1 = 0;
         var currentPersonCapacity1 = 0;
 
@@ -384,17 +384,17 @@ function clikRunVrp() {
     const customersInRoutes3 = vehicle3.map((vehicle) =>
         vehicle.route.map((customer) => customer.id)
     );
-    
+
     console.log("Route from depot 1", customersInRoutes1);
-    console.log("Route from depot 2",customersInRoutes2);
-    console.log("Route from depot 3",customersInRoutes3);
+    console.log("Route from depot 2", customersInRoutes2);
+    console.log("Route from depot 3", customersInRoutes3);
 
     const { totalArray: totalDistanceArray1, totalDistance: totalDistance1 } = TotalDIstanceAllRoute(depots[0], customersInRoutes1);
     const { totalArray: totalDistanceArray2, totalDistance: totalDistance2 } = TotalDIstanceAllRoute(depots[1], customersInRoutes2);
     const { totalArray: totalDistanceArray3, totalDistance: totalDistance3 } = TotalDIstanceAllRoute(depots[2], customersInRoutes3);
-    console.log("Total Distance Depot 1 : ",totalDistance1, "KM.");
-    console.log("Total Distance Depot 2 : ",totalDistance2, "KM.");
-    console.log("Total Distance Depot 3 : ",totalDistance3, "KM.");
+    console.log("Total Distance Depot 1 : ", totalDistance1, "KM.");
+    console.log("Total Distance Depot 2 : ", totalDistance2, "KM.");
+    console.log("Total Distance Depot 3 : ", totalDistance3, "KM.");
     //console.log("Total Distance of All route : ",totalDistance1 + totalDistance2 + totalDistance3, "KM.");
 
     drawAllPoint();
@@ -535,7 +535,7 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
         if (cust.length === 0) {
             //console.log("Empty...");
             continue;
-        }else if (cust.length === 1){
+        } else if (cust.length === 1) {
             //console.log("Have 1 Point");
             for (const inCust of cust) {
                 if (cust.indexOf(inCust) === cust.indexOf(cust[0])) {       // Case depot -> point 1
@@ -543,13 +543,13 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
                         const id = customer.id;
                         if (id == inCust) {
                             let distance = calculateDistance(Depot, customer);
-                            totalDistance += (distance*2);
+                            totalDistance += (distance * 2);
                             //console.log("Dist from Depot to point ",id ,"and return to Depot", distance*2);
                         }
                     }
                 }
             }
-        }else{
+        } else {
             for (const inCust of cust) {
                 if (cust.indexOf(inCust) === cust.indexOf(cust[0])) {       // Case depot -> point 1
                     for (const customer of customers) {
@@ -598,8 +598,8 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
         }
         totalDistanceArray.push(totalDistance);
     }
-    for ( const distance of totalDistanceArray){
+    for (const distance of totalDistanceArray) {
         totalDistanceAllRoute += distance;
     }
-    return { totalArray: totalDistanceArray, totalDistance: totalDistanceAllRoute};
+    return { totalArray: totalDistanceArray, totalDistance: totalDistanceAllRoute };
 }
