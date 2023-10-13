@@ -609,6 +609,10 @@ function clikRunVrp() {
     console.log("Total Distance Depot 3 : ", totalDistance3, "KM.");
     //console.log("Total Distance of All route : ",totalDistance1 + totalDistance2 + totalDistance3, "KM.");
 
+    const Depot1Round = getRoundDepot(customersInRoutes1);
+    const Depot2Round = getRoundDepot(customersInRoutes2);
+    const Depot3Round = getRoundDepot(customersInRoutes3);
+
     drawAllPoint();
     drawAllNamePoint();
     drawRouteLine(depots[0], customersInRoutes1);
@@ -617,10 +621,16 @@ function clikRunVrp() {
 
     // Block to display Results
     var resultDiv = document.getElementById("results"),
-        distanceElem = document.getElementById("distance-result")
+        distanceElem = document.getElementById("distance-result"),
+        wing1Round = document.getElementById("Depot1-round"),
+        wing21Round = document.getElementById("Depot2-round"),
+        wing23Round = document.getElementById("Depot3-round")
 
     resultDiv.style.display = "block";  // set to can visibility
     distanceElem.innerHTML = totalDistance1 + totalDistance2 + totalDistance3;
+    wing1Round.innerHTML = Depot1Round;
+    wing21Round.innerHTML = Depot2Round;
+    wing23Round.innerHTML = Depot3Round;
 }
 
 function UnlimitedInput() {
@@ -814,4 +824,15 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
         totalDistanceAllRoute += distance;
     }
     return { totalArray: totalDistanceArray, totalDistance: totalDistanceAllRoute };
+}
+
+function getRoundDepot(CustomerInRoute){
+    let NumberOfRound = 0;
+
+    for (const cust of CustomerInRoute){
+        if ( cust != '' ){
+            NumberOfRound += 1;
+        }
+    }
+    return NumberOfRound;
 }

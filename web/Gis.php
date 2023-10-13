@@ -121,8 +121,11 @@ $application = "cs_gis_dev_framework";
 														<div id="results" style="display : none;">
 															<h3>Result</h3>
 															<p>Total Distance : <span id="distance-result" style="display: inline; color: yellow"></span> km.</p>
-															<!--  <p>Route :</p>
-															<ol id="routes-result"></ol>-->
+															<p style="visibility:hidden" >///</p>
+															<h3>Number of Rounds</h3>
+															<p>Wing 1 : <span id="Depot1-round" style="display: inline; color: yellow"></span></p>
+															<p>Wing 21 : <span id="Depot2-round" style="display: inline; color: yellow"></span></p>
+															<p>Wing 23 : <span id="Depot3-round" style="display: inline; color: yellow"></span></p>
 														</div>
 													</td>			
 												</tr>
