@@ -77,10 +77,10 @@ function solveMDVRP(customers, depots) {
     const unassignedCustomers = [...customers];
 
     while (unassignedCustomers.length > 0) {
+
         var vehicle1 = new Vehicle(vehicles1.length + 1, stretchCapacity1, personCapacity1);    // Use var cause of can change out of block...
         var vehicle2 = new Vehicle(vehicles2.length + 1, stretchCapacity2, personCapacity2);
         var vehicle3 = new Vehicle(vehicles3.length + 1, stretchCapacity3, personCapacity3);
-
         var currentStretchCapacity1 = 0;
         var currentPersonCapacity1 = 0;
 
@@ -98,16 +98,18 @@ function solveMDVRP(customers, depots) {
         var totalDistanceDepot2 = 0;
         var totalDistanceDepot3 = 0;
 
-        //while ((currentCapacity1 < vehicleCapacity1) || (currentCapacity2 < vehicleCapacity2)) {
-        while (true) {
+        let CheckBool1 = true;
+        let CheckBool2 = true;
+        let CheckBool3 = true;
+
+        do {
             const { nearestCustomer: nearestCustomer1, distance: distance1 } = findNearestCustomer(currentCustomer1, unassignedCustomers);
             const { nearestCustomer: nearestCustomer2, distance: distance2 } = findNearestCustomer(currentCustomer2, unassignedCustomers);
             const { nearestCustomer: nearestCustomer3, distance: distance3 } = findNearestCustomer(currentCustomer3, unassignedCustomers);
 
             if ((nearestCustomer1 === null) && (nearestCustomer2 === null) && (nearestCustomer3 === null)) {    // break when all don't have nearest Customer
                 break;
-            }
-            else {
+            } else {
                 //============================================== Block to set Capacity Dynamic Type =========================================
                 // Check Capacity from Warehouse 1
                 if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand == 0) && (currentPersonCapacity1 + nearestCustomer1.personDemand <= 28)) {
@@ -130,7 +132,7 @@ function solveMDVRP(customers, depots) {
                     stretchCapacity1 = 11;
                     personCapacity1 = 4;
                 } else {
-                    break;
+                    CheckBool1 = false;
                 }
 
                 // Check Capacity from Warehouse 2
@@ -154,7 +156,7 @@ function solveMDVRP(customers, depots) {
                     stretchCapacity2 = 11;
                     personCapacity2 = 4;
                 } else {
-                    break;
+                    CheckBool2 = false;
                 }
 
                 // Check Capacity from Warehouse 3
@@ -178,86 +180,294 @@ function solveMDVRP(customers, depots) {
                     stretchCapacity3 = 11;
                     personCapacity3 = 4;
                 } else {
-                    break;
+                    CheckBool3 = false;
                 }
 
+                // Block to use event from Boolean
+                if ((CheckBool1) && (CheckBool2) && (CheckBool3)) {
+                    if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand > stretchCapacity1) && (currentPersonCapacity1 + nearestCustomer1.personDemand > personCapacity1) &&
+                        (currentStretchCapacity2 + nearestCustomer2.stretchDemand > stretchCapacity2) && (currentPersonCapacity2 + nearestCustomer2.personDemand > personCapacity2) &&
+                        (currentStretchCapacity3 + nearestCustomer3.stretchDemand > stretchCapacity3) && (currentPersonCapacity3 + nearestCustomer3.personDemand > personCapacity3)) {
+                        //console.log("=============Over Capavity============");
+                        break;
+                    }
 
-                //=========================================================== Main Block for MDVRP =======================================================
+                    if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand <= stretchCapacity1) &&   // Case All can use
+                        (currentPersonCapacity1 + nearestCustomer1.personDemand <= personCapacity1) &&
+                        (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= stretchCapacity2) &&
+                        (currentPersonCapacity2 + nearestCustomer2.personDemand <= personCapacity2) &&
+                        (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= stretchCapacity3) &&
+                        (currentPersonCapacity3 + nearestCustomer3.personDemand <= personCapacity3)) {
+                        if ((totalDistanceDepot1 + distance1 < totalDistanceDepot2 + distance2) &&
+                            (totalDistanceDepot1 + distance1 < totalDistanceDepot3 + distance3)) {
+                            vehicle1.route.push(nearestCustomer1);
+                            currentCustomer1 = nearestCustomer1;
+                            currentStretchCapacity1 += nearestCustomer1.stretchDemand;
+                            currentPersonCapacity1 += nearestCustomer2.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer1), 1);
+                            totalDistanceDepot1 += distance1; // Update total distance for depot 1
+                        } else if ((totalDistanceDepot2 + distance2 < totalDistanceDepot1 + distance1) &&
+                            (totalDistanceDepot2 + distance2 < totalDistanceDepot3 + distance3)) {
+                            vehicle2.route.push(nearestCustomer2);
+                            currentCustomer2 = nearestCustomer2;
+                            currentStretchCapacity2 += nearestCustomer2.stretchDemand;
+                            currentPersonCapacity2 += nearestCustomer2.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer2), 1);
+                            totalDistanceDepot2 += distance2; // Update total distance for depot 2
+                        } else if ((totalDistanceDepot3 + distance3 < totalDistanceDepot1 + distance1) &&
+                            (totalDistanceDepot3 + distance3 < totalDistanceDepot2 + distance1)) {
+                            vehicle3.route.push(nearestCustomer3);
+                            currentCustomer3 = nearestCustomer3;
+                            currentStretchCapacity3 += nearestCustomer3.stretchDemand;
+                            currentPersonCapacity3 += nearestCustomer3.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer3), 1);
+                            totalDistanceDepot3 += distance3; // Update total distance for depot 3
+                        }
 
-                if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand > stretchCapacity1) && (currentPersonCapacity1 + nearestCustomer1.personDemand > personCapacity1) &&
-                    (currentStretchCapacity2 + nearestCustomer2.stretchDemand > stretchCapacity2) && (currentPersonCapacity2 + nearestCustomer2.personDemand > personCapacity2) &&
-                    (currentStretchCapacity3 + nearestCustomer3.stretchDemand > stretchCapacity3) && (currentPersonCapacity3 + nearestCustomer3.personDemand > personCapacity3)) {
-                    //console.log("=============Over Capavity============");
-                    break;
-                }
-
-                if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand <= stretchCapacity1) && (currentPersonCapacity1 + nearestCustomer1.personDemand <= personCapacity1) &&
-                    (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= stretchCapacity2) && (currentPersonCapacity2 + nearestCustomer2.personDemand <= personCapacity2) &&
-                    (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= stretchCapacity3) && (currentPersonCapacity3 + nearestCustomer3.personDemand <= personCapacity3)) {
-                    // Case All can use
-
-                    if ((totalDistanceDepot1 + distance1 < totalDistanceDepot2 + distance2) && (totalDistanceDepot1 + distance1 < totalDistanceDepot3 + distance3)) {
+                    } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand <= stretchCapacity1) &&    // Just 1
+                        (currentPersonCapacity1 + nearestCustomer1.personDemand <= personCapacity1) &&
+                        !(currentStretchCapacity2 + nearestCustomer2.stretchDemand <= stretchCapacity2) &&
+                        !(currentPersonCapacity2 + nearestCustomer2.personDemand <= personCapacity2) &&
+                        !(currentStretchCapacity3 + nearestCustomer3.stretchDemand <= stretchCapacity3) &&
+                        !(currentPersonCapacity3 + nearestCustomer3.personDemand <= personCapacity3)) {
                         vehicle1.route.push(nearestCustomer1);
                         currentCustomer1 = nearestCustomer1;
                         currentStretchCapacity1 += nearestCustomer1.stretchDemand;
-                        currentPersonCapacity1 += nearestCustomer2.personDemand;
+                        currentPersonCapacity1 += nearestCustomer1.personDemand;
                         unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer1), 1);
                         totalDistanceDepot1 += distance1; // Update total distance for depot 1
-                    } else if ((totalDistanceDepot2 + distance2 < totalDistanceDepot1 + distance1) && (totalDistanceDepot2 + distance2 < totalDistanceDepot3 + distance3)) {
+
+                    } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand <= stretchCapacity2) &&   // Just 2
+                        (currentPersonCapacity2 + nearestCustomer2.personDemand <= personCapacity2) &&
+                        !(currentStretchCapacity1 + nearestCustomer1.stretchDemand <= stretchCapacity1) &&
+                        !(currentPersonCapacity1 + nearestCustomer1.personDemand <= personCapacity1) &&
+                        !(currentStretchCapacity3 + nearestCustomer3.stretchDemand <= stretchCapacity3) &&
+                        !(currentPersonCapacity3 + nearestCustomer3.personDemand <= personCapacity3)) {
                         vehicle2.route.push(nearestCustomer2);
                         currentCustomer2 = nearestCustomer2;
                         currentStretchCapacity2 += nearestCustomer2.stretchDemand;
                         currentPersonCapacity2 += nearestCustomer2.personDemand;
                         unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer2), 1);
                         totalDistanceDepot2 += distance2; // Update total distance for depot 2
-                    } else if ((totalDistanceDepot3 + distance3 < totalDistanceDepot1 + distance1) && (totalDistanceDepot3 + distance3 < totalDistanceDepot2 + distance1)) {
+
+                    } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand <= stretchCapacity3) &&    // Just 3
+                        (currentPersonCapacity3 + nearestCustomer3.personDemand <= personCapacity3) &&
+                        !(currentStretchCapacity2 + nearestCustomer2.stretchDemand <= stretchCapacity2) &&
+                        !(currentPersonCapacity2 + nearestCustomer2.personDemand <= personCapacity2) &&
+                        !(currentStretchCapacity1 + nearestCustomer1.stretchDemand <= stretchCapacity1) &&
+                        !(currentPersonCapacity1 + nearestCustomer1.personDemand <= personCapacity1)) {
                         vehicle3.route.push(nearestCustomer3);
                         currentCustomer3 = nearestCustomer3;
                         currentStretchCapacity3 += nearestCustomer3.stretchDemand;
                         currentPersonCapacity3 += nearestCustomer3.personDemand;
                         unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer3), 1);
                         totalDistanceDepot3 += distance3; // Update total distance for depot 3
-                    }
-                } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand <= stretchCapacity1) &&    // Just 1
-                    (currentPersonCapacity1 + nearestCustomer1.personDemand <= personCapacity1) &&
-                    !(currentStretchCapacity2 + nearestCustomer2.stretchDemand <= stretchCapacity2) &&
-                    !(currentPersonCapacity2 + nearestCustomer2.personDemand <= personCapacity2) &&
-                    !(currentStretchCapacity3 + nearestCustomer3.stretchDemand <= stretchCapacity3) &&
-                    !(currentPersonCapacity3 + nearestCustomer3.personDemand <= personCapacity3)) {
-                    vehicle1.route.push(nearestCustomer1);
-                    currentCustomer1 = nearestCustomer1;
-                    currentStretchCapacity1 += nearestCustomer1.stretchDemand;
-                    currentPersonCapacity1 += nearestCustomer1.personDemand;
-                    unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer1), 1);
-                    totalDistanceDepot1 += distance1; // Update total distance for depot 1
-                } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand <= stretchCapacity2) &&   // Just 2
-                    (currentPersonCapacity2 + nearestCustomer2.personDemand <= personCapacity2) &&
-                    !(currentStretchCapacity1 + nearestCustomer1.stretchDemand <= stretchCapacity1) &&
-                    !(currentPersonCapacity1 + nearestCustomer1.personDemand <= personCapacity1) &&
-                    !(currentStretchCapacity3 + nearestCustomer3.stretchDemand <= stretchCapacity3) &&
-                    !(currentPersonCapacity3 + nearestCustomer3.personDemand <= personCapacity3)) {
-                    vehicle2.route.push(nearestCustomer2);
-                    currentCustomer2 = nearestCustomer2;
-                    currentStretchCapacity2 += nearestCustomer2.stretchDemand;
-                    currentPersonCapacity2 += nearestCustomer2.personDemand;
-                    unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer2), 1);
-                    totalDistanceDepot2 += distance2; // Update total distance for depot 2
-                } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand <= stretchCapacity3) &&    // Just 3
-                    (currentPersonCapacity3 + nearestCustomer3.personDemand <= personCapacity3) &&
-                    !(currentStretchCapacity2 + nearestCustomer2.stretchDemand <= stretchCapacity2) &&
-                    !(currentPersonCapacity2 + nearestCustomer2.personDemand <= personCapacity2) &&
-                    !(currentStretchCapacity1 + nearestCustomer1.stretchDemand <= stretchCapacity1) &&
-                    !(currentPersonCapacity1 + nearestCustomer1.personDemand <= personCapacity1)) {
-                    vehicle3.route.push(nearestCustomer3);
-                    currentCustomer3 = nearestCustomer3;
-                    currentStretchCapacity3 += nearestCustomer3.stretchDemand;
-                    currentPersonCapacity3 += nearestCustomer3.personDemand;
-                    unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer3), 1);
-                    totalDistanceDepot3 += distance3; // Update total distance for depot 3
 
-                } else if (!(currentStretchCapacity3 + nearestCustomer3.stretchDemand <= stretchCapacity3) &&   // 3 is not
-                    !(currentPersonCapacity3 + nearestCustomer3.personDemand <= personCapacity3)) {
-                    if (totalDistanceDepot1 + distance1 < totalDistanceDepot2 + distance2) {
+                    } else if (!(currentStretchCapacity3 + nearestCustomer3.stretchDemand <= stretchCapacity3) &&   // 3 is not
+                        !(currentPersonCapacity3 + nearestCustomer3.personDemand <= personCapacity3)) {
+                        if (totalDistanceDepot1 + distance1 < totalDistanceDepot2 + distance2) {
+                            vehicle1.route.push(nearestCustomer1);
+                            currentCustomer1 = nearestCustomer1;
+                            currentStretchCapacity1 += nearestCustomer1.stretchDemand;
+                            currentPersonCapacity1 += nearestCustomer1.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer1), 1);
+                            totalDistanceDepot1 += distance1; // Update total distance for depot 1
+                        } else {
+                            vehicle2.route.push(nearestCustomer2);
+                            currentCustomer2 = nearestCustomer2;
+                            currentStretchCapacity2 += nearestCustomer2.stretchDemand;
+                            currentPersonCapacity2 += nearestCustomer2.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer2), 1);
+                            totalDistanceDepot2 += distance2; // Update total distance for depot 2
+                        }
+
+                    } else if (!(currentStretchCapacity2 + nearestCustomer2.stretchDemand <= stretchCapacity2) &&   // 2 is not
+                        !(currentPersonCapacity2 + nearestCustomer2.personDemand <= personCapacity2)) {
+                        if (totalDistanceDepot1 + distance1 < totalDistanceDepot3 + distance3) {
+                            vehicle1.route.push(nearestCustomer1);
+                            currentCustomer1 = nearestCustomer1;
+                            currentStretchCapacity1 += nearestCustomer1.stretchDemand;
+                            currentPersonCapacity1 += nearestCustomer1.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer1), 1);
+                            totalDistanceDepot1 += distance1; // Update total distance for depot 1
+                        } else {
+                            vehicle3.route.push(nearestCustomer3);
+                            currentCustomer3 = nearestCustomer3;
+                            currentStretchCapacity3 += nearestCustomer3.stretchDemand;
+                            currentPersonCapacity3 += nearestCustomer3.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer3), 1);
+                            totalDistanceDepot3 += distance3; // Update total distance for depot 3
+                        }
+
+                    } else if (!(currentStretchCapacity1 + nearestCustomer1.stretchDemand <= stretchCapacity1) &&   // 1 is not
+                        !(currentPersonCapacity1 + nearestCustomer1.personDemand <= personCapacity1)) {
+                        if (totalDistanceDepot2 + distance2 < totalDistanceDepot3 + distance3) {
+                            vehicle2.route.push(nearestCustomer2);
+                            currentCustomer2 = nearestCustomer2;
+                            currentStretchCapacity2 += nearestCustomer2.stretchDemand;
+                            currentPersonCapacity2 += nearestCustomer2.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer2), 1);
+                            totalDistanceDepot2 += distance2; // Update total distance for depot 2
+                        } else {
+                            vehicle3.route.push(nearestCustomer3);
+                            currentCustomer3 = nearestCustomer3;
+                            currentStretchCapacity3 += nearestCustomer3.stretchDemand;
+                            currentPersonCapacity3 += nearestCustomer3.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer3), 1);
+                            totalDistanceDepot3 += distance3; // Update total distance for depot 3
+                        }
+                    }
+
+                } else if ((!CheckBool1) && (CheckBool2) && (CheckBool3)) {  // 1 can not true
+
+                    if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand > stretchCapacity2) &&    // Check 2%3 is over?
+                        (currentPersonCapacity2 + nearestCustomer2.personDemand > personCapacity2) &&
+                        (currentStretchCapacity3 + nearestCustomer3.stretchDemand > stretchCapacity3) &&
+                        (currentPersonCapacity3 + nearestCustomer3.personDemand > personCapacity3)) {
+                        //console.log("=============Over Capavity============");
+                        break;
+                    }
+
+                    if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand <= stretchCapacity2) &&   // Case 2&3 can use
+                        (currentPersonCapacity2 + nearestCustomer2.personDemand <= personCapacity2) &&
+                        (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= stretchCapacity3) &&
+                        (currentPersonCapacity3 + nearestCustomer3.personDemand <= personCapacity3)) {
+
+                        if (totalDistanceDepot2 + distance2 < totalDistanceDepot3 + distance3) {
+                            vehicle2.route.push(nearestCustomer2);
+                            currentCustomer2 = nearestCustomer2;
+                            currentStretchCapacity2 += nearestCustomer2.stretchDemand;
+                            currentPersonCapacity2 += nearestCustomer2.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer2), 1);
+                            totalDistanceDepot2 += distance2; // Update total distance for depot 2
+                        } else if (totalDistanceDepot3 + distance3 < totalDistanceDepot2 + distance2) {
+                            vehicle3.route.push(nearestCustomer3);
+                            currentCustomer3 = nearestCustomer3;
+                            currentStretchCapacity3 += nearestCustomer3.stretchDemand;
+                            currentPersonCapacity3 += nearestCustomer3.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer3), 1);
+                            totalDistanceDepot3 += distance3; // Update total distance for depot 3
+                        }
+
+                    } else if (currentCapacity2 + nearestCustomer2.demand > vehicleCapacity2) {  // capacity 2 exceed...
+                        vehicle3.route.push(nearestCustomer3);
+                        currentCustomer3 = nearestCustomer3;
+                        currentStretchCapacity3 += nearestCustomer3.stretchDemand;
+                        currentPersonCapacity3 += nearestCustomer3.personDemand;
+                        unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer3), 1);
+                        totalDistanceDepot3 += distance3; // Update total distance for depot 3
+                    } else if (currentCapacity3 + nearestCustomer3.demand > vehicleCapacity3) { // capacity 3 exceed...
+                        vehicle2.route.push(nearestCustomer2);
+                        currentCustomer2 = nearestCustomer2;
+                        currentStretchCapacity2 += nearestCustomer2.stretchDemand;
+                        currentPersonCapacity2 += nearestCustomer2.personDemand;
+                        unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer2), 1);
+                        totalDistanceDepot2 += distance2; // Update total distance for depot 2
+                    }
+
+                } else if ((CheckBool1) && (!CheckBool2) && (CheckBool3)) { // 2 can not true
+
+                    if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand > stretchCapacity1) &&    // Check 1 % 3 is over?
+                        (currentPersonCapacity1 + nearestCustomer1.personDemand > personCapacity1) &&
+                        (currentStretchCapacity3 + nearestCustomer3.stretchDemand > stretchCapacity3) &&
+                        (currentPersonCapacity3 + nearestCustomer3.personDemand > personCapacity3)) {
+                        //console.log("=============Over Capavity============");
+                        break;
+                    }
+
+                    if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand <= stretchCapacity1) &&   // Case 1 & 3 can use
+                        (currentPersonCapacity1 + nearestCustomer1.personDemand <= personCapacity1) &&
+                        (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= stretchCapacity3) &&
+                        (currentPersonCapacity3 + nearestCustomer3.personDemand <= personCapacity3)) {
+
+                        if (totalDistanceDepot1 + distance1 < totalDistanceDepot3 + distance3) {
+                            vehicle1.route.push(nearestCustomer1);
+                            currentCustomer1 = nearestCustomer1;
+                            currentStretchCapacity1 += nearestCustomer1.stretchDemand;
+                            currentPersonCapacity1 += nearestCustomer1.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer1), 1);
+                            totalDistanceDepot1 += distance1; // Update total distance for depot 1
+                        } else if (totalDistanceDepot3 + distance3 < totalDistanceDepot1 + distance1) {
+                            vehicle3.route.push(nearestCustomer3);
+                            currentCustomer3 = nearestCustomer3;
+                            currentStretchCapacity3 += nearestCustomer3.stretchDemand;
+                            currentPersonCapacity3 += nearestCustomer3.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer3), 1);
+                            totalDistanceDepot3 += distance3; // Update total distance for depot 3
+                        }
+
+                    } else if (currentCapacity1 + nearestCustomer1.demand > vehicleCapacity1) {  // capacity 1 exceed....
+                        vehicle3.route.push(nearestCustomer3);
+                        currentCustomer3 = nearestCustomer3;
+                        currentStretchCapacity3 += nearestCustomer3.stretchDemand;
+                        currentPersonCapacity3 += nearestCustomer3.personDemand;
+                        unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer3), 1);
+                        totalDistanceDepot3 += distance3; // Update total distance for depot 3
+                    } else if (currentCapacity3 + nearestCustomer3.demand > vehicleCapacity3) { // capacity 3 exceed....
+                        vehicle1.route.push(nearestCustomer1);
+                        currentCustomer1 = nearestCustomer1;
+                        currentStretchCapacity1 += nearestCustomer1.stretchDemand;
+                        currentPersonCapacity1 += nearestCustomer1.personDemand;
+                        unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer1), 1);
+                        totalDistanceDepot1 += distance1; // Update total distance for depot 1
+                    }
+
+                } else if ((CheckBool1) && (CheckBool2) && (!CheckBool3)) {  // 3 can not true
+
+                    if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand > stretchCapacity1) &&    // Check 1 % 2 is over?
+                        (currentPersonCapacity1 + nearestCustomer1.personDemand > personCapacity1) &&
+                        (currentStretchCapacity2 + nearestCustomer2.stretchDemand > stretchCapacity2) &&
+                        (currentPersonCapacity2 + nearestCustomer2.personDemand > personCapacity2)) {
+                        //console.log("=============Over Capavity============");
+                        break;
+                    }
+
+                    if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand <= stretchCapacity1) &&   // Case 1 & 2 can use
+                        (currentPersonCapacity1 + nearestCustomer1.personDemand <= personCapacity1) &&
+                        (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= stretchCapacity2) &&
+                        (currentPersonCapacity2 + nearestCustomer2.personDemand <= personCapacity2)) {
+                        if (totalDistanceDepot1 + distance1 < totalDistanceDepot2 + distance2) {
+                            vehicle1.route.push(nearestCustomer1);
+                            currentCustomer1 = nearestCustomer1;
+                            currentStretchCapacity1 += nearestCustomer1.stretchDemand;
+                            currentPersonCapacity1 += nearestCustomer1.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer1), 1);
+                            totalDistanceDepot1 += distance1; // Update total distance for depot 1
+                        } else if (totalDistanceDepot2 + distance2 < totalDistanceDepot1 + distance1) {
+                            vehicle2.route.push(nearestCustomer2);
+                            currentCustomer2 = nearestCustomer2;
+                            currentStretchCapacity2 += nearestCustomer2.stretchDemand;
+                            currentPersonCapacity2 += nearestCustomer2.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer2), 1);
+                            totalDistanceDepot2 += distance2; // Update total distance for depot 2
+                        }
+
+                    } else if (currentCapacity1 + nearestCustomer1.demand > vehicleCapacity1) { // capacity 1 exceed...
+                        vehicle2.route.push(nearestCustomer2);
+                        currentCustomer2 = nearestCustomer2;
+                        currentStretchCapacity2 += nearestCustomer2.stretchDemand;
+                        currentPersonCapacity2 += nearestCustomer2.personDemand;
+                        unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer2), 1);
+                        totalDistanceDepot2 += distance2; // Update total distance for depot 2
+                    } else if (currentCapacity2 + nearestCustomer2.demand > vehicleCapacity2) { // capacity 2 exceed...
+                        vehicle1.route.push(nearestCustomer1);
+                        currentCustomer1 = nearestCustomer1;
+                        currentStretchCapacity1 += nearestCustomer1.stretchDemand;
+                        currentPersonCapacity1 += nearestCustomer1.personDemand;
+                        unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer1), 1);
+                        totalDistanceDepot1 += distance1; // Update total distance for depot 1
+                    }
+
+                } else if ((CheckBool1) && (!CheckBool2) && (!CheckBool3)) { // Just 1
+
+                    if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand > stretchCapacity1) &&    // Check 1 is over?
+                        (currentPersonCapacity1 + nearestCustomer1.personDemand > personCapacity1)) {
+                        //console.log("=============Over Capavity============");
+                        break;
+                    }
+
+                    if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand <= stretchCapacity1) &&   // Case 1 can use
+                        (currentPersonCapacity1 + nearestCustomer1.personDemand <= personCapacity1)) {
                         vehicle1.route.push(nearestCustomer1);
                         currentCustomer1 = nearestCustomer1;
                         currentStretchCapacity1 += nearestCustomer1.stretchDemand;
@@ -265,33 +475,19 @@ function solveMDVRP(customers, depots) {
                         unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer1), 1);
                         totalDistanceDepot1 += distance1; // Update total distance for depot 1
                     } else {
-                        vehicle2.route.push(nearestCustomer2);
-                        currentCustomer2 = nearestCustomer2;
-                        currentStretchCapacity2 += nearestCustomer2.stretchDemand;
-                        currentPersonCapacity2 += nearestCustomer2.personDemand;
-                        unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer2), 1);
-                        totalDistanceDepot2 += distance2; // Update total distance for depot 2
+                        CheckBool1 = false;     // set checkbool 1 if it out of condition
                     }
-                } else if (!(currentStretchCapacity2 + nearestCustomer2.stretchDemand <= stretchCapacity2) &&   // 2 is not
-                    !(currentPersonCapacity2 + nearestCustomer2.personDemand <= personCapacity2)) {
-                    if (totalDistanceDepot1 + distance1 < totalDistanceDepot3 + distance3) {
-                        vehicle1.route.push(nearestCustomer1);
-                        currentCustomer1 = nearestCustomer1;
-                        currentStretchCapacity1 += nearestCustomer1.stretchDemand;
-                        currentPersonCapacity1 += nearestCustomer1.personDemand;
-                        unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer1), 1);
-                        totalDistanceDepot1 += distance1; // Update total distance for depot 1
-                    } else {
-                        vehicle3.route.push(nearestCustomer3);
-                        currentCustomer3 = nearestCustomer3;
-                        currentStretchCapacity3 += nearestCustomer3.stretchDemand;
-                        currentPersonCapacity3 += nearestCustomer3.personDemand;
-                        unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer3), 1);
-                        totalDistanceDepot3 += distance3; // Update total distance for depot 3
+
+                } else if ((!CheckBool1) && (CheckBool2) && (!CheckBool3)) {   // Just 2
+
+                    if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand > stretchCapacity2) &&    // Check 2 is over?
+                        (currentPersonCapacity2 + nearestCustomer2.personDemand > personCapacity2)) {
+                        //console.log("=============Over Capavity============");
+                        break;
                     }
-                } else if (!(currentStretchCapacity1 + nearestCustomer1.stretchDemand <= stretchCapacity1) &&   // 1 is not
-                    !(currentPersonCapacity1 + nearestCustomer1.personDemand <= personCapacity1)) {
-                    if (totalDistanceDepot2 + distance2 < totalDistanceDepot3 + distance3) {
+
+                    if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand <= stretchCapacity2) &&   // check 2 can use
+                        (currentPersonCapacity2 + nearestCustomer2.personDemand <= personCapacity2)) {
                         vehicle2.route.push(nearestCustomer2);
                         currentCustomer2 = nearestCustomer2;
                         currentStretchCapacity2 += nearestCustomer2.stretchDemand;
@@ -299,20 +495,34 @@ function solveMDVRP(customers, depots) {
                         unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer2), 1);
                         totalDistanceDepot2 += distance2; // Update total distance for depot 2
                     } else {
+                        CheckBool2 = false;     // set checkbool 2 if it out of condition
+                    }
+
+                } else if ((!CheckBool1) && (!CheckBool2) && (CheckBool3)) {   // Just 3
+
+                    if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand > stretchCapacity3) &&    // Check 3 is over?
+                        (currentPersonCapacity3 + nearestCustomer3.personDemand > personCapacity3)) {
+                        //console.log("=============Over Capavity============");
+                        break;
+                    }
+
+                    if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand <= stretchCapacity3) &&
+                        (currentPersonCapacity3 + nearestCustomer3.personDemand <= personCapacity3)) {
                         vehicle3.route.push(nearestCustomer3);
                         currentCustomer3 = nearestCustomer3;
                         currentStretchCapacity3 += nearestCustomer3.stretchDemand;
                         currentPersonCapacity3 += nearestCustomer3.personDemand;
                         unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer3), 1);
                         totalDistanceDepot3 += distance3; // Update total distance for depot 3
+                    } else {
+                        CheckBool3 = false;     // set checkbool 3 if it out of condition
                     }
                 }
             }
-        }
+        } while (CheckBool1 || CheckBool2 || CheckBool3);   // If all false -> == false...
         vehicles1.push(vehicle1);
         vehicles2.push(vehicle2);
         vehicles3.push(vehicle3);
-
     }
     return { vehicles1: vehicles1, vehicles2: vehicles2, vehicles3: vehicles3 };
 }
@@ -336,7 +546,7 @@ function clikRunVrp() {
         let inputIsValid = true;
 
         for (const CustIn of CustInput) {
-            if ((CustIn.lat == "") && (CustIn.lon == "") && (CustIn.stretchDemand == "") && (CustIn.personDemand == "")){
+            if ((CustIn.lat == "") && (CustIn.lon == "") && (CustIn.stretchDemand == "") && (CustIn.personDemand == "")) {
                 alert(`Please Enter Data ... id : ${CustIn.id}`);
                 inputIsValid = false;
                 break;
@@ -364,7 +574,7 @@ function clikRunVrp() {
                 break;
             }
         }
-        if (inputIsValid){
+        if (inputIsValid) {
             break;
         }
     } while (!inputIsValid);
