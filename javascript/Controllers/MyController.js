@@ -63,6 +63,20 @@ function cal(){
 	};
 }
 
+function delGraphics() {
+	newLayer.clear();
+
+	let distanceElem = document.getElementById("distance-result"),
+        wing1Round = document.getElementById("Depot1-round"),
+        wing21Round = document.getElementById("Depot2-round"),
+        wing23Round = document.getElementById("Depot3-round")
+
+		distanceElem.innerHTML = "";
+		wing1Round.innerHTML = "";
+		wing21Round.innerHTML = "";
+		wing23Round.innerHTML = "";
+}
+
 function searchMyForm(){
 	alert($("#startdate").val());
 	var fillColor = $("#fillColor").val();
@@ -225,3 +239,4 @@ function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2){
 function deg2rad(deg){
 	return deg * (Math.PI/180);
 }
+
