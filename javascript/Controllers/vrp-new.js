@@ -604,14 +604,36 @@ function clikRunVrp() {
     const { totalArray: totalDistanceArray1, totalDistance: totalDistance1 } = TotalDIstanceAllRoute(depots[0], customersInRoutes1);
     const { totalArray: totalDistanceArray2, totalDistance: totalDistance2 } = TotalDIstanceAllRoute(depots[1], customersInRoutes2);
     const { totalArray: totalDistanceArray3, totalDistance: totalDistance3 } = TotalDIstanceAllRoute(depots[2], customersInRoutes3);
-    console.log("Total Distance Depot 1 : ", totalDistance1, "KM.");
-    console.log("Total Distance Depot 2 : ", totalDistance2, "KM.");
-    console.log("Total Distance Depot 3 : ", totalDistance3, "KM.");
     //console.log("Total Distance of All route : ",totalDistance1 + totalDistance2 + totalDistance3, "KM.");
 
     const Depot1Round = getRoundDepot(customersInRoutes1);
     const Depot2Round = getRoundDepot(customersInRoutes2);
     const Depot3Round = getRoundDepot(customersInRoutes3);
+
+    const route1 = generateRoutes(customersInRoutes1,"W1");
+    const route2 = generateRoutes(customersInRoutes2,"W21");
+    const route3 = generateRoutes(customersInRoutes3,"W23");
+
+    const Time1 = generateTimeMin(totalDistanceArray1);
+    const Time2 = generateTimeMin(totalDistanceArray2);
+    const Time3 = generateTimeMin(totalDistanceArray3);
+
+    const totalStretch1 = generateTotalStretch(customersInRoutes1);
+    const totalStretch2 = generateTotalStretch(customersInRoutes2);
+    const totalStretch3 = generateTotalStretch(customersInRoutes3);
+
+    const totalPerson1 = generateTotalPerson(customersInRoutes1);
+    const totalPerson2 = generateTotalPerson(customersInRoutes2);
+    const totalPerson3 = generateTotalPerson(customersInRoutes3);
+
+    const result1 = getDictResult(route1,Time1,totalPerson1,totalStretch1,totalDistanceArray1);
+    console.log("Result 1 : ", result1);
+    const result2 = getDictResult(route2,Time2,totalPerson2,totalStretch2,totalDistanceArray2);
+    console.log("Result 2 : ", result2);
+    const result3 = getDictResult(route3,Time3,totalPerson3,totalStretch3,totalDistanceArray3);
+    console.log("Result 3 : ", result3);
+
+
 
     drawAllPoint();
     drawAllNamePoint();
@@ -835,4 +857,94 @@ function getRoundDepot(CustomerInRoute){
         }
     }
     return NumberOfRound;
+}
+
+function generateRoutes(customersInRoutes, startLocation) {
+    let routes = [];
+  
+    for (const route of customersInRoutes) {
+      const routeSegments = [];
+  
+      if (route.length > 0) {
+        routeSegments.push(startLocation);
+        for (const customer of route) {
+          routeSegments.push(customer);
+        }
+      } else {
+        continue;
+      }
+      routeSegments.push(startLocation);
+  
+      // Join the route segments to create the full route for this route
+      const fullRoute = routeSegments.join(' -> ');
+      routes.push(fullRoute);
+    }
+    return routes;
+  }
+
+function generateTimeMin(customerDistanceArray){
+    let arrayTime = [];
+    for ( const dist of customerDistanceArray){
+        let time = (dist*60)/224.24;   // get time minutes
+        arrayTime.push(time);
+    }
+    return arrayTime;
+}
+
+function generateTotalStretch(customersInRoutes){
+    let stretch = [];
+    for ( const cust of customersInRoutes){
+        let totalStretch = 0;
+        if ( cust != ''){
+            for (const inCust of cust){
+                for (const customer of customers) {
+                    const id = customer.id;
+                    if (id == inCust){
+                        totalStretch += customer.stretchDemand;
+                    }
+                }
+            }
+        } else {
+            continue;
+        }
+        stretch.push(totalStretch);
+    }
+    return stretch;
+}
+
+function generateTotalPerson(customersInRoutes){
+    let person = [];
+    for ( const cust of customersInRoutes){
+        let totalPerson = 0;
+        if ( cust != ''){
+            for (const inCust of cust){
+                for (const customer of customers) {
+                    const id = customer.id;
+                    if (id == inCust){
+                        totalPerson += customer.personDemand;
+                    }
+                }
+            }
+        } else {
+            continue;
+        }
+        person.push(totalPerson);
+    }
+    return person;
+}
+
+function getDictResult(route, Time, totalPerson, totalStretch,totalDistanceArray){
+    let results = [];
+
+    for ( let i = 0; i < route.length; i++){
+        let result = {
+            route: route[i],
+            person: totalPerson[i],
+            stretch: totalStretch[i],
+            time: Time[i],
+            distance: totalDistanceArray[i]
+        };
+        results.push(result);
+    }
+    return results;
 }
