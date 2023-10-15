@@ -66,12 +66,18 @@ function cal(){
 function delGraphics() {
 	newLayer.clear();
 
-	let distanceElem = document.getElementById("distance-result"),
+	let AlldistanceElem = document.getElementById("Alldistance-result"),
+		distance1Elem = document.getElementById("distance1-result"),
+		distance2Elem = document.getElementById("distance2-result"),
+		distance3Elem = document.getElementById("distance3-result"),
         wing1Round = document.getElementById("Depot1-round"),
         wing21Round = document.getElementById("Depot2-round"),
         wing23Round = document.getElementById("Depot3-round")
 
-		distanceElem.innerHTML = "";
+		AlldistanceElem.innerHTML = "";
+		distance1Elem.innerHTML = "";
+		distance2Elem.innerHTML = "";
+		distance3Elem.innerHTML = "";
 		wing1Round.innerHTML = "";
 		wing21Round.innerHTML = "";
 		wing23Round.innerHTML = "";

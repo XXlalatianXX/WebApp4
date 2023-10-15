@@ -604,6 +604,7 @@ function clikRunVrp() {
     const { totalArray: totalDistanceArray1, totalDistance: totalDistance1 } = TotalDIstanceAllRoute(depots[0], customersInRoutes1);
     const { totalArray: totalDistanceArray2, totalDistance: totalDistance2 } = TotalDIstanceAllRoute(depots[1], customersInRoutes2);
     const { totalArray: totalDistanceArray3, totalDistance: totalDistance3 } = TotalDIstanceAllRoute(depots[2], customersInRoutes3);
+    const totalDistanceAll = totalDistance1 + totalDistance2 + totalDistance3;
     //console.log("Total Distance of All route : ",totalDistance1 + totalDistance2 + totalDistance3, "KM.");
 
     const Depot1Round = getRoundDepot(customersInRoutes1);
@@ -643,13 +644,19 @@ function clikRunVrp() {
 
     // Block to display Results
     var resultDiv = document.getElementById("results"),
-        distanceElem = document.getElementById("distance-result"),
+        AlldistanceElem = document.getElementById("Alldistance-result"),
+        distance1Elem = document.getElementById("distance1-result"),
+        distance2Elem = document.getElementById("distance2-result"),
+        distance3Elem = document.getElementById("distance3-result"),
         wing1Round = document.getElementById("Depot1-round"),
         wing21Round = document.getElementById("Depot2-round"),
         wing23Round = document.getElementById("Depot3-round")
 
     resultDiv.style.display = "block";  // set to can visibility
-    distanceElem.innerHTML = totalDistance1 + totalDistance2 + totalDistance3;
+    AlldistanceElem.innerHTML = totalDistanceAll;
+    distance1Elem.innerHTML = totalDistance1;
+    distance2Elem.innerHTML = totalDistance2;
+    distance3Elem.innerHTML = totalDistance3;
     wing1Round.innerHTML = Depot1Round;
     wing21Round.innerHTML = Depot2Round;
     wing23Round.innerHTML = Depot3Round;

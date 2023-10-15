@@ -119,8 +119,11 @@ $application = "cs_gis_dev_framework";
 												<tr>
 													<td colspan = "8">
 														<div id="results" style="display : none;">
-															<h3>Result</h3>
-															<p>Total Distance : <span id="distance-result" style="display: inline; color: yellow"></span> km.</p>
+															<h3>Distance</h3>
+															<p>Total All Distance : <span id="Alldistance-result" style="display: inline; color: yellow"></span> km.</p>
+															<p>Total Distance 1 : <span id="distance1-result" style="display: inline; color: yellow"></span> km.</p>
+															<p>Total Distance 2 : <span id="distance2-result" style="display: inline; color: yellow"></span> km.</p>
+															<p>Total Distance 3 : <span id="distance3-result" style="display: inline; color: yellow"></span> km.</p>
 															<p style="visibility:hidden" >///</p>
 															<h3>Number of Rounds</h3>
 															<p>Wing 1 : <span id="Depot1-round" style="display: inline; color: yellow"></span></p>
