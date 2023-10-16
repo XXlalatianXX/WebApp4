@@ -93,7 +93,10 @@ $application = "cs_gis_dev_framework";
 													<input type="text" name="stretchers" placeholder="เปลสนาม"class="form-control num_stretchers">
 													</td>
 													<td>
-													<button type="button" name="add" id="add" class="btn btn-success">Add More</button>        
+													<button type="button" name="add" id="add" class="btn btn-success">Add More</button>       
+													</td>
+													<td>
+													<button type="button" name="Pri" id="Pri" class="btn btn-info">P</button> 
 													</td>
 												</tr>
 												<tr>
@@ -545,6 +548,14 @@ $application = "cs_gis_dev_framework";
 		let botton_id = $(this).attr('id');
 		$('.row'+botton_id+'').remove();
 	});
+	$("#Pri").on('click',function(){
+		$('#Pri').prop('disabled', true); 
+		$("#Pri").css("background-color", "Red");
+	});
+	$('#Pri').on('dblclick', function () { 
+            $('#Pri').prop('disabled', false); 
+			$("#Pri").css("background-color", "cyan");
+        }); 
   });
  
  </script>
