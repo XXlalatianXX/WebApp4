@@ -551,10 +551,14 @@ $application = "cs_gis_dev_framework";
 	$("#Pri").on('click',function(){
 		$('#Pri').prop('disabled', true); 
 		$("#Pri").css("background-color", "Red");
+		PriorityEvent =	true;
+		console.log("PriorityEvent : ", PriorityEvent);
 	});
 	$('#Pri').on('dblclick', function () { 
             $('#Pri').prop('disabled', false); 
 			$("#Pri").css("background-color", "cyan");
+			PriorityEvent =	false;
+			console.log("PriorityEvent : ", PriorityEvent);
         }); 
   });
  

@@ -1,3 +1,5 @@
+var PriorityEvent = false;
+
 class Customer {
     constructor(id, lat, lon, personDemand, stretchDemand) {
         this.id = id;
