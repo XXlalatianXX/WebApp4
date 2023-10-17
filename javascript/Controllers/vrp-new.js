@@ -59,6 +59,20 @@ function findNearestCustomer(currentCustomer, unassignedCustomers) {
     return { nearestCustomer: nearestCustomer, distance: minDistance };
 };
 
+function findNearestDepot (priorityCustomer, Depot){
+    let nearestDepot = null;
+    let minDistance = Infinity;
+
+    for (const dep of Depot){
+        const distance = calculateDistance(priorityCustomer,dep);
+        if (distance < minDistance){
+            nearestDepot = dep;
+            minDistance = distance;
+        }
+    }
+    return {nearestDepot: nearestDepot, distance: minDistance};
+}
+
 function solveMDVRP(customers, depots) {
     const depot1 = depots[0];
     const depot2 = depots[1];
@@ -77,6 +91,8 @@ function solveMDVRP(customers, depots) {
     const vehicles2 = [];
     const vehicles3 = [];
     const unassignedCustomers = [...customers];
+
+    const priorityDep = [];
 
     while (unassignedCustomers.length > 0) {
 
@@ -105,6 +121,30 @@ function solveMDVRP(customers, depots) {
         let CheckBool3 = true;
 
         do {
+
+            if (PriorityEvent){
+                var priorityCustomer = unassignedCustomers[0];
+
+                const {nearestDepot: nearestDepotPri, distance: distancePri} = findNearestDepot(priorityCustomer, depots);
+                priorityDep.push(nearestDepotPri.id);
+                unassignedCustomers.splice(unassignedCustomers[0],1);   // remove the first member of array
+
+                for ( let x of priorityDep){
+                    if ( x == 1 ){
+                        CheckBool1 = false;
+                        console.log("Use Depot 1");
+                    }else if ( x == 2 ){
+                        CheckBool2 = false;
+                        console.log("Use Depot 2");
+                    }else if ( x == 3 ){
+                        CheckBool3 = false;
+                        console.log("Use Depot 3");
+                    }
+                }
+                PriorityEvent = false;
+                console.log("Priority Case Successfully !!");
+            }
+
             const { nearestCustomer: nearestCustomer1, distance: distance1 } = findNearestCustomer(currentCustomer1, unassignedCustomers);
             const { nearestCustomer: nearestCustomer2, distance: distance2 } = findNearestCustomer(currentCustomer2, unassignedCustomers);
             const { nearestCustomer: nearestCustomer3, distance: distance3 } = findNearestCustomer(currentCustomer3, unassignedCustomers);
@@ -526,7 +566,7 @@ function solveMDVRP(customers, depots) {
         vehicles2.push(vehicle2);
         vehicles3.push(vehicle3);
     }
-    return { vehicles1: vehicles1, vehicles2: vehicles2, vehicles3: vehicles3 };
+    return { vehicles1: vehicles1, vehicles2: vehicles2, vehicles3: vehicles3 , priorityDep: priorityDep};
 }
 
 const depots = [
@@ -587,7 +627,7 @@ function clikRunVrp() {
     // vehicle1 is from warehouse 1
     // vehicle2 is from warehouse 2
     // vehicle3 is from warehouse 3
-    const { vehicles1: vehicle1, vehicles2: vehicle2, vehicles3: vehicle3 } = solveMDVRP(customers, depots);
+    const { vehicles1: vehicle1, vehicles2: vehicle2, vehicles3: vehicle3 , priorityDep: priorityDep} = solveMDVRP(customers, depots);
 
     const customersInRoutes1 = vehicle1.map((vehicle) =>    //const customersInRoutes1 = [[2, 1, 3], [4], []];
         vehicle.route.map((customer) => customer.id)
@@ -602,16 +642,85 @@ function clikRunVrp() {
     console.log("Route from depot 1", customersInRoutes1);
     console.log("Route from depot 2", customersInRoutes2);
     console.log("Route from depot 3", customersInRoutes3);
+    console.log("Priority Depot : ", priorityDep);  // Check how it's come
 
-    const { totalArray: totalDistanceArray1, totalDistance: totalDistance1 } = TotalDIstanceAllRoute(depots[0], customersInRoutes1);
-    const { totalArray: totalDistanceArray2, totalDistance: totalDistance2 } = TotalDIstanceAllRoute(depots[1], customersInRoutes2);
-    const { totalArray: totalDistanceArray3, totalDistance: totalDistance3 } = TotalDIstanceAllRoute(depots[2], customersInRoutes3);
-    const totalDistanceAll = totalDistance1 + totalDistance2 + totalDistance3;
+    var { totalArray: totalDistanceArray1, totalDistance: totalDistance1 } = TotalDIstanceAllRoute(depots[0], customersInRoutes1);
+    var { totalArray: totalDistanceArray2, totalDistance: totalDistance2 } = TotalDIstanceAllRoute(depots[1], customersInRoutes2);
+    var { totalArray: totalDistanceArray3, totalDistance: totalDistance3 } = TotalDIstanceAllRoute(depots[2], customersInRoutes3);
     //console.log("Total Distance of All route : ",totalDistance1 + totalDistance2 + totalDistance3, "KM.");
 
-    const Depot1Round = getRoundDepot(customersInRoutes1);
-    const Depot2Round = getRoundDepot(customersInRoutes2);
-    const Depot3Round = getRoundDepot(customersInRoutes3);
+    // Case to check that PriorityDep was used ...
+    if ( priorityDep == "" ){   // case don't be used
+        console.log("Priority do not use...");
+        var totalDistanceAll = totalDistance1 + totalDistance2 + totalDistance3;
+        console.log("Total Distance of All route : ", totalDistanceAll , "KM.");
+
+        var Depot1Round = getRoundDepot(customersInRoutes1);
+        var Depot2Round = getRoundDepot(customersInRoutes2);
+        var Depot3Round = getRoundDepot(customersInRoutes3);
+
+    } else {
+        // Priority was used
+        console.log(" ============= Priority Case was used ... ==============");
+        const totalDistancePri = calculateDistance(depots[priorityDep[0] - 1], customers[0]) * 2;   // go and back
+        const totalDistanceArrayPri = [totalDistancePri];
+
+        console.log("Total Distance Priority : ", totalDistancePri, "KM.");
+        console.log("Total Distance Array Priority : ", totalDistanceArrayPri);
+
+        /*
+        var totalDistanceAll = totalDistance1 + totalDistance2 + totalDistance3 + totalDistancePri;
+        console.log("Total Distance of All route : ", totalDistanceAll , "KM.");  // Show all distance
+        */
+
+        // Block to plus round of depot if priority was used ...
+        if (priorityDep[0] == 1) {
+            var Depot1Round = getRoundDepot(customersInRoutes1) + 1;
+            var Depot2Round = getRoundDepot(customersInRoutes2);
+            var Depot3Round = getRoundDepot(customersInRoutes3);
+            totalDistance1 += totalDistancePri;
+            var totalDistanceAll = totalDistance1 + totalDistance2 + totalDistance3;
+        } else if (priorityDep[0] == 2) {
+            var Depot1Round = getRoundDepot(customersInRoutes1);
+            var Depot2Round = getRoundDepot(customersInRoutes2) + 1;
+            var Depot3Round = getRoundDepot(customersInRoutes3);
+            totalDistance2 += totalDistancePri;
+            var totalDistanceAll = totalDistance1 + totalDistance2 + totalDistance3;
+        } else if (priorityDep[0] == 3) {
+            var Depot1Round = getRoundDepot(customersInRoutes1);
+            var Depot2Round = getRoundDepot(customersInRoutes2);
+            var Depot3Round = getRoundDepot(customersInRoutes3) + 1;
+            totalDistance3 += totalDistancePri;
+            var totalDistanceAll = totalDistance1 + totalDistance2 + totalDistance3;
+        }
+
+        var PriorityRound = getRoundDepot(priorityDep);
+        console.log("PriorityRound : ", PriorityRound);
+
+        var PriRoute = generateRoutesPri(priorityDep);
+        console.log("PriRoute : ", PriRoute);
+
+        var TimePri = generateTimeMin(totalDistanceArrayPri);
+        console.log("TimePri : ", TimePri);
+
+        var totalStretchPri = [customers[0].stretchDemand];
+        console.log("totalStretchPri : ", totalStretchPri);
+
+        var totalPersonPri = [customers[0].personDemand];
+        console.log("TotalPersonPri : ", totalPersonPri);
+
+        var resultPri = getDictResult(PriRoute, TimePri, totalPersonPri, totalStretchPri, totalDistanceArrayPri);
+        console.log("Result Priority : ", resultPri);
+
+
+        const outlineWidth = 3.0;
+        const coordinatesPri = [[[depots[priorityDep[0] - 1].lon, depots[priorityDep[0] - 1].lat] ,[customers[0].lon, customers[0].lat]]];
+        drawGraphicPolyLine(newLayer,coordinatesPri,"rgba(255,0,0,0.8)",outlineWidth)
+
+        console.log(" ========================================");
+    }
+
+    
 
     const route1 = generateRoutes(customersInRoutes1,"W1");
     const route2 = generateRoutes(customersInRoutes2,"W21");
@@ -890,6 +999,36 @@ function generateRoutes(customersInRoutes, startLocation) {
     }
     return routes;
   }
+
+  function generateRoutesPri(DepotInRoute){
+    let routes = [];
+    let firstCust = '1';
+    let dep = null;
+
+    if ( DepotInRoute[0] == 1 ){
+        dep = "W1";
+    }else if (DepotInRoute[0] == 2){
+        dep = "W21";
+    }else if (DepotInRoute[0] == 3){
+        dep = "W23";
+    }
+
+    for ( const route in DepotInRoute){
+        let routesSegments = [];
+        if (route.length > 0){
+            routesSegments.push(dep)
+            routesSegments.push(firstCust)
+        } else {
+            continue;
+        }
+        routesSegments.push(dep);
+
+        // Join the route segments to create the full route for this route
+        const fullRoute = routesSegments.join(' -> ');
+        routes.push(fullRoute);
+    }
+    return routes;
+}
 
 function generateTimeMin(customerDistanceArray){
     let arrayTime = [];
