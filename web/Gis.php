@@ -110,7 +110,7 @@ $application = "cs_gis_dev_framework";
 												</tr>
 												<tr>
 													<td colspan = "5" align="center">
-														<div style="visibility:hidden" >///</div>
+														<div style="visibility:hidden" >---</div>
 													</td>
 												 </tr>
 												<tr>
@@ -132,10 +132,13 @@ $application = "cs_gis_dev_framework";
 															<p>Wing 1 : <span id="Depot1-round" style="display: inline; color: yellow"></span></p>
 															<p>Wing 21 : <span id="Depot2-round" style="display: inline; color: yellow"></span></p>
 															<p>Wing 23 : <span id="Depot3-round" style="display: inline; color: yellow"></span></p>
+															<p style="visibility:hidden" >///</p>
+															<h3>Routes</h3>
+															<ol id="routes-priority"></ol>
+															<ol id="routes-w"></ol>
 														</div>
 													</td>			
 												</tr>
-
 											</table>										
 										</div>
 										<div id="acasSearchPagesDiv"></div>

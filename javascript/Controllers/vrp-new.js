@@ -753,6 +753,8 @@ function clikRunVrp() {
     drawRouteLine(depots[1], customersInRoutes2);
     drawRouteLine(depots[2], customersInRoutes3);
 
+
+
     // Block to display Results
     var resultDiv = document.getElementById("results"),
         AlldistanceElem = document.getElementById("Alldistance-result"),
@@ -761,16 +763,105 @@ function clikRunVrp() {
         distance3Elem = document.getElementById("distance3-result"),
         wing1Round = document.getElementById("Depot1-round"),
         wing21Round = document.getElementById("Depot2-round"),
-        wing23Round = document.getElementById("Depot3-round")
+        wing23Round = document.getElementById("Depot3-round"),
+        routesW = document.getElementById("routes-w"),
+        routesPri = document.getElementById("routes-priority")
 
     resultDiv.style.display = "block";  // set to can visibility
-    AlldistanceElem.innerHTML = totalDistanceAll;
-    distance1Elem.innerHTML = totalDistance1;
-    distance2Elem.innerHTML = totalDistance2;
-    distance3Elem.innerHTML = totalDistance3;
+    AlldistanceElem.innerHTML = totalDistanceAll.toFixed(4);
+    distance1Elem.innerHTML = totalDistance1.toFixed(4);
+    distance2Elem.innerHTML = totalDistance2.toFixed(4);
+    distance3Elem.innerHTML = totalDistance3.toFixed(4);
     wing1Round.innerHTML = Depot1Round;
     wing21Round.innerHTML = Depot2Round;
     wing23Round.innerHTML = Depot3Round;
+
+    var IdOfli = 1
+
+    if ( resultPri != null ){
+        for ( let pri of resultPri ){
+            var li = document.createElement("li");
+            let variableRoutePri = Object.values(pri)[0];
+            let variablePersonPri = Object.values(pri)[1];
+            let variableStretchPri = Object.values(pri)[2];
+            let variableTimePri = Object.values(pri)[3];
+            let variableDistPri = Object.values(pri)[4];
+            let route = "Routes : " + variableRoutePri;
+            let person =  "Person : " + variablePersonPri;
+            let stretch = "Stretch : " + variableStretchPri;
+            let Time = "Time : " + variableTimePri;
+            let Distance = "Distance : " + variableDistPri.toFixed(4);
+
+            li.innerHTML += route + "<br>" +person + "     " +stretch + "<br>" + Time + " Minutes" +"<br>" + Distance + " KM.";
+            li.id = IdOfli;
+            IdOfli += 1;
+            routesPri.appendChild(li);
+        }
+    }
+
+    if ( result1 != null ){
+        for ( let i of result1){
+            var li = document.createElement("li");
+            let variableRouteW1 = Object.values(i)[0];
+            let variablePersonW1 = Object.values(i)[1];
+            let variableStretchW1 = Object.values(i)[2];
+            let variableTimeW1 = Object.values(i)[3];
+            let variableDistW1 = Object.values(i)[4];
+            let route = "Routes : " + variableRouteW1;
+            let person =  "Person : " + variablePersonW1;
+            let stretch = "Stretch : " + variableStretchW1;
+            let Time = "Time : " + variableTimeW1;
+            let Distance = "Distance : " + variableDistW1.toFixed(4);
+
+            li.innerHTML += route + "<br>" +person + "     " +stretch + "<br>" + Time + " Minutes" +"<br>" + Distance + " KM.";
+            li.id = IdOfli;
+            IdOfli += 1;
+            routesW.appendChild(li);
+        }
+    }
+
+    if ( result2 != null ){
+        for (let j of result2){
+            var li = document.createElement("li");
+            let variableRouteW2 = Object.values(j)[0];
+            let variablePersonW2 = Object.values(j)[1];
+            let variableStretchW2 = Object.values(j)[2];
+            let variableTimeW2 = Object.values(j)[3];
+            let variableDistW2 = Object.values(j)[4];
+            let route = "Routes : " + variableRouteW2;
+            let person =  "Person : " + variablePersonW2;
+            let stretch = "Stretch : " + variableStretchW2;
+            let Time = "Time : " + variableTimeW2;
+            let Distance = "Distance : " + variableDistW2.toFixed(4);
+
+            li.innerHTML += route + "<br>" +person + "     " +stretch + "<br>" + Time + " Minutes" +"<br>" + Distance + " KM.";
+            li.id = IdOfli;
+            IdOfli += 1;
+            routesW.appendChild(li);
+        }
+    }
+
+    if ( result3 != null){
+        for (let k of result3){
+            var li = document.createElement("li");
+            let variableRouteW2 = Object.values(k)[0];
+            let variablePersonW2 = Object.values(k)[1];
+            let variableStretchW2 = Object.values(k)[2];
+            let variableTimeW2 = Object.values(k)[3];
+            let variableDistW2 = Object.values(k)[4];
+            let route = "Routes : " + variableRouteW2;
+            let person =  "Person : " + variablePersonW2;
+            let stretch = "Stretch : " + variableStretchW2;
+            let Time = "Time : " + variableTimeW2;
+            let Distance = "Distance : " + variableDistW2.toFixed(4);
+
+            li.innerHTML += route + "<br>" +person + "     " +stretch + "<br>" + Time + " Minutes" +"<br>" + Distance + " KM.";
+            li.id = IdOfli;
+            IdOfli += 1;
+            routesW.appendChild(li);
+        }
+    }
+
 }
 
 function UnlimitedInput() {
@@ -1034,7 +1125,7 @@ function generateTimeMin(customerDistanceArray){
     let arrayTime = [];
     for ( const dist of customerDistanceArray){
         let time = (dist*60)/224.24;   // get time minutes
-        arrayTime.push(time);
+        arrayTime.push(time.toFixed(2));
     }
     return arrayTime;
 }
