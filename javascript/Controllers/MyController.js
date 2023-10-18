@@ -66,13 +66,19 @@ function cal(){
 function delGraphics() {
 	newLayer.clear();
 
+	IdOfli = 0;	// reset id of li block
+
+	
+
 	let AlldistanceElem = document.getElementById("Alldistance-result"),
 		distance1Elem = document.getElementById("distance1-result"),
 		distance2Elem = document.getElementById("distance2-result"),
 		distance3Elem = document.getElementById("distance3-result"),
         wing1Round = document.getElementById("Depot1-round"),
         wing21Round = document.getElementById("Depot2-round"),
-        wing23Round = document.getElementById("Depot3-round")
+        wing23Round = document.getElementById("Depot3-round"),
+		routesW = document.getElementById("routes-w"),
+        routesPri = document.getElementById("routes-priority")
 
 		AlldistanceElem.innerHTML = "";
 		distance1Elem.innerHTML = "";
@@ -81,6 +87,15 @@ function delGraphics() {
 		wing1Round.innerHTML = "";
 		wing21Round.innerHTML = "";
 		wing23Round.innerHTML = "";
+	
+	// Block to remove child of lo
+	while (routesW.hasChildNodes()) {
+		routesW.removeChild(routesW.firstChild);
+	}
+
+	while (routesPri.hasChildNodes()) {
+		routesPri.removeChild(routesPri.firstChild);
+	}
 }
 
 function searchMyForm(){

@@ -793,8 +793,7 @@ function clikRunVrp() {
             let Distance = "Distance : " + variableDistPri.toFixed(4);
 
             li.innerHTML += route + "<br>" +person + "     " +stretch + "<br>" + Time + " Minutes" +"<br>" + Distance + " KM.";
-            li.id = IdOfli;
-            IdOfli += 1;
+            li.id = 1;
             routesPri.appendChild(li);
         }
     }
@@ -861,7 +860,6 @@ function clikRunVrp() {
             routesW.appendChild(li);
         }
     }
-
 }
 
 function UnlimitedInput() {
