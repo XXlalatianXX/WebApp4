@@ -588,7 +588,11 @@ function clikRunVrp() {
         let inputIsValid = true;
 
         for (const CustIn of CustInput) {
-            if ((CustIn.lat == "") && (CustIn.lon == "") && (CustIn.stretchDemand == "") && (CustIn.personDemand == "")) {
+            if ((CustIn.lat == "") && (CustIn.lon == "") && (CustIn.stretchDemand == 0) && (CustIn.personDemand == 0)) {
+                alert(`Please Enter Data ... id : ${CustIn.id}`);
+                inputIsValid = false;
+                break;
+            } else if (((CustIn.lat != "") || (CustIn.lon != "")) && ((CustIn.stretchDemand == 0) || (CustIn.personDemand == 0))){
                 alert(`Please Enter Data ... id : ${CustIn.id}`);
                 inputIsValid = false;
                 break;
@@ -603,7 +607,7 @@ function clikRunVrp() {
                 (CustIn.personDemand <= 16)) {
                 continue;
             } else if ((CustIn.stretchDemand >= 6) && (CustIn.stretchDemand <= 8) &&
-                (CustIn.personDemand <= 10)) {
+                (CustIn.pSSersonDemand <= 10)) {
                 continue;
             } else if ((CustIn.stretchDemand >= 9) && (CustIn.stretchDemand <= 11) &&
                 (CustIn.personDemand <= 4)) {
