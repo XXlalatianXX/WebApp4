@@ -3,7 +3,7 @@ session_start();
 include_once('web/inc_connection.php');
 //Configuration Site
 $_SESSION['Title'] = "CS-GIS";
-$_SESSION['Fullname_Site'] = "CS GIS DEV FRAMEWROK";
+$_SESSION['Fullname_Site'] = "RTAF VRP";
 
 if(isset($_POST['submit']))
 {
@@ -86,7 +86,7 @@ background-image: linear-gradient(to top right, #2d2d2d 50%, #242424 50%);
 <center>
 <div class="loginbox" style="background-image:url(web/images/bg_login.png);">
   <p style="padding-top: 25px; "> 
-		<img style="width:200px;" src="web/images/cs_bg_login.png" />
+		<img style="width:200px;" src="web/images/rtaf.png" />
   </p>
   <p style="font-weight: bold"> <?php echo $_SESSION['Fullname_Site'];?>  </p>
   <p>
