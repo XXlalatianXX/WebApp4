@@ -579,6 +579,7 @@ let customers = [];
 
 function clikRunVrp() {
 
+
     // Block to check Input is correct Pattern ...
     let CustInput = [];
     do {
@@ -864,6 +865,8 @@ function clikRunVrp() {
             routesW.appendChild(li);
         }
     }
+
+    $('#mainSearch').hide();
 }
 
 function UnlimitedInput() {
