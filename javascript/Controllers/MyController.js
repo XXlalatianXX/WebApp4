@@ -66,6 +66,11 @@ function cal(){
 function delGraphics() {
 	newLayer.clear();
 
+	$('#mainSearch').show();
+	PriorityEvent = false;
+	$('#Pri').prop('disabled', false); 
+	$("#Pri").css("background-color", "cyan");
+
 	IdOfli = 0;	// reset id of li block
 
 	
