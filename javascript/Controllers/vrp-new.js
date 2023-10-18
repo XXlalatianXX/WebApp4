@@ -768,10 +768,10 @@ function clikRunVrp() {
         routesPri = document.getElementById("routes-priority")
 
     resultDiv.style.display = "block";  // set to can visibility
-    AlldistanceElem.innerHTML = totalDistanceAll.toFixed(4);
-    distance1Elem.innerHTML = totalDistance1.toFixed(4);
-    distance2Elem.innerHTML = totalDistance2.toFixed(4);
-    distance3Elem.innerHTML = totalDistance3.toFixed(4);
+    AlldistanceElem.innerHTML = totalDistanceAll.toFixed(2);
+    distance1Elem.innerHTML = totalDistance1.toFixed(2);
+    distance2Elem.innerHTML = totalDistance2.toFixed(2);
+    distance3Elem.innerHTML = totalDistance3.toFixed(2);
     wing1Round.innerHTML = Depot1Round;
     wing21Round.innerHTML = Depot2Round;
     wing23Round.innerHTML = Depot3Round;
@@ -790,7 +790,7 @@ function clikRunVrp() {
             let person =  "Person : " + variablePersonPri;
             let stretch = "Stretch : " + variableStretchPri;
             let Time = "Time : " + variableTimePri;
-            let Distance = "Distance : " + variableDistPri.toFixed(4);
+            let Distance = "Distance : " + variableDistPri.toFixed(2);
 
             li.innerHTML += route + "<br>" +person + "     " +stretch + "<br>" + Time + " Minutes" +"<br>" + Distance + " KM.";
             li.id = 1;
@@ -810,7 +810,7 @@ function clikRunVrp() {
             let person =  "Person : " + variablePersonW1;
             let stretch = "Stretch : " + variableStretchW1;
             let Time = "Time : " + variableTimeW1;
-            let Distance = "Distance : " + variableDistW1.toFixed(4);
+            let Distance = "Distance : " + variableDistW1.toFixed(2);
 
             li.innerHTML += route + "<br>" +person + "     " +stretch + "<br>" + Time + " Minutes" +"<br>" + Distance + " KM.";
             li.id = IdOfli;
@@ -831,7 +831,7 @@ function clikRunVrp() {
             let person =  "Person : " + variablePersonW2;
             let stretch = "Stretch : " + variableStretchW2;
             let Time = "Time : " + variableTimeW2;
-            let Distance = "Distance : " + variableDistW2.toFixed(4);
+            let Distance = "Distance : " + variableDistW2.toFixed(2);
 
             li.innerHTML += route + "<br>" +person + "     " +stretch + "<br>" + Time + " Minutes" +"<br>" + Distance + " KM.";
             li.id = IdOfli;
@@ -852,7 +852,7 @@ function clikRunVrp() {
             let person =  "Person : " + variablePersonW2;
             let stretch = "Stretch : " + variableStretchW2;
             let Time = "Time : " + variableTimeW2;
-            let Distance = "Distance : " + variableDistW2.toFixed(4);
+            let Distance = "Distance : " + variableDistW2.toFixed(2);
 
             li.innerHTML += route + "<br>" +person + "     " +stretch + "<br>" + Time + " Minutes" +"<br>" + Distance + " KM.";
             li.id = IdOfli;
