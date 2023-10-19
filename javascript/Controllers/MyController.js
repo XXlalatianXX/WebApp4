@@ -68,8 +68,13 @@ function delGraphics() {
 
 	$('#mainSearch').show();
 	PriorityEvent = false;
+	
 	$('#Pri').prop('disabled', false); 
 	$("#Pri").css("background-color", "cyan");
+	$("#Lat").css("background-color","white");
+	$("#Lon").css("background-color", "white");
+	$("#Pers").css("background-color", "white");
+	$("#Stret").css("background-color", "white");
 
 	IdOfli = 0;	// reset id of li block
 

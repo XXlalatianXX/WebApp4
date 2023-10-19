@@ -304,6 +304,7 @@ $application = "cs_gis_dev_framework";
 <link rel="stylesheet" type="text/css" href="css/soria/soria.css"/>
 <link rel="stylesheet" type="text/css" href="/<?php echo $application;?>/javascript/arcgis_js_api/library/3.8/3.8/js/esri/css/esri.css"/>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
 <script src="css/themes/Cupertino/jquery-ui-1.11.4.custom/external/jquery/jquery.js"></script>
 <script src="css/themes/Cupertino/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
 <script src="/<?php echo $application;?>/javascript/arcgis_js_api/library/3.8/3.8/init.js"></script>
@@ -554,12 +555,20 @@ $application = "cs_gis_dev_framework";
 	$("#Pri").on('click',function(){
 		$('#Pri').prop('disabled', true); 
 		$("#Pri").css("background-color", "Red");
+		$("#Lat").css("background-color","orange");
+		$("#Lon").css("background-color","orange");
+		$("#Pers").css("background-color","orange");
+		$("#Stret").css("background-color","orange");
 		PriorityEvent =	true;
 		console.log("PriorityEvent : ", PriorityEvent);
 	});
 	$('#Pri').on('dblclick', function () { 
             $('#Pri').prop('disabled', false); 
 			$("#Pri").css("background-color", "cyan");
+			$("#Lat").css("background-color","white");
+			$("#Lon").css("background-color","white");
+			$("#Pers").css("background-color","white");
+			$("#Stret").css("background-color","white");
 			PriorityEvent =	false;
 			console.log("PriorityEvent : ", PriorityEvent);
         }); 
