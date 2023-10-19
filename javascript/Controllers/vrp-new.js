@@ -590,11 +590,36 @@ function clikRunVrp() {
 
         for (const CustIn of CustInput) {
             if ((CustIn.lat == "") && (CustIn.lon == "") && (CustIn.stretchDemand == 0) && (CustIn.personDemand == 0)) {
-                alert(`Please Enter Data ... id : ${CustIn.id}`);
+                fireSweetAlert();
+                function fireSweetAlert() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: `กรุณากรอกข้อมูล id : ${CustIn.id}`
+                        // text: `Please Enter Data ... id : ${CustIn.id}`
+                    })
+                }
                 inputIsValid = false;
                 break;
-            } else if (((CustIn.lat != "") || (CustIn.lon != "")) && ((CustIn.stretchDemand == 0) || (CustIn.personDemand == 0))){
-                alert(`Please Enter Data ... id : ${CustIn.id}`);
+            } else if (((CustIn.lat == "") || (CustIn.lon == "")) && ((CustIn.stretchDemand == 0) && (CustIn.personDemand == 0))){
+                fireSweetAlert();
+                function fireSweetAlert() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: `กรุณากรอกข้อมูล id : ${CustIn.id}`
+                        // text: `Please Enter Data ... id : ${CustIn.id}`
+                    })
+                }
+                inputIsValid = false;
+                break;
+            } else if (((CustIn.lat != "") || (CustIn.lon != "")) && ((CustIn.stretchDemand == 0) && (CustIn.personDemand == 0))){
+                fireSweetAlert();
+                function fireSweetAlert() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: `กรุณากรอกข้อมูล id : ${CustIn.id}`
+                        // text: `Please Enter Data ... id : ${CustIn.id}`
+                    })
+                }
                 inputIsValid = false;
                 break;
             }
@@ -615,8 +640,23 @@ function clikRunVrp() {
                 continue;
             } else {
                 console.log("CustIn Wrong : ", CustIn);
-                alert(`***** Data ${CustIn.id} was wrong *****\nPlease input new data`);
-                alert(`Enter Data like this condition ...\n\nif  stretcher==0  -->  person<=28\n if  1<=stretcher<=2  -->  person<=22\nif  3<=stretcher<=5  -->  person<=16\nif  6<=stretcher<=8  --> person<=10\nif  9<=stretcher<=11  -->  person<=4`)
+                fireSweetAlert2();
+                function fireSweetAlert2() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: `ข้อมูล ${CustIn.id} ผิดพลาด`,
+                        text: 'กรุณากรอกข้อมูลใหม่'
+                        // text: `Please Enter Data ... id : ${CustIn.id}`
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                          Swal.fire(
+                            'กรุณากรอกข้อมูลให้ตรงตามเงื่อนไขนี้',
+                            'ถ้า  เปล == 0   -->   คน <= 28 <br> ถ้า  1 <= เปล <= 2   -->   คน <= 22 <br> ถ้า   3 <= เปล <= 5   -->   คน <= 16 <br> ถ้า   6 <= เปล <= 8   -->  คน <= 10 <br> ถ้า   9 <= เปล <= 11  -->  คน <= 4',
+                            'info'
+                          )
+                        }
+                    })
+                };
                 inputIsValid = false;
                 break;
             }
