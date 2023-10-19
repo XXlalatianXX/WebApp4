@@ -81,16 +81,16 @@ $application = "cs_gis_dev_framework";
 													</tr>
 												<tr>
 													<td>
-													<input type="in" name="lat[]" placeholder="ละติจูด" class="form-control lat_list">
+													<input type="text" name="lat[]" id="Lat" placeholder="ละติจูด" class="form-control lat_list">
 													</td>
 													<td>
-													<input type="text" name="lon[]" placeholder="ลองจิจูด" class="form-control lon_list">
+													<input type="text" name="lon[]" id="Lon" placeholder="ลองจิจูด" class="form-control lon_list">
 													</td>
 													<td>
-													<input type="text" name="person" placeholder="คน" class="form-control num_person" >
+													<input type="text" name="person" id="Pers" placeholder="คน" class="form-control num_person" >
 													</td>
 													<td>
-													<input type="text" name="stretchers" placeholder="เปลสนาม"class="form-control num_stretchers">
+													<input type="text" name="stretchers" id="Stret" placeholder="เปลสนาม"class="form-control num_stretchers">
 													</td>
 													<td>
 													<button type="button" name="add" id="add" class="btn btn-success">Add More</button>       
