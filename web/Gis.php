@@ -49,8 +49,6 @@ $application = "cs_gis_dev_framework";
 		<!-------------Right menu Section---------------->
 		<div id="verticalLineRight">	
 			<a href='#' id="btnBaseMap"><img src="images/basemap_icon.png" ></a><br>	
-			<a href='#' id="btnStaffMap"><img src="images/layers_icon.png" ></a><br>
-			<a href='#' id="btnDrawMap"><img src="images/draw_icon.png" ></a><br>
 			<a href='#' id="btnSymbols"><img src="images/symbol_icon.png" ></a><br>
 			<a href='#' id="btnToolMap"><img src="images/measurement_icon.png" ></a><br>
 		</div>
@@ -238,29 +236,6 @@ $application = "cs_gis_dev_framework";
 						<h5 id="slideBaseMap" style="margin:0; padding:4px 0px 5px 5px; text-align:left; background-image:url(images/bg_header_cop_div.png); background-repeat:repeat; color:#EFEFEF; cursor:pointer; font-size:1em;"><b style="color:#FF0000;margin:0px 8px 0px 2px; font-size:1.3em;">x</b> Online BaseMap</h5>								
 						<div id="basemap" style="margin-left:5px;margin-bottom:10px;overflow-y:auto;overflow-x:hidden;">
 							<div id="basemapGallery" style="color:black; font-size:0.75em;"></div>
-						</div>
-					</div>
-					
-					<div id="divStaffContainer" class="divCOP" style="width:270px;height:85%;top:40px;right:18px;z-index:1;">
-						<h5 id="slideStaffMap" style="margin:0; padding:4px 0px 5px 5px; text-align:left; background-image:url(images/bg_header_cop_div.png); background-repeat:repeat; color:#EFEFEF; cursor:pointer; font-size:1em;"><b style="color:#FF0000;margin:0px 8px 0px 2px; font-size:1.3em;">x</b> ชั้นข้อมูลพื้นฐาน</h5>
-						<div id ="staffmap" style="margin-left:10px;overflow-y:auto;overflow-x:hidden;">
-							<table  cellpadding="4"cellspacing="0" width="100%" border='0'>
-								<tr>
-									<td>
-										<div id="RtafLayers" style="color:#FFFFFF; font-size:1em;"></div>										
-										<div id="siteGraphicPointLayer" style="color:#FFFFFF; font-size:1em;"></div>
-										<div id="radarGraphicPointLayer" style="color:#FFFFFF; font-size:1em;"></div>
-										<div><input type="checkbox" name="chkRadarTracking" id="chkRadarTracking" />: Radar Tracking</div>
-									</td>
-								</tr>
-							</table>
-						</div>
-					</div>
-					
-					<div id="divDrawContainer" class="divCOP" style="width:270px;height:85%;top:40px;right:18px;z-index:1;">
-						<h5 id="slideDrawMap" style="margin:0; padding:4px 0px 5px 5px; text-align:left; background-image:url(images/bg_header_cop_div.png); background-repeat:repeat; color:#EFEFEF; cursor:pointer; font-size:1em;"><b style="color:#FF0000;margin:0px 8px 0px 2px; font-size:1.3em;">x</b> วาดกราฟฟิก</h5>
-						<div id ="drawmap" style="margin:0px 5px 0px 5px;overflow-y:auto;overflow-x:hidden;">
-							<div id="divDrawingPanel"></div>
 						</div>
 					</div>
 					
