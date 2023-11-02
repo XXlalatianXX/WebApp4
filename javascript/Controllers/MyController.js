@@ -68,6 +68,8 @@ function delGraphics() {
 
 	$('#mainSearch').show();
 	PriorityEvent = false;
+	customers = [];
+	console.log("customers was seted to empty : ",customers);
 	
 	$('#Pri').prop('disabled', false); 
 	$("#Pri").css("background-color", "cyan");
