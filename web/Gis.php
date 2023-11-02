@@ -49,8 +49,6 @@ $application = "cs_gis_dev_framework";
 		<!-------------Right menu Section---------------->
 		<div id="verticalLineRight">	
 			<a href='#' id="btnBaseMap"><img src="images/basemap_icon.png" ></a><br>	
-			<a href='#' id="btnSymbols"><img src="images/symbol_icon.png" ></a><br>
-			<a href='#' id="btnToolMap"><img src="images/measurement_icon.png" ></a><br>
 		</div>
 		<!-------------Map Section-------------------->
 		<div id="map" style="position:relative;width:100%; height:100%;border:0px solid #000;">
