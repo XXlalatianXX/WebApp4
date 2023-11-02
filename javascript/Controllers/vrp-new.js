@@ -627,16 +627,16 @@ function clikRunVrp() {
             if ((CustIn.stretchDemand == 0) && (CustIn.personDemand <= 28)) {
                 continue;
             } else if ((CustIn.stretchDemand >= 1) && (CustIn.stretchDemand <= 2) &&
-                (CustIn.personDemand <= 22)) {
+                (CustIn.personDemand <= 22) && (CustIn.personDemand >= 0)) {
                 continue;
             } else if ((CustIn.stretchDemand >= 3) && (CustIn.stretchDemand <= 5) &&
-                (CustIn.personDemand <= 16)) {
+                (CustIn.personDemand <= 16) && (CustIn.personDemand >= 0)) {
                 continue;
             } else if ((CustIn.stretchDemand >= 6) && (CustIn.stretchDemand <= 8) &&
-                (CustIn.pSSersonDemand <= 10)) {
+                (CustIn.personDemand <= 10) && (CustIn.personDemand >= 0)) {
                 continue;
             } else if ((CustIn.stretchDemand >= 9) && (CustIn.stretchDemand <= 11) &&
-                (CustIn.personDemand <= 4)) {
+                (CustIn.personDemand <= 4) && (CustIn.personDemand >= 0)) {
                 continue;
             } else {
                 console.log("CustIn Wrong : ", CustIn);
