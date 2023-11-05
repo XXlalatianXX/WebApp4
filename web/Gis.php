@@ -237,6 +237,11 @@ $application = "cs_gis_dev_framework";
 							<div id="basemapGallery" style="color:black; font-size:0.75em;"></div>
 						</div>
 					</div>
+
+					<div id="divManualContainer" class="divCOP" style="top:40px;right:18px;width:80%;height:80%">
+						<h5 id="slideManual" style="margin:0; padding:4px 0px 5px 5px; text-align:left; background-image:url(images/bg_header_cop_div.png); background-repeat:repeat; color:#EFEFEF; cursor:pointer; font-size:1em;"><b style="color:#FF0000;margin:0px 8px 0px 2px; font-size:1.3em;">x</b> Manual </h5>								
+						
+					</div>
 					
 					<div id="divStaffContainer" class="divCOP" style="width:270px;height:85%;top:40px;right:18px;z-index:1;">
 						<h5 id="slideStaffMap" style="margin:0; padding:4px 0px 5px 5px; text-align:left; background-image:url(images/bg_header_cop_div.png); background-repeat:repeat; color:#EFEFEF; cursor:pointer; font-size:1em;"><b style="color:#FF0000;margin:0px 8px 0px 2px; font-size:1.3em;">x</b> ชั้นข้อมูลพื้นฐาน</h5>
@@ -408,27 +413,38 @@ $application = "cs_gis_dev_framework";
       $(div).toggle( selectedEffect, options, 500 );
 		  
 		  if ($(div).attr('id')=='divBaseMapContainer') {		  
+			if ($("#divManualContainer").is(":visible")) $("#divManualContainer").toggle( selectedEffect, options, 500 );
 			  if ($("#divStaffContainer").is(":visible")) $("#divStaffContainer").toggle( selectedEffect, options, 500 );
 			  if ($("#divDrawContainer").is(":visible")) $("#divDrawContainer").toggle( selectedEffect, options, 500 );
 			  if ($("#divToolContainer").is(":visible")) $("#divToolContainer").toggle( selectedEffect, options, 500 );	
 			  if ($("#divSymbolContainer").is(":visible")) $("#divSymbolContainer").toggle( selectedEffect, options, 500 );			  
+		  }else if ($(div).attr('id')=='divManualContainer'){
+			if ($("#divBaseMapContainer").is(":visible")) $("#divBaseMapContainer").toggle( selectedEffect, options, 500 );
+			if ($("#divStaffContainer").is(":visible")) $("#divStaffContainer").toggle( selectedEffect, options, 500 );
+			  if ($("#divDrawContainer").is(":visible")) $("#divDrawContainer").toggle( selectedEffect, options, 500 );
+			  if ($("#divToolContainer").is(":visible")) $("#divToolContainer").toggle( selectedEffect, options, 500 );	
+			  if ($("#divSymbolContainer").is(":visible")) $("#divSymbolContainer").toggle( selectedEffect, options, 500 );
 		  }else if ($(div).attr('id')=='divStaffContainer') { 		  
 			  if ($("#divBaseMapContainer").is(":visible")) $("#divBaseMapContainer").toggle( selectedEffect, options, 500 );
+			  if ($("#divManualContainer").is(":visible")) $("#divManualContainer").toggle( selectedEffect, options, 500 );
 			  if ($("#divDrawContainer").is(":visible")) $("#divDrawContainer").toggle( selectedEffect, options, 500 );
 			  if ($("#divToolContainer").is(":visible")) $("#divToolContainer").toggle( selectedEffect, options, 500 );	
 			  if ($("#divSymbolContainer").is(":visible")) $("#divSymbolContainer").toggle( selectedEffect, options, 500 );			  
 		  }else if ($(div).attr('id')=='divDrawContainer') { 		  
 			  if ($("#divBaseMapContainer").is(":visible")) $("#divBaseMapContainer").toggle( selectedEffect, options, 500 );
+			  if ($("#divManualContainer").is(":visible")) $("#divManualContainer").toggle( selectedEffect, options, 500 );
 			  if ($("#divStaffContainer").is(":visible")) $("#divStaffContainer").toggle( selectedEffect, options, 500 );
 			  if ($("#divToolContainer").is(":visible")) $("#divToolContainer").toggle( selectedEffect, options, 500 );	
 			  if ($("#divSymbolContainer").is(":visible")) $("#divSymbolContainer").toggle( selectedEffect, options, 500 );			  
 		  }else if ($(div).attr('id')=='divToolContainer') { 		  
 			  if ($("#divBaseMapContainer").is(":visible")) $("#divBaseMapContainer").toggle( selectedEffect, options, 500 );
+			  if ($("#divManualContainer").is(":visible")) $("#divManualContainer").toggle( selectedEffect, options, 500 );
 			  if ($("#divStaffContainer").is(":visible")) $("#divStaffContainer").toggle( selectedEffect, options, 500 );
 			  if ($("#divDrawContainer").is(":visible")) $("#divDrawContainer").toggle( selectedEffect, options, 500 );	
 			  if ($("#divSymbolContainer").is(":visible")) $("#divSymbolContainer").toggle( selectedEffect, options, 500 );			  
 		  }else if ($(div).attr('id')=='divSymbolContainer') { 		  
 			  if ($("#divBaseMapContainer").is(":visible")) $("#divBaseMapContainer").toggle( selectedEffect, options, 500 );
+			  if ($("#divManualContainer").is(":visible")) $("#divManualContainer").toggle( selectedEffect, options, 500 );
 			  if ($("#divStaffContainer").is(":visible")) $("#divStaffContainer").toggle( selectedEffect, options, 500 );
 			  if ($("#divDrawContainer").is(":visible")) $("#divDrawContainer").toggle( selectedEffect, options, 500 );	
 			  if ($("#divToolContainer").is(":visible")) $("#divToolContainer").toggle( selectedEffect, options, 500 );			  
@@ -444,6 +460,16 @@ $application = "cs_gis_dev_framework";
 	$( "#slideBaseMap" ).click(function() 
 	{
       togglePanelMenuLeft("#divBaseMapContainer","slide");
+    });
+
+	$( "#btnManual" ).click(function() 
+	{
+      togglePanelMenuLeft("#divManualContainer","slide");
+    });
+
+	$( "#slideManual" ).click(function() 
+	{
+      togglePanelMenuLeft("#divManualContainer","slide");
     });
 	
 	$( "#btnStaffMap" ).click(function() 
