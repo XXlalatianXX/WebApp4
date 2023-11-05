@@ -238,9 +238,32 @@ $application = "cs_gis_dev_framework";
 						</div>
 					</div>
 
-					<div id="divManualContainer" class="divCOP" style="top:40px;right:18px;width:80%;height:80%">
+					<div id="divManualContainer" class="divCOP" style="top:40px;right:18px;width:80%;height:90%">
 						<h5 id="slideManual" style="margin:0; padding:4px 0px 5px 5px; text-align:left; background-image:url(images/bg_header_cop_div.png); background-repeat:repeat; color:#EFEFEF; cursor:pointer; font-size:1em;"><b style="color:#FF0000;margin:0px 8px 0px 2px; font-size:1.3em;">x</b> Manual </h5>								
 						
+						<div class="w3-content" style="margin-top:20px;max-width:50%;max-height:25%">
+  							<img class="mySlides" src="images/Manual1.png" style="width:100%">
+  							<img class="mySlides" src="images/Manual2.png" style="width:100%;">
+  							<img class="mySlides" src="images/Manual3.png" style="width:100%">
+							<img class="mySlides" src="images/Manual4.png" style="width:100%">
+  							<img class="mySlides" src="images/Manual5.png" style="width:100%">
+  							<img class="mySlides" src="images/Manual6.png" style="width:100%">
+							<img class="mySlides" src="images/Manual7.png" style="width:100%">
+						</div>
+
+						<div class="w3-center" style="margin-top:300px">
+  							<div class="w3-section">
+    							<button class="w3-button w3-light-grey" onclick="plusDivs(-1)">❮ Prev</button>
+    							<button class="w3-button w3-light-grey" onclick="plusDivs(1)">Next ❯</button>
+  							</div>
+ 						 	<button class="w3-button demo" onclick="currentDiv(1)">1</button> 
+  							<button class="w3-button demo" onclick="currentDiv(2)">2</button> 
+  							<button class="w3-button demo" onclick="currentDiv(3)">3</button> 
+							<button class="w3-button demo" onclick="currentDiv(4)">4</button> 
+							<button class="w3-button demo" onclick="currentDiv(5)">5</button> 
+							<button class="w3-button demo" onclick="currentDiv(6)">6</button> 
+							<button class="w3-button demo" onclick="currentDiv(7)">7</button> 
+						</div>
 					</div>
 					
 					<div id="divStaffContainer" class="divCOP" style="width:270px;height:85%;top:40px;right:18px;z-index:1;">
@@ -305,6 +328,8 @@ $application = "cs_gis_dev_framework";
 
 <link rel="stylesheet" type="text/css" href="css/soria/soria.css"/>
 <link rel="stylesheet" type="text/css" href="/<?php echo $application;?>/javascript/arcgis_js_api/library/3.8/3.8/js/esri/css/esri.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
 <script src="css/themes/Cupertino/jquery-ui-1.11.4.custom/external/jquery/jquery.js"></script>
@@ -596,5 +621,5 @@ $application = "cs_gis_dev_framework";
 			console.log("PriorityEvent : ", PriorityEvent);
         }); 
   });
- 
+
  </script>
