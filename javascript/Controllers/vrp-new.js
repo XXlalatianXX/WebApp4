@@ -589,37 +589,11 @@ function clikRunVrp() {
         let inputIsValid = true;
 
         for (const CustIn of CustInput) {
-            if ((CustIn.lat == "") && (CustIn.lon == "") && (CustIn.stretchDemand == 0) && (CustIn.personDemand == 0)) {
-                fireSweetAlert();
-                function fireSweetAlert() {
-                    Swal.fire({
-                        icon: 'error',
-                        title: `กรุณากรอกข้อมูล id : ${CustIn.id}`
-                        // text: `Please Enter Data ... id : ${CustIn.id}`
-                    })
-                }
-                inputIsValid = false;
-                break;
-            } else if (((CustIn.lat == "") || (CustIn.lon == "")) && ((CustIn.stretchDemand == 0) && (CustIn.personDemand == 0))){
-                fireSweetAlert();
-                function fireSweetAlert() {
-                    Swal.fire({
-                        icon: 'error',
-                        title: `กรุณากรอกข้อมูล id : ${CustIn.id}`
-                        // text: `Please Enter Data ... id : ${CustIn.id}`
-                    })
-                }
-                inputIsValid = false;
-                break;
-            } else if (((CustIn.lat != "") || (CustIn.lon != "")) && ((CustIn.stretchDemand == 0) && (CustIn.personDemand == 0))){
-                fireSweetAlert();
-                function fireSweetAlert() {
-                    Swal.fire({
-                        icon: 'error',
-                        title: `กรุณากรอกข้อมูล id : ${CustIn.id}`
-                        // text: `Please Enter Data ... id : ${CustIn.id}`
-                    })
-                }
+            const isDataMissing1 = (CustIn.lat == "") && (CustIn.lon == "") && (CustIn.stretchDemand == 0) && (CustIn.personDemand == 0);
+            const isDataMissing2 = (CustIn.lat != "" && CustIn.lon != "") && (CustIn.stretchDemand == 0 && CustIn.personDemand == 0);
+
+            if (isDataMissing1 || isDataMissing2) {
+                fireSweetAlert(CustIn.id);
                 inputIsValid = false;
                 break;
             }
@@ -640,23 +614,7 @@ function clikRunVrp() {
                 continue;
             } else {
                 console.log("CustIn Wrong : ", CustIn);
-                fireSweetAlert2();
-                function fireSweetAlert2() {
-                    Swal.fire({
-                        icon: 'error',
-                        title: `ข้อมูล ${CustIn.id} ผิดพลาด`,
-                        text: 'กรุณากรอกข้อมูลใหม่'
-                        // text: `Please Enter Data ... id : ${CustIn.id}`
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                          Swal.fire(
-                            'กรุณากรอกข้อมูลให้ตรงตามเงื่อนไขนี้',
-                            'ถ้า  เปล == 0   -->   คน <= 28 <br> ถ้า  1 <= เปล <= 2   -->   คน <= 22 <br> ถ้า   3 <= เปล <= 5   -->   คน <= 16 <br> ถ้า   6 <= เปล <= 8   -->  คน <= 10 <br> ถ้า   9 <= เปล <= 11  -->  คน <= 4',
-                            'info'
-                          )
-                        }
-                    })
-                };
+                fireSweetAlert2(CustIn.id);
                 inputIsValid = false;
                 break;
             }
@@ -1232,3 +1190,27 @@ function getDictResult(route, Time, totalPerson, totalStretch,totalDistanceArray
     }
     return results;
 }
+
+function fireSweetAlert(id) {
+    Swal.fire({
+        icon: 'error',
+        title: `กรุณากรอกข้อมูล id : ${id}`
+    });
+}
+
+function fireSweetAlert2(id) {
+    Swal.fire({
+        icon: 'error',
+        title: `ข้อมูล ${id} ผิดพลาด`,
+        text: 'กรุณากรอกข้อมูลใหม่'
+        // text: `Please Enter Data ... id : ${CustIn.id}`
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire(
+                'กรุณากรอกข้อมูลให้ตรงตามเงื่อนไขนี้',
+                'ถ้า  เปล == 0   -->   คน <= 28 <br> ถ้า  1 <= เปล <= 2   -->   คน <= 22 <br> ถ้า   3 <= เปล <= 5   -->   คน <= 16 <br> ถ้า   6 <= เปล <= 8   -->  คน <= 10 <br> ถ้า   9 <= เปล <= 11  -->  คน <= 4',
+                'info'
+            )
+        }
+    })
+};
