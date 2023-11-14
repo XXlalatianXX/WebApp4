@@ -59,18 +59,18 @@ function findNearestCustomer(currentCustomer, unassignedCustomers) {
     return { nearestCustomer: nearestCustomer, distance: minDistance };
 };
 
-function findNearestDepot (priorityCustomer, Depot){
+function findNearestDepot(priorityCustomer, Depot) {
     let nearestDepot = null;
     let minDistance = Infinity;
 
-    for (const dep of Depot){
-        const distance = calculateDistance(priorityCustomer,dep);
-        if (distance < minDistance){
+    for (const dep of Depot) {
+        const distance = calculateDistance(priorityCustomer, dep);
+        if (distance < minDistance) {
             nearestDepot = dep;
             minDistance = distance;
         }
     }
-    return {nearestDepot: nearestDepot, distance: minDistance};
+    return { nearestDepot: nearestDepot, distance: minDistance };
 }
 
 function solveMDVRP(customers, depots) {
@@ -122,21 +122,21 @@ function solveMDVRP(customers, depots) {
 
         do {
 
-            if (PriorityEvent){
+            if (PriorityEvent) {
                 var priorityCustomer = unassignedCustomers[0];
 
-                const {nearestDepot: nearestDepotPri, distance: distancePri} = findNearestDepot(priorityCustomer, depots);
+                const { nearestDepot: nearestDepotPri, distance: distancePri } = findNearestDepot(priorityCustomer, depots);
                 priorityDep.push(nearestDepotPri.id);
-                unassignedCustomers.splice(unassignedCustomers[0],1);   // remove the first member of array
+                unassignedCustomers.splice(unassignedCustomers[0], 1);   // remove the first member of array
 
-                for ( let x of priorityDep){
-                    if ( x == 1 ){
+                for (let x of priorityDep) {
+                    if (x == 1) {
                         CheckBool1 = false;
                         console.log("Use Depot 1");
-                    }else if ( x == 2 ){
+                    } else if (x == 2) {
                         CheckBool2 = false;
                         console.log("Use Depot 2");
-                    }else if ( x == 3 ){
+                    } else if (x == 3) {
                         CheckBool3 = false;
                         console.log("Use Depot 3");
                     }
@@ -366,7 +366,6 @@ function solveMDVRP(customers, depots) {
                         (currentPersonCapacity2 + nearestCustomer2.personDemand > personCapacity2) &&
                         (currentStretchCapacity3 + nearestCustomer3.stretchDemand > stretchCapacity3) &&
                         (currentPersonCapacity3 + nearestCustomer3.personDemand > personCapacity3)) {
-                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -413,7 +412,6 @@ function solveMDVRP(customers, depots) {
                         (currentPersonCapacity1 + nearestCustomer1.personDemand > personCapacity1) &&
                         (currentStretchCapacity3 + nearestCustomer3.stretchDemand > stretchCapacity3) &&
                         (currentPersonCapacity3 + nearestCustomer3.personDemand > personCapacity3)) {
-                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -460,7 +458,6 @@ function solveMDVRP(customers, depots) {
                         (currentPersonCapacity1 + nearestCustomer1.personDemand > personCapacity1) &&
                         (currentStretchCapacity2 + nearestCustomer2.stretchDemand > stretchCapacity2) &&
                         (currentPersonCapacity2 + nearestCustomer2.personDemand > personCapacity2)) {
-                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -504,7 +501,6 @@ function solveMDVRP(customers, depots) {
 
                     if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand > stretchCapacity1) &&    // Check 1 is over?
                         (currentPersonCapacity1 + nearestCustomer1.personDemand > personCapacity1)) {
-                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -524,7 +520,6 @@ function solveMDVRP(customers, depots) {
 
                     if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand > stretchCapacity2) &&    // Check 2 is over?
                         (currentPersonCapacity2 + nearestCustomer2.personDemand > personCapacity2)) {
-                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -544,7 +539,6 @@ function solveMDVRP(customers, depots) {
 
                     if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand > stretchCapacity3) &&    // Check 3 is over?
                         (currentPersonCapacity3 + nearestCustomer3.personDemand > personCapacity3)) {
-                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -566,7 +560,7 @@ function solveMDVRP(customers, depots) {
         vehicles2.push(vehicle2);
         vehicles3.push(vehicle3);
     }
-    return { vehicles1: vehicles1, vehicles2: vehicles2, vehicles3: vehicles3 , priorityDep: priorityDep};
+    return { vehicles1: vehicles1, vehicles2: vehicles2, vehicles3: vehicles3, priorityDep: priorityDep };
 }
 
 const depots = [
@@ -584,8 +578,6 @@ function clikRunVrp() {
     let CustInput = [];
     do {
         CustInput = UnlimitedInput();
-        //console.log("CustInput Before: ", CustInput);
-
         let inputIsValid = true;
 
         for (const CustIn of CustInput) {
@@ -627,12 +619,12 @@ function clikRunVrp() {
     } while (!inputIsValid);
 
     customers = CustInput;
-    console.log("Customer =========================", customers);
+    console.log("Customer Dictionary : ", customers);
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // vehicle1 is from warehouse 1
     // vehicle2 is from warehouse 2
     // vehicle3 is from warehouse 3
-    const { vehicles1: vehicle1, vehicles2: vehicle2, vehicles3: vehicle3 , priorityDep: priorityDep} = solveMDVRP(customers, depots);
+    const { vehicles1: vehicle1, vehicles2: vehicle2, vehicles3: vehicle3, priorityDep: priorityDep } = solveMDVRP(customers, depots);
 
     const customersInRoutes1 = vehicle1.map((vehicle) =>    //const customersInRoutes1 = [[2, 1, 3], [4], []];
         vehicle.route.map((customer) => customer.id)
@@ -652,13 +644,12 @@ function clikRunVrp() {
     var { totalArray: totalDistanceArray1, totalDistance: totalDistance1 } = TotalDIstanceAllRoute(depots[0], customersInRoutes1);
     var { totalArray: totalDistanceArray2, totalDistance: totalDistance2 } = TotalDIstanceAllRoute(depots[1], customersInRoutes2);
     var { totalArray: totalDistanceArray3, totalDistance: totalDistance3 } = TotalDIstanceAllRoute(depots[2], customersInRoutes3);
-    //console.log("Total Distance of All route : ",totalDistance1 + totalDistance2 + totalDistance3, "KM.");
 
     // Case to check that PriorityDep was used ...
-    if ( priorityDep == "" ){   // case don't be used
+    if (priorityDep == "") {   // case don't be used
         console.log("Priority do not use...");
         var totalDistanceAll = totalDistance1 + totalDistance2 + totalDistance3;
-        console.log("Total Distance of All route : ", totalDistanceAll , "KM.");
+        console.log("Total Distance of All route : ", totalDistanceAll, "KM.");
 
         var Depot1Round = getRoundDepot(customersInRoutes1);
         var Depot2Round = getRoundDepot(customersInRoutes2);
@@ -672,11 +663,6 @@ function clikRunVrp() {
 
         console.log("Total Distance Priority : ", totalDistancePri, "KM.");
         console.log("Total Distance Array Priority : ", totalDistanceArrayPri);
-
-        /*
-        var totalDistanceAll = totalDistance1 + totalDistance2 + totalDistance3 + totalDistancePri;
-        console.log("Total Distance of All route : ", totalDistanceAll , "KM.");  // Show all distance
-        */
 
         // Block to plus round of depot if priority was used ...
         if (priorityDep[0] == 1) {
@@ -699,37 +685,29 @@ function clikRunVrp() {
             var totalDistanceAll = totalDistance1 + totalDistance2 + totalDistance3;
         }
 
+        console.log("Total Distance of All route : ", totalDistanceAll, "KM.");
+
         var PriorityRound = getRoundDepot(priorityDep);
-        console.log("PriorityRound : ", PriorityRound);
 
         var PriRoute = generateRoutesPri(priorityDep);
-        console.log("PriRoute : ", PriRoute);
 
         var TimePri = generateTimeMin(totalDistanceArrayPri);
-        console.log("TimePri : ", TimePri);
 
         var totalStretchPri = [customers[0].stretchDemand];
-        console.log("totalStretchPri : ", totalStretchPri);
 
         var totalPersonPri = [customers[0].personDemand];
-        console.log("TotalPersonPri : ", totalPersonPri);
 
         var resultPri = getDictResult(PriRoute, TimePri, totalPersonPri, totalStretchPri, totalDistanceArrayPri);
-        console.log("Result Priority : ", resultPri);
 
 
         const outlineWidth = 3.0;
-        const coordinatesPri = [[[depots[priorityDep[0] - 1].lon, depots[priorityDep[0] - 1].lat] ,[customers[0].lon, customers[0].lat]]];
-        drawGraphicPolyLine(newLayer,coordinatesPri,"rgba(255,0,0,0.8)",outlineWidth)
-
-        console.log(" ========================================");
+        const coordinatesPri = [[[depots[priorityDep[0] - 1].lon, depots[priorityDep[0] - 1].lat], [customers[0].lon, customers[0].lat]]];
+        drawGraphicPolyLine(newLayer, coordinatesPri, "rgba(255,0,0,0.8)", outlineWidth)
     }
 
-    
-
-    const route1 = generateRoutes(customersInRoutes1,"W1");
-    const route2 = generateRoutes(customersInRoutes2,"W21");
-    const route3 = generateRoutes(customersInRoutes3,"W23");
+    const route1 = generateRoutes(customersInRoutes1, "W1");
+    const route2 = generateRoutes(customersInRoutes2, "W21");
+    const route3 = generateRoutes(customersInRoutes3, "W23");
 
     const Time1 = generateTimeMin(totalDistanceArray1);
     const Time2 = generateTimeMin(totalDistanceArray2);
@@ -743,11 +721,11 @@ function clikRunVrp() {
     const totalPerson2 = generateTotalPerson(customersInRoutes2);
     const totalPerson3 = generateTotalPerson(customersInRoutes3);
 
-    const result1 = getDictResult(route1,Time1,totalPerson1,totalStretch1,totalDistanceArray1);
+    const result1 = getDictResult(route1, Time1, totalPerson1, totalStretch1, totalDistanceArray1);
     console.log("Result 1 : ", result1);
-    const result2 = getDictResult(route2,Time2,totalPerson2,totalStretch2,totalDistanceArray2);
+    const result2 = getDictResult(route2, Time2, totalPerson2, totalStretch2, totalDistanceArray2);
     console.log("Result 2 : ", result2);
-    const result3 = getDictResult(route3,Time3,totalPerson3,totalStretch3,totalDistanceArray3);
+    const result3 = getDictResult(route3, Time3, totalPerson3, totalStretch3, totalDistanceArray3);
     console.log("Result 3 : ", result3);
 
 
@@ -783,8 +761,8 @@ function clikRunVrp() {
 
     var IdOfli = 1
 
-    if ( resultPri != null ){
-        for ( let pri of resultPri ){
+    if (resultPri != null) {
+        for (let pri of resultPri) {
             var li = document.createElement("li");
             let variableRoutePri = Object.values(pri)[0];
             let variablePersonPri = Object.values(pri)[1];
@@ -792,19 +770,19 @@ function clikRunVrp() {
             let variableTimePri = Object.values(pri)[3];
             let variableDistPri = Object.values(pri)[4];
             let route = "Routes : " + variableRoutePri;
-            let person =  "Person : " + variablePersonPri;
+            let person = "Person : " + variablePersonPri;
             let stretch = "Stretch : " + variableStretchPri;
             let Time = "Time : " + variableTimePri;
             let Distance = "Distance : " + variableDistPri.toFixed(2);
 
-            li.innerHTML += route + "<br>" +person + "     " +stretch + "<br>" + Time + " Minutes" +"<br>" + Distance + " KM.";
+            li.innerHTML += route + "<br>" + person + "     " + stretch + "<br>" + Time + " Minutes" + "<br>" + Distance + " KM.";
             li.id = 1;
             routesPri.appendChild(li);
         }
     }
 
-    if ( result1 != null ){
-        for ( let i of result1){
+    if (result1 != null) {
+        for (let i of result1) {
             var li = document.createElement("li");
             let variableRouteW1 = Object.values(i)[0];
             let variablePersonW1 = Object.values(i)[1];
@@ -812,20 +790,20 @@ function clikRunVrp() {
             let variableTimeW1 = Object.values(i)[3];
             let variableDistW1 = Object.values(i)[4];
             let route = "Routes : " + variableRouteW1;
-            let person =  "Person : " + variablePersonW1;
+            let person = "Person : " + variablePersonW1;
             let stretch = "Stretch : " + variableStretchW1;
             let Time = "Time : " + variableTimeW1;
             let Distance = "Distance : " + variableDistW1.toFixed(2);
 
-            li.innerHTML += route + "<br>" +person + "     " +stretch + "<br>" + Time + " Minutes" +"<br>" + Distance + " KM.";
+            li.innerHTML += route + "<br>" + person + "     " + stretch + "<br>" + Time + " Minutes" + "<br>" + Distance + " KM.";
             li.id = IdOfli;
             IdOfli += 1;
             routesW.appendChild(li);
         }
     }
 
-    if ( result2 != null ){
-        for (let j of result2){
+    if (result2 != null) {
+        for (let j of result2) {
             var li = document.createElement("li");
             let variableRouteW2 = Object.values(j)[0];
             let variablePersonW2 = Object.values(j)[1];
@@ -833,20 +811,20 @@ function clikRunVrp() {
             let variableTimeW2 = Object.values(j)[3];
             let variableDistW2 = Object.values(j)[4];
             let route = "Routes : " + variableRouteW2;
-            let person =  "Person : " + variablePersonW2;
+            let person = "Person : " + variablePersonW2;
             let stretch = "Stretch : " + variableStretchW2;
             let Time = "Time : " + variableTimeW2;
             let Distance = "Distance : " + variableDistW2.toFixed(2);
 
-            li.innerHTML += route + "<br>" +person + "     " +stretch + "<br>" + Time + " Minutes" +"<br>" + Distance + " KM.";
+            li.innerHTML += route + "<br>" + person + "     " + stretch + "<br>" + Time + " Minutes" + "<br>" + Distance + " KM.";
             li.id = IdOfli;
             IdOfli += 1;
             routesW.appendChild(li);
         }
     }
 
-    if ( result3 != null){
-        for (let k of result3){
+    if (result3 != null) {
+        for (let k of result3) {
             var li = document.createElement("li");
             let variableRouteW2 = Object.values(k)[0];
             let variablePersonW2 = Object.values(k)[1];
@@ -854,18 +832,17 @@ function clikRunVrp() {
             let variableTimeW2 = Object.values(k)[3];
             let variableDistW2 = Object.values(k)[4];
             let route = "Routes : " + variableRouteW2;
-            let person =  "Person : " + variablePersonW2;
+            let person = "Person : " + variablePersonW2;
             let stretch = "Stretch : " + variableStretchW2;
             let Time = "Time : " + variableTimeW2;
             let Distance = "Distance : " + variableDistW2.toFixed(2);
 
-            li.innerHTML += route + "<br>" +person + "     " +stretch + "<br>" + Time + " Minutes" +"<br>" + Distance + " KM.";
+            li.innerHTML += route + "<br>" + person + "     " + stretch + "<br>" + Time + " Minutes" + "<br>" + Distance + " KM.";
             li.id = IdOfli;
             IdOfli += 1;
             routesW.appendChild(li);
         }
     }
-
     $('#mainSearch').hide();
 }
 
@@ -886,7 +863,6 @@ function UnlimitedInput() {
         const collection = document.getElementsByClassName(column[i]);
         for (let j = 0; j < collection.length; j++) {
             const value = collection[j].value;
-            // alert(value)
             if (value != "") {
                 data[j][column[i]] = parseFloat(value); // Have to parse to Number before use in Class
             }
@@ -900,10 +876,8 @@ function UnlimitedInput() {
         }
     }
     for (let i = 0; i < data.length; i++) {
-        //console.log(i + 1);
         CustInputs.push(new Customer(i + 1, data[i]["lat_list"], data[i]["lon_list"], data[i]["num_person"], data[i]["num_stretchers"]));
     }
-
     return CustInputs;
 }
 
@@ -925,15 +899,12 @@ function drawAllPoint() {
     for (const depot of depots) {
         drawGraphicPointWarehouse(newLayer, [depot.lon, depot.lat]);
     }
-    //console.log("Draw all point");
-
 }
 function drawRouteLine(Depot, CustomerInRoute) {
     currentPoint = null;
     var outlineWidth = 3.0;
     for (const cust of CustomerInRoute) {
         if (cust.length === 0) {
-            //console.log("Empty...");
             continue;
         } else {
             for (const inCust of cust) {
@@ -958,7 +929,6 @@ function drawRouteLine(Depot, CustomerInRoute) {
                                     let coordinates = [[[customer.lon, customer.lat], [customerCurrent.lon, customerCurrent.lat]]];
                                     drawGraphicPolyLine(newLayer, coordinates, "rgba(255,0,0,0.8)", outlineWidth);	// red line
                                     currentPoint = inCust;
-                                    //console.log("Point to Point");
                                 }
                             }
                         }
@@ -973,7 +943,6 @@ function drawRouteLine(Depot, CustomerInRoute) {
                                     let coordinates = [[[customer.lon, customer.lat], [customerCurrent.lon, customerCurrent.lat]]];
                                     drawGraphicPolyLine(newLayer, coordinates, "rgba(255,0,0,0.8)", outlineWidth);	// red line
                                     currentPoint = inCust;
-                                    //console.log("Point to Point");
                                 }
                             }
                         }
@@ -991,10 +960,8 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
     for (const cust of CustomerInRoute) {
         let totalDistance = 0;
         if (cust.length === 0) {
-            //console.log("Empty...");
             continue;
         } else if (cust.length === 1) {
-            //console.log("Have 1 Point");
             for (const inCust of cust) {
                 if (cust.indexOf(inCust) === cust.indexOf(cust[0])) {       // Case depot -> point 1
                     for (const customer of customers) {
@@ -1002,7 +969,6 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
                         if (id == inCust) {
                             let distance = calculateDistance(Depot, customer);
                             totalDistance += (distance * 2);
-                            //console.log("Dist from Depot to point ",id ,"and return to Depot", distance*2);
                         }
                     }
                 }
@@ -1015,7 +981,6 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
                         if (id == inCust) {
                             let distance = calculateDistance(Depot, customer)
                             totalDistance += distance;
-                            //console.log("Dist from Depot to point ",id , distance)
                             currentPoint = id;
                         }
                     }
@@ -1025,13 +990,11 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
                         if (inCust == id) {
                             let distance = calculateDistance(customer, Depot);
                             totalDistance += distance;
-                            //console.log("Dist from Last point ",id ," to Depot ", distance)
                             for (const customerCurrent of customers) {
                                 const idCurrent = customerCurrent.id;
                                 if (idCurrent === currentPoint) {   // Check that now index of CurrentPoint is same in customers
                                     let distance = calculateDistance(customer, customerCurrent);
                                     totalDistance += distance;
-                                    //console.log("Dist from Current point",id ," to Last point", idCurrent, distance);
                                 }
                             }
                         }
@@ -1045,7 +1008,6 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
                                 if (idCurrent === currentPoint) {   // Check that now index of CurrentPoint is same in customers
                                     let distance = calculateDistance(customerCurrent, customer);
                                     totalDistance += distance;
-                                    //console.log("Dist Current",currentPoint, "to point ",id , distance);
                                     currentPoint = inCust;
                                 }
                             }
@@ -1062,11 +1024,11 @@ function TotalDIstanceAllRoute(Depot, CustomerInRoute) {
     return { totalArray: totalDistanceArray, totalDistance: totalDistanceAllRoute };
 }
 
-function getRoundDepot(CustomerInRoute){
+function getRoundDepot(CustomerInRoute) {
     let NumberOfRound = 0;
 
-    for (const cust of CustomerInRoute){
-        if ( cust != '' ){
+    for (const cust of CustomerInRoute) {
+        if (cust != '') {
             NumberOfRound += 1;
         }
     }
@@ -1075,43 +1037,43 @@ function getRoundDepot(CustomerInRoute){
 
 function generateRoutes(customersInRoutes, startLocation) {
     let routes = [];
-  
+
     for (const route of customersInRoutes) {
-      const routeSegments = [];
-  
-      if (route.length > 0) {
-        routeSegments.push(startLocation);
-        for (const customer of route) {
-          routeSegments.push(customer);
+        const routeSegments = [];
+
+        if (route.length > 0) {
+            routeSegments.push(startLocation);
+            for (const customer of route) {
+                routeSegments.push(customer);
+            }
+        } else {
+            continue;
         }
-      } else {
-        continue;
-      }
-      routeSegments.push(startLocation);
-  
-      // Join the route segments to create the full route for this route
-      const fullRoute = routeSegments.join(' -> ');
-      routes.push(fullRoute);
+        routeSegments.push(startLocation);
+
+        // Join the route segments to create the full route for this route
+        const fullRoute = routeSegments.join(' -> ');
+        routes.push(fullRoute);
     }
     return routes;
-  }
+}
 
-  function generateRoutesPri(DepotInRoute){
+function generateRoutesPri(DepotInRoute) {
     let routes = [];
     let firstCust = '1';
     let dep = null;
 
-    if ( DepotInRoute[0] == 1 ){
+    if (DepotInRoute[0] == 1) {
         dep = "W1";
-    }else if (DepotInRoute[0] == 2){
+    } else if (DepotInRoute[0] == 2) {
         dep = "W21";
-    }else if (DepotInRoute[0] == 3){
+    } else if (DepotInRoute[0] == 3) {
         dep = "W23";
     }
 
-    for ( const route in DepotInRoute){
+    for (const route in DepotInRoute) {
         let routesSegments = [];
-        if (route.length > 0){
+        if (route.length > 0) {
             routesSegments.push(dep)
             routesSegments.push(firstCust)
         } else {
@@ -1126,24 +1088,24 @@ function generateRoutes(customersInRoutes, startLocation) {
     return routes;
 }
 
-function generateTimeMin(customerDistanceArray){
+function generateTimeMin(customerDistanceArray) {
     let arrayTime = [];
-    for ( const dist of customerDistanceArray){
-        let time = (dist*60)/224.24;   // get time minutes
+    for (const dist of customerDistanceArray) {
+        let time = (dist * 60) / 224.24;   // get time minutes
         arrayTime.push(time.toFixed(2));
     }
     return arrayTime;
 }
 
-function generateTotalStretch(customersInRoutes){
+function generateTotalStretch(customersInRoutes) {
     let stretch = [];
-    for ( const cust of customersInRoutes){
+    for (const cust of customersInRoutes) {
         let totalStretch = 0;
-        if ( cust != ''){
-            for (const inCust of cust){
+        if (cust != '') {
+            for (const inCust of cust) {
                 for (const customer of customers) {
                     const id = customer.id;
-                    if (id == inCust){
+                    if (id == inCust) {
                         totalStretch += customer.stretchDemand;
                     }
                 }
@@ -1156,15 +1118,15 @@ function generateTotalStretch(customersInRoutes){
     return stretch;
 }
 
-function generateTotalPerson(customersInRoutes){
+function generateTotalPerson(customersInRoutes) {
     let person = [];
-    for ( const cust of customersInRoutes){
+    for (const cust of customersInRoutes) {
         let totalPerson = 0;
-        if ( cust != ''){
-            for (const inCust of cust){
+        if (cust != '') {
+            for (const inCust of cust) {
                 for (const customer of customers) {
                     const id = customer.id;
-                    if (id == inCust){
+                    if (id == inCust) {
                         totalPerson += customer.personDemand;
                     }
                 }
@@ -1177,10 +1139,10 @@ function generateTotalPerson(customersInRoutes){
     return person;
 }
 
-function getDictResult(route, Time, totalPerson, totalStretch,totalDistanceArray){
+function getDictResult(route, Time, totalPerson, totalStretch, totalDistanceArray) {
     let results = [];
 
-    for ( let i = 0; i < route.length; i++){
+    for (let i = 0; i < route.length; i++) {
         let result = {
             route: route[i],
             person: totalPerson[i],
