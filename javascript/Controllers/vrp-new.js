@@ -595,6 +595,7 @@ function clikRunVrp() {
             if (isDataMissing1 || isDataMissing2) {
                 fireSweetAlert(CustIn.id);
                 inputIsValid = false;
+                CustInput = [];
                 break;
             }
 
@@ -616,6 +617,7 @@ function clikRunVrp() {
                 console.log("CustIn Wrong : ", CustIn);
                 fireSweetAlert2(CustIn.id);
                 inputIsValid = false;
+                CustInput = [];
                 break;
             }
         }
