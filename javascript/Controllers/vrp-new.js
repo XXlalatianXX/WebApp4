@@ -564,9 +564,9 @@ function solveMDVRP(customers, depots) {
 }
 
 const depots = [
-    new Depot(1, 102.080567, 14.934309), // Depot 1   1  Korat
-    new Depot(2, 105.080567, 15.934309), // Depot 2   21 Ubon
-    new Depot(3, 102.787364, 17.386890), // Depot 3   23 Udon
+    new Depot(1, 102.081660, 14.933738), // Depot 1   1  Korat
+    new Depot(2, 104.861988, 15.249080), // Depot 2   21 Ubon
+    new Depot(3, 102.795457, 17.379619), // Depot 3   23 Udon
 ];
 
 let customers = [];
