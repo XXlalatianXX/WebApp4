@@ -559,6 +559,7 @@ function solveMDVRP(customers, depots) {
         vehicles1.push(vehicle1);
         vehicles2.push(vehicle2);
         vehicles3.push(vehicle3);
+        console.log(" vehicle 1 : ", vehicle1);
     }
     return { vehicles1: vehicles1, vehicles2: vehicles2, vehicles3: vehicles3, priorityDep: priorityDep };
 }
@@ -569,18 +570,25 @@ const depots = [
     new Depot(3, 102.795457, 17.379619), // Depot 3   23 Udon
 ];
 
-let customers = [];
+// Point set 3
+let customers = [
+    new Customer(1, 15.023672, 105.367127, 2, 5),
+    new Customer(2, 15.867286, 104.635988, 1, 5),
+    new Customer(3, 17.589593, 104.294433, 2, 6),
+    new Customer(4, 17.590998, 103.395112, 1, 5),
+    new Customer(5, 16.730289, 102.576651, 3, 2),
+];
 
 function clikRunVrp() {
 
-
+    /*
     // Block to check Input is correct Pattern ...
     let CustInput = [];
     do {
         CustInput = UnlimitedInput();
         let inputIsValid = true;
-
-        for (const CustIn of CustInput) {
+        
+        for (const CustIn of CustInput) {                                                                                                   // Check Input is Empty?
             const isDataMissing1 = (CustIn.lat == "") && (CustIn.lon == "") && (CustIn.stretchDemand == 0) && (CustIn.personDemand == 0);
             const isDataMissing2 = (CustIn.lat != "" && CustIn.lon != "") && (CustIn.stretchDemand == 0 && CustIn.personDemand == 0);
 
@@ -619,6 +627,7 @@ function clikRunVrp() {
     } while (!inputIsValid);
 
     customers = CustInput;
+    */
     console.log("Customer Dictionary : ", customers);
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // vehicle1 is from warehouse 1
