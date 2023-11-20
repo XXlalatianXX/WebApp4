@@ -87,6 +87,10 @@ function solveMDVRP(customers, depots) {
     var stretchCapacity3 = 0;
     var personCapacity3 = 0;
 
+    var totalDistanceDepot1 = 0;
+    var totalDistanceDepot2 = 0;
+    var totalDistanceDepot3 = 0;
+
     const vehicles1 = [];   // From warehouse 1
     const vehicles2 = [];
     const vehicles3 = [];
@@ -111,10 +115,6 @@ function solveMDVRP(customers, depots) {
         var currentCustomer1 = depot1;
         var currentCustomer2 = depot2;
         var currentCustomer3 = depot3;
-
-        var totalDistanceDepot1 = 0;
-        var totalDistanceDepot2 = 0;
-        var totalDistanceDepot3 = 0;
 
         let CheckBool1 = true;
         let CheckBool2 = true;
@@ -148,82 +148,346 @@ function solveMDVRP(customers, depots) {
             const { nearestCustomer: nearestCustomer1, distance: distance1 } = findNearestCustomer(currentCustomer1, unassignedCustomers);
             const { nearestCustomer: nearestCustomer2, distance: distance2 } = findNearestCustomer(currentCustomer2, unassignedCustomers);
             const { nearestCustomer: nearestCustomer3, distance: distance3 } = findNearestCustomer(currentCustomer3, unassignedCustomers);
+            const AlldisArray = [distance1, distance2, distance3];
+            const dis13Array = [distance1, distance3];
+            const dis12Array = [distance1, distance2];
+            const dis23Array = [distance2, distance3];
+            console.log("disArray : " + AlldisArray);
+
+            if (nearestCustomer1 != null){
+                console.log(" Near from Deepot 1 : ", nearestCustomer1.id);
+            }
+            if (nearestCustomer2 != null){
+                console.log(" Near from Deepot 2 : ", nearestCustomer2.id);
+            }
+            if (nearestCustomer3 != null){
+                console.log(" Near from Deepot 3 : ", nearestCustomer3.id);
+            }
+
+            console.log("CheckBool1 : ", CheckBool1);
+            console.log("CheckBool2 : ", CheckBool2);
+            console.log("CheckBool3 : ", CheckBool3);
+
+            if (nearestCustomer1 != null && nearestCustomer2 != null && nearestCustomer3 != null) {
+                if ((nearestCustomer1.id == nearestCustomer2.id) && (nearestCustomer2.id == nearestCustomer3.id)) { // all point have same nearest
+                    let nearDep = null;
+                    let minDis = Infinity;
+                    for (const dis of AlldisArray) {
+                        console.log("dis : " + dis);
+                        if (dis < minDis) {
+                            minDis = dis;
+                            nearDep = AlldisArray.indexOf(dis);
+                            console.log("nearDep :  ", nearDep);
+                        }
+                    }
+
+                    if ((nearDep == 0) && !CheckBool1){
+                        CheckBool2 = false;
+                        CheckBool3 = false;
+                    } else if ((nearDep == 1) && !CheckBool2){
+                        CheckBool1 = false;
+                        CheckBool3 = false;
+                    } else if ((nearDep == 2) && !CheckBool3){
+                        CheckBool1 = false;
+                        CheckBool2 = false;
+                    }
+                } else if ((nearestCustomer1.id == nearestCustomer3.id) && (nearestCustomer2.id != nearestCustomer3.id)){ // just point 1,3 have same nearest
+                    let nearDep = null;
+                    let minDis = Infinity;
+                    for (const dis of dis13Array) {
+                        console.log("dis : " + dis);
+                        if (dis < minDis) {
+                            minDis = dis;
+                            nearDep = dis13Array.indexOf(dis);
+                            console.log("nearDep :  ", nearDep);
+                        }
+                    }
+                    if ((nearDep == 0) && !CheckBool1){
+                        CheckBool3 = false;
+                    } else if ((nearDep == 1) && !CheckBool3){
+                        CheckBool1 = false;
+                    }
+                } else if ((nearestCustomer1.id == nearestCustomer2.id) && (nearestCustomer2.id != nearestCustomer3)){  // just point 1,2 have same nearest
+                    let nearDep = null;
+                    let minDis = Infinity;
+                    for (const dis of dis12Array) {
+                        console.log("dis : " + dis);
+                        if (dis < minDis) {
+                            minDis = dis;
+                            nearDep = dis12Array.indexOf(dis);
+                            console.log("nearDep :  ", nearDep);
+                        }
+                    }
+                    if ((nearDep == 0) && !CheckBool1){
+                        CheckBool2 = false;
+                    } else if ((nearDep == 1) && !CheckBool2){
+                        CheckBool1 = false;
+                    }
+                } else if ((nearestCustomer2.id == nearestCustomer3.id) && (nearestCustomer1.id != nearestCustomer2)){  // just point 2,3 have same nearest
+                    let nearDep = null;
+                    let minDis = Infinity;
+                    for (const dis of dis23Array) {
+                        console.log("dis : " + dis);
+                        if (dis < minDis) {
+                            minDis = dis;
+                            nearDep = dis23Array.indexOf(dis);
+                            console.log("nearDep :  ", nearDep);
+                        }
+                    }
+                    if ((nearDep == 0) && !CheckBool2){
+                        CheckBool3 = false;
+                    } else if ((nearDep == 1) && !CheckBool3){
+                        CheckBool2 = false;
+                    }
+                }
+            }
+
+            console.log("Before capacity CheckBool1 : ", CheckBool1);
+            console.log("Before capacity CheckBool2 : ", CheckBool2);
+            console.log("Before capacity CheckBool3 : ", CheckBool3);
+
+            console.log("||||||||||||||||||||||||||||||||||||||||||||");
 
             if ((nearestCustomer1 === null) && (nearestCustomer2 === null) && (nearestCustomer3 === null)) {    // break when all don't have nearest Customer
                 break;
             } else {
                 //============================================== Block to set Capacity Dynamic Type =========================================
-                // Check Capacity from Warehouse 1
-                if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand == 0) && (currentPersonCapacity1 + nearestCustomer1.personDemand <= 28)) {
-                    stretchCapacity1 = 0;
-                    personCapacity1 = 28;
-                } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 1) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 2) &&
-                    (currentPersonCapacity1 + nearestCustomer1.personDemand <= 22)) {
-                    stretchCapacity1 = 2;
-                    personCapacity1 = 22;
-                } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 3) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 5) &&
-                    (currentPersonCapacity1 + nearestCustomer1.personDemand <= 16)) {
-                    stretchCapacity1 = 5;
-                    personCapacity1 = 16;
-                } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 6) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 8) &&
-                    (currentPersonCapacity1 + nearestCustomer1.personDemand <= 10)) {
-                    stretchCapacity1 = 8;
-                    personCapacity1 = 10;
-                } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 9) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 11) &&
-                    (currentPersonCapacity1 + nearestCustomer1.personDemand <= 4)) {
-                    stretchCapacity1 = 11;
-                    personCapacity1 = 4;
-                } else {
-                    CheckBool1 = false;
+
+                if (!CheckBool1 && !CheckBool2 && !CheckBool3){ // if all checkbox false before capacity set
+                    break;
+                } else if (!CheckBool1 & !CheckBool3){  // if 1,3 check point false before capacity set
+                    // Check Capacity from Warehouse 2
+                    if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand == 0) && (currentPersonCapacity2 + nearestCustomer2.personDemand <= 28)) {
+                        stretchCapacity2 = 0;
+                        personCapacity2 = 28;
+                    } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 1) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 2) &&
+                        (currentPersonCapacity2 + nearestCustomer2.personDemand <= 22)) {
+                        stretchCapacity2 = 2;
+                        personCapacity2 = 22;
+                    } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 3) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 5) &&
+                        (currentPersonCapacity2 + nearestCustomer2.personDemand <= 16)) {
+                        stretchCapacity2 = 5;
+                        personCapacity2 = 16;
+                    } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 6) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 8) &&
+                        (currentPersonCapacity2 + nearestCustomer2.personDemand <= 10)) {
+                        stretchCapacity2 = 8;
+                        personCapacity2 = 10;
+                    } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 9) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 11) &&
+                        (currentPersonCapacity2 + nearestCustomer2.personDemand <= 4)) {
+                        stretchCapacity2 = 11;
+                        personCapacity2 = 4;
+                    } else {
+                        console.log("Warehouse 2 Full");
+                        const vehicle1Inloop2 = vehicle2.route.map((customer) => customer.id);  // vehicle1Inloop :  [ 2 , ...]
+
+                        for (const custInloop2 of vehicle1Inloop2) {
+                            if (vehicle1Inloop2.indexOf(custInloop2) == (vehicle1Inloop2.length - 1)) {  // end in loop will can distance return to warehouse
+                                for (const cust of customers) {
+                                    const id = cust.id;
+                                    if (custInloop2 == id) {
+                                        const distance = calculateDistance(cust, depots[1]);
+                                        totalDistanceDepot2 += distance;
+                                    }
+                                }
+                            }
+                        }
+                        CheckBool2 = false;
+                    }
+                } else if (!CheckBool1 && !CheckBool2){ // if 1,2 check point false before capacity set
+                    // Check Capacity from Warehouse 3
+                    if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand == 0) && (currentPersonCapacity3 + nearestCustomer3.personDemand <= 28)) {
+                        stretchCapacity3 = 0;
+                        personCapacity3 = 28;
+                    } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 1) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 2) &&
+                        (currentPersonCapacity3 + nearestCustomer3.personDemand <= 22)) {
+                        stretchCapacity3 = 2;
+                        personCapacity3 = 22;
+                    } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 3) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 5) &&
+                        (currentPersonCapacity3 + nearestCustomer3.personDemand <= 16)) {
+                        stretchCapacity3 = 5;
+                        personCapacity3 = 16;
+                    } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 6) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 8) &&
+                        (currentPersonCapacity3 + nearestCustomer3.personDemand <= 10)) {
+                        stretchCapacity3 = 8;
+                        personCapacity3 = 10;
+                    } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 9) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 11) &&
+                        (currentPersonCapacity3 + nearestCustomer3.personDemand <= 4)) {
+                        stretchCapacity3 = 11;
+                        personCapacity3 = 4;
+                    } else {
+                        console.log("Warehouse 3 Full");
+                        const vehicle1Inloop3 = vehicle3.route.map((customer) => customer.id);  // vehicle1Inloop :  [ 2 , ...]
+
+                        for (const custInloop3 of vehicle1Inloop3) {
+                            if (vehicle1Inloop3.indexOf(custInloop3) == (vehicle1Inloop3.length - 1)) {  // end in loop will can distance return to warehouse
+                                for (const cust of customers) {
+                                    const id = cust.id;
+                                    if (custInloop3 == id) {
+                                        const distance = calculateDistance(cust, depots[2]);
+                                        totalDistanceDepot3 += distance;
+                                    }
+                                }
+                            }
+                        }
+                        CheckBool3 = false;
+                    }
+                } else if (!CheckBool2 && !CheckBool3){ // if 2,3 check point false before capacity set
+                    // Check Capacity from Warehouse 1
+                    if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand == 0) && (currentPersonCapacity1 + nearestCustomer1.personDemand <= 28)) {
+                        stretchCapacity1 = 0;
+                        personCapacity1 = 28;
+                    } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 1) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 2) &&
+                        (currentPersonCapacity1 + nearestCustomer1.personDemand <= 22)) {
+                        stretchCapacity1 = 2;
+                        personCapacity1 = 22;
+                    } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 3) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 5) &&
+                        (currentPersonCapacity1 + nearestCustomer1.personDemand <= 16)) {
+                        stretchCapacity1 = 5;
+                        personCapacity1 = 16;
+                    } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 6) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 8) &&
+                        (currentPersonCapacity1 + nearestCustomer1.personDemand <= 10)) {
+                        stretchCapacity1 = 8;
+                        personCapacity1 = 10;
+                    } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 9) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 11) &&
+                        (currentPersonCapacity1 + nearestCustomer1.personDemand <= 4)) {
+                        stretchCapacity1 = 11;
+                        personCapacity1 = 4;
+                    } else {
+                        console.log("Warehouse 1 Full");
+                        const vehicle1Inloop1 = vehicle1.route.map((customer) => customer.id);  // vehicle1Inloop :  [ 2 , ...]
+
+                        for (const custInloop1 of vehicle1Inloop1) {
+                            if (vehicle1Inloop1.indexOf(custInloop1) == (vehicle1Inloop1.length - 1)) {  // end in loop will can distance return to warehouse
+                                for (const cust of customers) {
+                                    const id = cust.id;
+                                    if (custInloop1 == id) {
+                                        const distance = calculateDistance(cust, depots[0]);
+                                        totalDistanceDepot1 += distance;
+                                    }
+                                }
+                            }
+                        }
+                        CheckBool1 = false;
+                    }
+                } else {                                // another case
+                    // Check Capacity from Warehouse 1
+                    if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand == 0) && (currentPersonCapacity1 + nearestCustomer1.personDemand <= 28)) {
+                        stretchCapacity1 = 0;
+                        personCapacity1 = 28;
+                    } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 1) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 2) &&
+                        (currentPersonCapacity1 + nearestCustomer1.personDemand <= 22)) {
+                        stretchCapacity1 = 2;
+                        personCapacity1 = 22;
+                    } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 3) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 5) &&
+                        (currentPersonCapacity1 + nearestCustomer1.personDemand <= 16)) {
+                        stretchCapacity1 = 5;
+                        personCapacity1 = 16;
+                    } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 6) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 8) &&
+                        (currentPersonCapacity1 + nearestCustomer1.personDemand <= 10)) {
+                        stretchCapacity1 = 8;
+                        personCapacity1 = 10;
+                    } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand >= 9) && (currentStretchCapacity1 + nearestCustomer1.stretchDemand <= 11) &&
+                        (currentPersonCapacity1 + nearestCustomer1.personDemand <= 4)) {
+                        stretchCapacity1 = 11;
+                        personCapacity1 = 4;
+                    } else {
+                        console.log("Warehouse 1 Full");
+                        const vehicle1Inloop1 = vehicle1.route.map((customer) => customer.id);  // vehicle1Inloop :  [ 2 , ...]
+
+                        for (const custInloop1 of vehicle1Inloop1) {
+                            if (vehicle1Inloop1.indexOf(custInloop1) == (vehicle1Inloop1.length - 1)) {  // end in loop will can distance return to warehouse
+                                for (const cust of customers) {
+                                    const id = cust.id;
+                                    if (custInloop1 == id) {
+                                        const distance = calculateDistance(cust, depots[0]);
+                                        totalDistanceDepot1 += distance;
+                                    }
+                                }
+                            }
+                        }
+                        CheckBool1 = false;
+                    }
+
+                    // Check Capacity from Warehouse 2
+                    if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand == 0) && (currentPersonCapacity2 + nearestCustomer2.personDemand <= 28)) {
+                        stretchCapacity2 = 0;
+                        personCapacity2 = 28;
+                    } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 1) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 2) &&
+                        (currentPersonCapacity2 + nearestCustomer2.personDemand <= 22)) {
+                        stretchCapacity2 = 2;
+                        personCapacity2 = 22;
+                    } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 3) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 5) &&
+                        (currentPersonCapacity2 + nearestCustomer2.personDemand <= 16)) {
+                        stretchCapacity2 = 5;
+                        personCapacity2 = 16;
+                    } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 6) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 8) &&
+                        (currentPersonCapacity2 + nearestCustomer2.personDemand <= 10)) {
+                        stretchCapacity2 = 8;
+                        personCapacity2 = 10;
+                    } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 9) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 11) &&
+                        (currentPersonCapacity2 + nearestCustomer2.personDemand <= 4)) {
+                        stretchCapacity2 = 11;
+                        personCapacity2 = 4;
+                    } else {
+                        console.log("Warehouse 2 Full");
+                        const vehicle1Inloop2 = vehicle2.route.map((customer) => customer.id);  // vehicle1Inloop :  [ 2 , ...]
+
+                        for (const custInloop2 of vehicle1Inloop2) {
+                            if (vehicle1Inloop2.indexOf(custInloop2) == (vehicle1Inloop2.length - 1)) {  // end in loop will can distance return to warehouse
+                                for (const cust of customers) {
+                                    const id = cust.id;
+                                    if (custInloop2 == id) {
+                                        const distance = calculateDistance(cust, depots[1]);
+                                        totalDistanceDepot2 += distance;
+                                    }
+                                }
+                            }
+                        }
+                        CheckBool2 = false;
+                    }
+
+                    // Check Capacity from Warehouse 3
+                    if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand == 0) && (currentPersonCapacity3 + nearestCustomer3.personDemand <= 28)) {
+                        stretchCapacity3 = 0;
+                        personCapacity3 = 28;
+                    } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 1) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 2) &&
+                        (currentPersonCapacity3 + nearestCustomer3.personDemand <= 22)) {
+                        stretchCapacity3 = 2;
+                        personCapacity3 = 22;
+                    } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 3) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 5) &&
+                        (currentPersonCapacity3 + nearestCustomer3.personDemand <= 16)) {
+                        stretchCapacity3 = 5;
+                        personCapacity3 = 16;
+                    } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 6) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 8) &&
+                        (currentPersonCapacity3 + nearestCustomer3.personDemand <= 10)) {
+                        stretchCapacity3 = 8;
+                        personCapacity3 = 10;
+                    } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 9) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 11) &&
+                        (currentPersonCapacity3 + nearestCustomer3.personDemand <= 4)) {
+                        stretchCapacity3 = 11;
+                        personCapacity3 = 4;
+                    } else {
+                        console.log("Warehouse 3 Full");
+                        const vehicle1Inloop3 = vehicle3.route.map((customer) => customer.id);  // vehicle1Inloop :  [ 2 , ...]
+
+                        for (const custInloop3 of vehicle1Inloop3) {
+                            if (vehicle1Inloop3.indexOf(custInloop3) == (vehicle1Inloop3.length - 1)) {  // end in loop will can distance return to warehouse
+                                for (const cust of customers) {
+                                    const id = cust.id;
+                                    if (custInloop3 == id) {
+                                        const distance = calculateDistance(cust, depots[2]);
+                                        totalDistanceDepot3 += distance;
+                                    }
+                                }
+                            }
+                        }
+                        CheckBool3 = false;
+                    }
                 }
 
-                // Check Capacity from Warehouse 2
-                if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand == 0) && (currentPersonCapacity2 + nearestCustomer2.personDemand <= 28)) {
-                    stretchCapacity2 = 0;
-                    personCapacity2 = 28;
-                } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 1) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 2) &&
-                    (currentPersonCapacity2 + nearestCustomer2.personDemand <= 22)) {
-                    stretchCapacity2 = 2;
-                    personCapacity2 = 22;
-                } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 3) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 5) &&
-                    (currentPersonCapacity2 + nearestCustomer2.personDemand <= 16)) {
-                    stretchCapacity2 = 5;
-                    personCapacity2 = 16;
-                } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 6) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 8) &&
-                    (currentPersonCapacity2 + nearestCustomer2.personDemand <= 10)) {
-                    stretchCapacity2 = 8;
-                    personCapacity2 = 10;
-                } else if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand >= 9) && (currentStretchCapacity2 + nearestCustomer2.stretchDemand <= 11) &&
-                    (currentPersonCapacity2 + nearestCustomer2.personDemand <= 4)) {
-                    stretchCapacity2 = 11;
-                    personCapacity2 = 4;
-                } else {
-                    CheckBool2 = false;
-                }
-
-                // Check Capacity from Warehouse 3
-                if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand == 0) && (currentPersonCapacity3 + nearestCustomer3.personDemand <= 28)) {
-                    stretchCapacity3 = 0;
-                    personCapacity3 = 28;
-                } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 1) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 2) &&
-                    (currentPersonCapacity3 + nearestCustomer3.personDemand <= 22)) {
-                    stretchCapacity3 = 2;
-                    personCapacity3 = 22;
-                } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 3) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 5) &&
-                    (currentPersonCapacity3 + nearestCustomer3.personDemand <= 16)) {
-                    stretchCapacity3 = 5;
-                    personCapacity3 = 16;
-                } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 6) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 8) &&
-                    (currentPersonCapacity3 + nearestCustomer3.personDemand <= 10)) {
-                    stretchCapacity3 = 8;
-                    personCapacity3 = 10;
-                } else if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand >= 9) && (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= 11) &&
-                    (currentPersonCapacity3 + nearestCustomer3.personDemand <= 4)) {
-                    stretchCapacity3 = 11;
-                    personCapacity3 = 4;
-                } else {
-                    CheckBool3 = false;
-                }
+                console.log("CheckBool1 : ", CheckBool1);
+                console.log("CheckBool2 : ", CheckBool2);
+                console.log("CheckBool3 : ", CheckBool3);
 
                 // Block to use event from Boolean
                 if ((CheckBool1) && (CheckBool2) && (CheckBool3)) {
@@ -366,6 +630,7 @@ function solveMDVRP(customers, depots) {
                         (currentPersonCapacity2 + nearestCustomer2.personDemand > personCapacity2) &&
                         (currentStretchCapacity3 + nearestCustomer3.stretchDemand > stretchCapacity3) &&
                         (currentPersonCapacity3 + nearestCustomer3.personDemand > personCapacity3)) {
+                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -412,6 +677,7 @@ function solveMDVRP(customers, depots) {
                         (currentPersonCapacity1 + nearestCustomer1.personDemand > personCapacity1) &&
                         (currentStretchCapacity3 + nearestCustomer3.stretchDemand > stretchCapacity3) &&
                         (currentPersonCapacity3 + nearestCustomer3.personDemand > personCapacity3)) {
+                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -458,6 +724,7 @@ function solveMDVRP(customers, depots) {
                         (currentPersonCapacity1 + nearestCustomer1.personDemand > personCapacity1) &&
                         (currentStretchCapacity2 + nearestCustomer2.stretchDemand > stretchCapacity2) &&
                         (currentPersonCapacity2 + nearestCustomer2.personDemand > personCapacity2)) {
+                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -501,6 +768,7 @@ function solveMDVRP(customers, depots) {
 
                     if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand > stretchCapacity1) &&    // Check 1 is over?
                         (currentPersonCapacity1 + nearestCustomer1.personDemand > personCapacity1)) {
+                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -520,6 +788,7 @@ function solveMDVRP(customers, depots) {
 
                     if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand > stretchCapacity2) &&    // Check 2 is over?
                         (currentPersonCapacity2 + nearestCustomer2.personDemand > personCapacity2)) {
+                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -539,6 +808,7 @@ function solveMDVRP(customers, depots) {
 
                     if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand > stretchCapacity3) &&    // Check 3 is over?
                         (currentPersonCapacity3 + nearestCustomer3.personDemand > personCapacity3)) {
+                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -554,12 +824,22 @@ function solveMDVRP(customers, depots) {
                         CheckBool3 = false;     // set checkbool 3 if it out of condition
                     }
                 }
+                
+                if ((!CheckBool1) && (!CheckBool2) && (!CheckBool3)){   // if all check is false after capacity exceed
+                    break;
+                }
             }
+            console.log("vehicle1 : ", vehicle1.route.map((customer) => customer.id));
+            console.log("vehicle2 : ", vehicle2.route.map((customer) => customer.id));
+            console.log("vehicle3 : ", vehicle3.route.map((customer) => customer.id));
+            console.log("totalDistanceDepot1 : ", totalDistanceDepot1);
+            console.log("totalDistanceDepot2 : ", totalDistanceDepot2);
+            console.log("totalDistanceDepot3 : ", totalDistanceDepot3);
+            console.log("---------------------------------------------------");
         } while (CheckBool1 || CheckBool2 || CheckBool3);   // If all false -> == false...
         vehicles1.push(vehicle1);
         vehicles2.push(vehicle2);
         vehicles3.push(vehicle3);
-        console.log(" vehicle 1 : ", vehicle1);
     }
     return { vehicles1: vehicles1, vehicles2: vehicles2, vehicles3: vehicles3, priorityDep: priorityDep };
 }
@@ -570,6 +850,7 @@ const depots = [
     new Depot(3, 102.795457, 17.379619), // Depot 3   23 Udon
 ];
 
+/*
 // Point set 3
 let customers = [
     new Customer(1, 15.023672, 105.367127, 2, 5),
@@ -578,10 +859,12 @@ let customers = [
     new Customer(4, 17.590998, 103.395112, 1, 5),
     new Customer(5, 16.730289, 102.576651, 3, 2),
 ];
+*/
+let customers = [];
 
 function clikRunVrp() {
 
-    /*
+    
     // Block to check Input is correct Pattern ...
     let CustInput = [];
     do {
@@ -627,7 +910,7 @@ function clikRunVrp() {
     } while (!inputIsValid);
 
     customers = CustInput;
-    */
+    
     console.log("Customer Dictionary : ", customers);
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // vehicle1 is from warehouse 1
