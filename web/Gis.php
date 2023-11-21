@@ -90,7 +90,7 @@ $application = "cs_gis_dev_framework";
 													<input type="text" name="stretchers" id="Stret" placeholder="เปลสนาม"class="form-control num_stretchers">
 													</td>
 													<td>
-													<button type="button" name="add" id="add" class="btn btn-success">Add More</button>       
+													<button type="button" name="add" id="add" style="border: 2px solid red;" class="btn btn-success">Add More</button>       
 													</td>
 													<td>
 													<button type="button" name="Pri" id="Pri" class="btn btn-info">P</button> 
@@ -101,7 +101,7 @@ $application = "cs_gis_dev_framework";
 													<td id="lon_field" style="color:white;"></td>
 													<td id="person_field" style="color:white;"></td>
 													<td id="stretcher_field" style="color:white;"></td>
-													<td id="button_field" style="color:red;"></td>
+													<td id="button_field" style="color:red;font-size: 14px;"></td>
 													</tr>
 													<tr>
 												</tr>
@@ -121,9 +121,9 @@ $application = "cs_gis_dev_framework";
 														<div id="results" style="display : none;">
 															<h3>Distance</h3>
 															<p>Total All Distance : <span id="Alldistance-result" style="display: inline; color: yellow"></span> km.</p>
-															<p>Total Distance 1 : <span id="distance1-result" style="display: inline; color: yellow"></span> km.</p>
-															<p>Total Distance 2 : <span id="distance2-result" style="display: inline; color: yellow"></span> km.</p>
-															<p>Total Distance 3 : <span id="distance3-result" style="display: inline; color: yellow"></span> km.</p>
+															<p>Total Distance Wing 1 : <span id="distance1-result" style="display: inline; color: yellow"></span> km.</p>
+															<p>Total Distance Wing 21 : <span id="distance2-result" style="display: inline; color: yellow"></span> km.</p>
+															<p>Total Distance Wing 23 : <span id="distance3-result" style="display: inline; color: yellow"></span> km.</p>
 															<p style="visibility:hidden" >///</p>
 															<h3>Number of Rounds</h3>
 															<p>Wing 1 : <span id="Depot1-round" style="display: inline; color: yellow"></span></p>
