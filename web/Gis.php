@@ -242,6 +242,7 @@ $application = "cs_gis_dev_framework";
 						<h5 id="slideManual" style="margin:0; padding:4px 0px 5px 5px; text-align:left; background-image:url(images/bg_header_cop_div.png); background-repeat:repeat; color:#EFEFEF; cursor:pointer; font-size:1em;"><b style="color:#FF0000;margin:0px 8px 0px 2px; font-size:1.3em;">x</b> Manual </h5>								
 						
 						<div class="w3-content" style="margin-top:20px;max-width:50%;max-height:25%">
+							<img class="mySlides" src="images/Input_cond.png" style="width:100%">
   							<img class="mySlides" src="images/Manual1.png" style="width:100%">
   							<img class="mySlides" src="images/Manual2.png" style="width:100%;">
   							<img class="mySlides" src="images/Manual3.png" style="width:100%">
@@ -263,6 +264,7 @@ $application = "cs_gis_dev_framework";
 							<button class="w3-button demo" onclick="currentDiv(5)">5</button> 
 							<button class="w3-button demo" onclick="currentDiv(6)">6</button> 
 							<button class="w3-button demo" onclick="currentDiv(7)">7</button> 
+							<button class="w3-button demo" onclick="currentDiv(8)">8</button> 
 						</div>
 					</div>
 					
