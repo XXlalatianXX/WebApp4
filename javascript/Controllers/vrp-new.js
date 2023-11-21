@@ -870,23 +870,26 @@ const depots = [
     new Depot(3, 102.795457, 17.379619), // Depot 3   23 Udon
 ];
 
-//let customers = [];
+let customers = [];
+
+/*
+// set 1&2
 let customers = [
     new Customer(1, 16.385090, 102.848165, 1, 3),
     new Customer(2, 15.574469, 102.543969, 2, 5),
     new Customer(3, 16.758493, 103.477906, 1, 6),
     new Customer(4, 16.308275, 104.374485, 4, 6),
     new Customer(5, 15.595031, 104.870806, 2, 2),
-    new Customer(6, 15.553905, 102.784124, 3, 7),    //*
-    new Customer(7, 14.956655, 103.093657,  1, 4),    //*
+    new Customer(6, 15.553905, 102.784124, 3, 7),
+    new Customer(7, 14.956655, 103.093657,  1, 4),
     new Customer(8, 15.157644, 104.145004,  2, 4),
     new Customer(9, 16.395330, 103.355160,  4, 5),
-    new Customer(10, 16.477229, 104.315781,  2, 3)      //*
+    new Customer(10, 16.477229, 104.315781,  2, 3)
 ];
+*/
 
 function clikRunVrp() {
-
-    /*
+    
     // Block to check Input is correct Pattern ...
     let CustInput = [];
     do {
@@ -932,8 +935,6 @@ function clikRunVrp() {
     } while (!inputIsValid);
 
     customers = CustInput;
-    */
-
     console.log("Customer Dictionary : ", customers);
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // vehicle1 is from warehouse 1
