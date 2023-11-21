@@ -99,6 +99,7 @@ function solveMDVRP(customers, depots) {
     const priorityDep = [];
 
     while (unassignedCustomers.length > 0) {
+        console.log(" Inner Large looop ...")
 
         var vehicle1 = new Vehicle(vehicles1.length + 1, stretchCapacity1, personCapacity1);    // Use var cause of can change out of block...
         var vehicle2 = new Vehicle(vehicles2.length + 1, stretchCapacity2, personCapacity2);
@@ -121,8 +122,10 @@ function solveMDVRP(customers, depots) {
         let CheckBool3 = true;
 
         do {
+            console.log(" Inner Small loop ...")
 
             if (PriorityEvent) {
+                console.log(" Inner priority loop ...")
                 var priorityCustomer = unassignedCustomers[0];
 
                 const { nearestDepot: nearestDepotPri, distance: distancePri } = findNearestDepot(priorityCustomer, depots);
@@ -154,13 +157,13 @@ function solveMDVRP(customers, depots) {
             const dis23Array = [distance2, distance3];
             console.log("disArray : " + AlldisArray);
 
-            if (nearestCustomer1 != null){
+            if (nearestCustomer1 != null) {
                 console.log(" Near from Deepot 1 : ", nearestCustomer1.id);
             }
-            if (nearestCustomer2 != null){
+            if (nearestCustomer2 != null) {
                 console.log(" Near from Deepot 2 : ", nearestCustomer2.id);
             }
-            if (nearestCustomer3 != null){
+            if (nearestCustomer3 != null) {
                 console.log(" Near from Deepot 3 : ", nearestCustomer3.id);
             }
 
@@ -169,79 +172,75 @@ function solveMDVRP(customers, depots) {
             console.log("CheckBool3 : ", CheckBool3);
 
             if (nearestCustomer1 != null && nearestCustomer2 != null && nearestCustomer3 != null) {
+                console.log(" Inner check nearest before execute ...")
                 if ((nearestCustomer1.id == nearestCustomer2.id) && (nearestCustomer2.id == nearestCustomer3.id)) { // all point have same nearest
+                    console.log(" all point same nesarest ...")
                     let nearDep = null;
                     let minDis = Infinity;
                     for (const dis of AlldisArray) {
-                        console.log("dis : " + dis);
                         if (dis < minDis) {
                             minDis = dis;
                             nearDep = AlldisArray.indexOf(dis);
-                            console.log("nearDep :  ", nearDep);
                         }
                     }
 
-                    if ((nearDep == 0) && !CheckBool1){
+                    if ((nearDep == 0) && !CheckBool1) {
                         CheckBool2 = false;
                         CheckBool3 = false;
-                    } else if ((nearDep == 1) && !CheckBool2){
+                    } else if ((nearDep == 1) && !CheckBool2) {
                         CheckBool1 = false;
                         CheckBool3 = false;
-                    } else if ((nearDep == 2) && !CheckBool3){
+                    } else if ((nearDep == 2) && !CheckBool3) {
                         CheckBool1 = false;
                         CheckBool2 = false;
                     }
-                } else if ((nearestCustomer1.id == nearestCustomer3.id) && (nearestCustomer2.id != nearestCustomer3.id)){ // just point 1,3 have same nearest
+                } else if ((nearestCustomer1.id == nearestCustomer3.id) && (nearestCustomer2.id != nearestCustomer3.id)) { // just point 1,3 have same nearest
+                    console.log(" just point 1,3 have same nearest ...")
                     let nearDep = null;
                     let minDis = Infinity;
                     for (const dis of dis13Array) {
-                        console.log("dis : " + dis);
                         if (dis < minDis) {
                             minDis = dis;
                             nearDep = dis13Array.indexOf(dis);
-                            console.log("nearDep :  ", nearDep);
                         }
                     }
-                    if ((nearDep == 0) && !CheckBool1){
+                    if ((nearDep == 0) && !CheckBool1) {
                         CheckBool3 = false;
-                    } else if ((nearDep == 1) && !CheckBool3){
+                    } else if ((nearDep == 1) && !CheckBool3) {
                         CheckBool1 = false;
                     }
-                } else if ((nearestCustomer1.id == nearestCustomer2.id) && (nearestCustomer2.id != nearestCustomer3)){  // just point 1,2 have same nearest
+                } else if ((nearestCustomer1.id == nearestCustomer2.id) && (nearestCustomer2.id != nearestCustomer3)) {  // just point 1,2 have same nearest
+                    console.log(" just point 1,2 have same nearest ...")
                     let nearDep = null;
                     let minDis = Infinity;
                     for (const dis of dis12Array) {
-                        console.log("dis : " + dis);
                         if (dis < minDis) {
                             minDis = dis;
                             nearDep = dis12Array.indexOf(dis);
-                            console.log("nearDep :  ", nearDep);
                         }
                     }
-                    if ((nearDep == 0) && !CheckBool1){
+                    if ((nearDep == 0) && !CheckBool1) {
                         CheckBool2 = false;
-                    } else if ((nearDep == 1) && !CheckBool2){
+                    } else if ((nearDep == 1) && !CheckBool2) {
                         CheckBool1 = false;
                     }
-                } else if ((nearestCustomer2.id == nearestCustomer3.id) && (nearestCustomer1.id != nearestCustomer2)){  // just point 2,3 have same nearest
+                } else if ((nearestCustomer2.id == nearestCustomer3.id) && (nearestCustomer1.id != nearestCustomer2)) {  // just point 2,3 have same nearest
+                    console.log(" just point 2,3 have same nearest ...")
                     let nearDep = null;
                     let minDis = Infinity;
                     for (const dis of dis23Array) {
-                        console.log("dis : " + dis);
                         if (dis < minDis) {
                             minDis = dis;
                             nearDep = dis23Array.indexOf(dis);
-                            console.log("nearDep :  ", nearDep);
                         }
                     }
-                    if ((nearDep == 0) && !CheckBool2){
+                    if ((nearDep == 0) && !CheckBool2) {
                         CheckBool3 = false;
-                    } else if ((nearDep == 1) && !CheckBool3){
+                    } else if ((nearDep == 1) && !CheckBool3) {
                         CheckBool2 = false;
                     }
                 }
             }
-
             console.log("Before capacity CheckBool1 : ", CheckBool1);
             console.log("Before capacity CheckBool2 : ", CheckBool2);
             console.log("Before capacity CheckBool3 : ", CheckBool3);
@@ -249,13 +248,17 @@ function solveMDVRP(customers, depots) {
             console.log("||||||||||||||||||||||||||||||||||||||||||||");
 
             if ((nearestCustomer1 === null) && (nearestCustomer2 === null) && (nearestCustomer3 === null)) {    // break when all don't have nearest Customer
+                console.log(" break when all don't have nearest Customer ...")
                 break;
             } else {
                 //============================================== Block to set Capacity Dynamic Type =========================================
+                console.log(" inner block to set Capacity Dynamic Type ...")
 
-                if (!CheckBool1 && !CheckBool2 && !CheckBool3){ // if all checkbox false before capacity set
+                if (!CheckBool1 && !CheckBool2 && !CheckBool3) { // if all checkbox false before capacity set
+                    console.log(" all checkbox false before capacity set ...")
                     break;
-                } else if (!CheckBool1 & !CheckBool3){  // if 1,3 check point false before capacity set
+                } else if (!CheckBool1 & !CheckBool3) {  // if 1,3 check point false before capacity set
+                    console.log(" 1,3 check point false before capacity set ...")
                     // Check Capacity from Warehouse 2
                     if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand == 0) && (currentPersonCapacity2 + nearestCustomer2.personDemand <= 28)) {
                         stretchCapacity2 = 0;
@@ -293,7 +296,8 @@ function solveMDVRP(customers, depots) {
                         }
                         CheckBool2 = false;
                     }
-                } else if (!CheckBool1 && !CheckBool2){ // if 1,2 check point false before capacity set
+                } else if (!CheckBool1 && !CheckBool2) { // if 1,2 check point false before capacity set
+                    console.log(" 1,2 check point false before capacity set ...")
                     // Check Capacity from Warehouse 3
                     if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand == 0) && (currentPersonCapacity3 + nearestCustomer3.personDemand <= 28)) {
                         stretchCapacity3 = 0;
@@ -331,7 +335,8 @@ function solveMDVRP(customers, depots) {
                         }
                         CheckBool3 = false;
                     }
-                } else if (!CheckBool2 && !CheckBool3){ // if 2,3 check point false before capacity set
+                } else if (!CheckBool2 && !CheckBool3) { // if 2,3 check point false before capacity set
+                    console.log(" 2,3 check point false before capacity set ...")
                     // Check Capacity from Warehouse 1
                     if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand == 0) && (currentPersonCapacity1 + nearestCustomer1.personDemand <= 28)) {
                         stretchCapacity1 = 0;
@@ -353,7 +358,6 @@ function solveMDVRP(customers, depots) {
                         stretchCapacity1 = 11;
                         personCapacity1 = 4;
                     } else {
-                        console.log("Warehouse 1 Full");
                         const vehicle1Inloop1 = vehicle1.route.map((customer) => customer.id);  // vehicle1Inloop :  [ 2 , ...]
 
                         for (const custInloop1 of vehicle1Inloop1) {
@@ -370,6 +374,7 @@ function solveMDVRP(customers, depots) {
                         CheckBool1 = false;
                     }
                 } else {                                // another case
+                    console.log(" another case to set capacity ...")
                     // Check Capacity from Warehouse 1
                     if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand == 0) && (currentPersonCapacity1 + nearestCustomer1.personDemand <= 28)) {
                         stretchCapacity1 = 0;
@@ -391,7 +396,6 @@ function solveMDVRP(customers, depots) {
                         stretchCapacity1 = 11;
                         personCapacity1 = 4;
                     } else {
-                        console.log("Warehouse 1 Full");
                         const vehicle1Inloop1 = vehicle1.route.map((customer) => customer.id);  // vehicle1Inloop :  [ 2 , ...]
 
                         for (const custInloop1 of vehicle1Inloop1) {
@@ -429,7 +433,6 @@ function solveMDVRP(customers, depots) {
                         stretchCapacity2 = 11;
                         personCapacity2 = 4;
                     } else {
-                        console.log("Warehouse 2 Full");
                         const vehicle1Inloop2 = vehicle2.route.map((customer) => customer.id);  // vehicle1Inloop :  [ 2 , ...]
 
                         for (const custInloop2 of vehicle1Inloop2) {
@@ -467,7 +470,6 @@ function solveMDVRP(customers, depots) {
                         stretchCapacity3 = 11;
                         personCapacity3 = 4;
                     } else {
-                        console.log("Warehouse 3 Full");
                         const vehicle1Inloop3 = vehicle3.route.map((customer) => customer.id);  // vehicle1Inloop :  [ 2 , ...]
 
                         for (const custInloop3 of vehicle1Inloop3) {
@@ -484,17 +486,21 @@ function solveMDVRP(customers, depots) {
                         CheckBool3 = false;
                     }
                 }
-
+                console.log("---------------------After Capacity Check -------------------");
+                console.log("totalDistanceDepot1 : ", totalDistanceDepot1);
+                console.log("totalDistanceDepot2 : ", totalDistanceDepot2);
+                console.log("totalDistanceDepot3 : ", totalDistanceDepot3);
                 console.log("CheckBool1 : ", CheckBool1);
                 console.log("CheckBool2 : ", CheckBool2);
                 console.log("CheckBool3 : ", CheckBool3);
 
+                console.log(" block to use event from boolean checkbock")
                 // Block to use event from Boolean
                 if ((CheckBool1) && (CheckBool2) && (CheckBool3)) {
+                    console.log("all checkbock true")
                     if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand > stretchCapacity1) && (currentPersonCapacity1 + nearestCustomer1.personDemand > personCapacity1) &&
                         (currentStretchCapacity2 + nearestCustomer2.stretchDemand > stretchCapacity2) && (currentPersonCapacity2 + nearestCustomer2.personDemand > personCapacity2) &&
                         (currentStretchCapacity3 + nearestCustomer3.stretchDemand > stretchCapacity3) && (currentPersonCapacity3 + nearestCustomer3.personDemand > personCapacity3)) {
-                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -504,12 +510,13 @@ function solveMDVRP(customers, depots) {
                         (currentPersonCapacity2 + nearestCustomer2.personDemand <= personCapacity2) &&
                         (currentStretchCapacity3 + nearestCustomer3.stretchDemand <= stretchCapacity3) &&
                         (currentPersonCapacity3 + nearestCustomer3.personDemand <= personCapacity3)) {
+                            console.log(" !!!!! All case have true !!!!!");
                         if ((totalDistanceDepot1 + distance1 < totalDistanceDepot2 + distance2) &&
                             (totalDistanceDepot1 + distance1 < totalDistanceDepot3 + distance3)) {
                             vehicle1.route.push(nearestCustomer1);
                             currentCustomer1 = nearestCustomer1;
                             currentStretchCapacity1 += nearestCustomer1.stretchDemand;
-                            currentPersonCapacity1 += nearestCustomer2.personDemand;
+                            currentPersonCapacity1 += nearestCustomer1.personDemand;
                             unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer1), 1);
                             totalDistanceDepot1 += distance1; // Update total distance for depot 1
                         } else if ((totalDistanceDepot2 + distance2 < totalDistanceDepot1 + distance1) &&
@@ -521,7 +528,7 @@ function solveMDVRP(customers, depots) {
                             unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer2), 1);
                             totalDistanceDepot2 += distance2; // Update total distance for depot 2
                         } else if ((totalDistanceDepot3 + distance3 < totalDistanceDepot1 + distance1) &&
-                            (totalDistanceDepot3 + distance3 < totalDistanceDepot2 + distance1)) {
+                            (totalDistanceDepot3 + distance3 < totalDistanceDepot2 + distance2)) {
                             vehicle3.route.push(nearestCustomer3);
                             currentCustomer3 = nearestCustomer3;
                             currentStretchCapacity3 += nearestCustomer3.stretchDemand;
@@ -530,7 +537,62 @@ function solveMDVRP(customers, depots) {
                             totalDistanceDepot3 += distance3; // Update total distance for depot 3
                         }
 
-                    } else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand <= stretchCapacity1) &&    // Just 1
+                    } else if (!(currentStretchCapacity3 + nearestCustomer3.stretchDemand <= stretchCapacity3) &&   // 3 is not
+                        !(currentPersonCapacity3 + nearestCustomer3.personDemand <= personCapacity3)) {
+                        if (totalDistanceDepot1 + distance1 < totalDistanceDepot2 + distance2) {
+                            vehicle1.route.push(nearestCustomer1);
+                            currentCustomer1 = nearestCustomer1;
+                            currentStretchCapacity1 += nearestCustomer1.stretchDemand;
+                            currentPersonCapacity1 += nearestCustomer1.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer1), 1);
+                            totalDistanceDepot1 += distance1; // Update total distance for depot 1
+                        } else {
+                            vehicle2.route.push(nearestCustomer2);
+                            currentCustomer2 = nearestCustomer2;
+                            currentStretchCapacity2 += nearestCustomer2.stretchDemand;
+                            currentPersonCapacity2 += nearestCustomer2.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer2), 1);
+                            totalDistanceDepot2 += distance2; // Update total distance for depot 2
+                        }
+                    }
+                    else if (!(currentStretchCapacity2 + nearestCustomer2.stretchDemand <= stretchCapacity2) &&   // 2 is not
+                        !(currentPersonCapacity2 + nearestCustomer2.personDemand <= personCapacity2)) {
+                        if (totalDistanceDepot1 + distance1 < totalDistanceDepot3 + distance3) {
+                            vehicle1.route.push(nearestCustomer1);
+                            currentCustomer1 = nearestCustomer1;
+                            currentStretchCapacity1 += nearestCustomer1.stretchDemand;
+                            currentPersonCapacity1 += nearestCustomer1.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer1), 1);
+                            totalDistanceDepot1 += distance1; // Update total distance for depot 1
+                        } else {
+                            vehicle3.route.push(nearestCustomer3);
+                            currentCustomer3 = nearestCustomer3;
+                            currentStretchCapacity3 += nearestCustomer3.stretchDemand;
+                            currentPersonCapacity3 += nearestCustomer3.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer3), 1);
+                            totalDistanceDepot3 += distance3; // Update total distance for depot 3
+                        }
+
+                    }
+                    else if (!(currentStretchCapacity1 + nearestCustomer1.stretchDemand <= stretchCapacity1) &&   // 1 is not
+                        !(currentPersonCapacity1 + nearestCustomer1.personDemand <= personCapacity1)) {
+                        if (totalDistanceDepot2 + distance2 < totalDistanceDepot3 + distance3) {
+                            vehicle2.route.push(nearestCustomer2);
+                            currentCustomer2 = nearestCustomer2;
+                            currentStretchCapacity2 += nearestCustomer2.stretchDemand;
+                            currentPersonCapacity2 += nearestCustomer2.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer2), 1);
+                            totalDistanceDepot2 += distance2; // Update total distance for depot 2
+                        } else {
+                            vehicle3.route.push(nearestCustomer3);
+                            currentCustomer3 = nearestCustomer3;
+                            currentStretchCapacity3 += nearestCustomer3.stretchDemand;
+                            currentPersonCapacity3 += nearestCustomer3.personDemand;
+                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer3), 1);
+                            totalDistanceDepot3 += distance3; // Update total distance for depot 3
+                        }
+                    }
+                    else if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand <= stretchCapacity1) &&    // Just 1
                         (currentPersonCapacity1 + nearestCustomer1.personDemand <= personCapacity1) &&
                         !(currentStretchCapacity2 + nearestCustomer2.stretchDemand <= stretchCapacity2) &&
                         !(currentPersonCapacity2 + nearestCustomer2.personDemand <= personCapacity2) &&
@@ -569,68 +631,16 @@ function solveMDVRP(customers, depots) {
                         unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer3), 1);
                         totalDistanceDepot3 += distance3; // Update total distance for depot 3
 
-                    } else if (!(currentStretchCapacity3 + nearestCustomer3.stretchDemand <= stretchCapacity3) &&   // 3 is not
-                        !(currentPersonCapacity3 + nearestCustomer3.personDemand <= personCapacity3)) {
-                        if (totalDistanceDepot1 + distance1 < totalDistanceDepot2 + distance2) {
-                            vehicle1.route.push(nearestCustomer1);
-                            currentCustomer1 = nearestCustomer1;
-                            currentStretchCapacity1 += nearestCustomer1.stretchDemand;
-                            currentPersonCapacity1 += nearestCustomer1.personDemand;
-                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer1), 1);
-                            totalDistanceDepot1 += distance1; // Update total distance for depot 1
-                        } else {
-                            vehicle2.route.push(nearestCustomer2);
-                            currentCustomer2 = nearestCustomer2;
-                            currentStretchCapacity2 += nearestCustomer2.stretchDemand;
-                            currentPersonCapacity2 += nearestCustomer2.personDemand;
-                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer2), 1);
-                            totalDistanceDepot2 += distance2; // Update total distance for depot 2
-                        }
-
-                    } else if (!(currentStretchCapacity2 + nearestCustomer2.stretchDemand <= stretchCapacity2) &&   // 2 is not
-                        !(currentPersonCapacity2 + nearestCustomer2.personDemand <= personCapacity2)) {
-                        if (totalDistanceDepot1 + distance1 < totalDistanceDepot3 + distance3) {
-                            vehicle1.route.push(nearestCustomer1);
-                            currentCustomer1 = nearestCustomer1;
-                            currentStretchCapacity1 += nearestCustomer1.stretchDemand;
-                            currentPersonCapacity1 += nearestCustomer1.personDemand;
-                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer1), 1);
-                            totalDistanceDepot1 += distance1; // Update total distance for depot 1
-                        } else {
-                            vehicle3.route.push(nearestCustomer3);
-                            currentCustomer3 = nearestCustomer3;
-                            currentStretchCapacity3 += nearestCustomer3.stretchDemand;
-                            currentPersonCapacity3 += nearestCustomer3.personDemand;
-                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer3), 1);
-                            totalDistanceDepot3 += distance3; // Update total distance for depot 3
-                        }
-
-                    } else if (!(currentStretchCapacity1 + nearestCustomer1.stretchDemand <= stretchCapacity1) &&   // 1 is not
-                        !(currentPersonCapacity1 + nearestCustomer1.personDemand <= personCapacity1)) {
-                        if (totalDistanceDepot2 + distance2 < totalDistanceDepot3 + distance3) {
-                            vehicle2.route.push(nearestCustomer2);
-                            currentCustomer2 = nearestCustomer2;
-                            currentStretchCapacity2 += nearestCustomer2.stretchDemand;
-                            currentPersonCapacity2 += nearestCustomer2.personDemand;
-                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer2), 1);
-                            totalDistanceDepot2 += distance2; // Update total distance for depot 2
-                        } else {
-                            vehicle3.route.push(nearestCustomer3);
-                            currentCustomer3 = nearestCustomer3;
-                            currentStretchCapacity3 += nearestCustomer3.stretchDemand;
-                            currentPersonCapacity3 += nearestCustomer3.personDemand;
-                            unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer3), 1);
-                            totalDistanceDepot3 += distance3; // Update total distance for depot 3
-                        }
                     }
+                    console.log("finish all checkbock true")
 
                 } else if ((!CheckBool1) && (CheckBool2) && (CheckBool3)) {  // 1 can not true
+                    console.log("Case 1 can not true")
 
                     if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand > stretchCapacity2) &&    // Check 2%3 is over?
                         (currentPersonCapacity2 + nearestCustomer2.personDemand > personCapacity2) &&
                         (currentStretchCapacity3 + nearestCustomer3.stretchDemand > stretchCapacity3) &&
                         (currentPersonCapacity3 + nearestCustomer3.personDemand > personCapacity3)) {
-                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -670,14 +680,15 @@ function solveMDVRP(customers, depots) {
                         unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer2), 1);
                         totalDistanceDepot2 += distance2; // Update total distance for depot 2
                     }
+                    console.log(" finish Case 1 can not true")
 
                 } else if ((CheckBool1) && (!CheckBool2) && (CheckBool3)) { // 2 can not true
+                    console.log(" case 2 can not true")
 
                     if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand > stretchCapacity1) &&    // Check 1 % 3 is over?
                         (currentPersonCapacity1 + nearestCustomer1.personDemand > personCapacity1) &&
                         (currentStretchCapacity3 + nearestCustomer3.stretchDemand > stretchCapacity3) &&
                         (currentPersonCapacity3 + nearestCustomer3.personDemand > personCapacity3)) {
-                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -717,14 +728,15 @@ function solveMDVRP(customers, depots) {
                         unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer1), 1);
                         totalDistanceDepot1 += distance1; // Update total distance for depot 1
                     }
+                    console.log(" finish Case 2 can not true")
 
                 } else if ((CheckBool1) && (CheckBool2) && (!CheckBool3)) {  // 3 can not true
+                    console.log(" case 3 can not true")
 
                     if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand > stretchCapacity1) &&    // Check 1 % 2 is over?
                         (currentPersonCapacity1 + nearestCustomer1.personDemand > personCapacity1) &&
                         (currentStretchCapacity2 + nearestCustomer2.stretchDemand > stretchCapacity2) &&
                         (currentPersonCapacity2 + nearestCustomer2.personDemand > personCapacity2)) {
-                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -763,12 +775,13 @@ function solveMDVRP(customers, depots) {
                         unassignedCustomers.splice(unassignedCustomers.indexOf(nearestCustomer1), 1);
                         totalDistanceDepot1 += distance1; // Update total distance for depot 1
                     }
+                    console.log("finish Case 3 can not true")
 
                 } else if ((CheckBool1) && (!CheckBool2) && (!CheckBool3)) { // Just 1
+                    console.log(" case just 1")
 
                     if ((currentStretchCapacity1 + nearestCustomer1.stretchDemand > stretchCapacity1) &&    // Check 1 is over?
                         (currentPersonCapacity1 + nearestCustomer1.personDemand > personCapacity1)) {
-                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -783,12 +796,13 @@ function solveMDVRP(customers, depots) {
                     } else {
                         CheckBool1 = false;     // set checkbool 1 if it out of condition
                     }
+                    console.log(" finish case just 1")
 
                 } else if ((!CheckBool1) && (CheckBool2) && (!CheckBool3)) {   // Just 2
+                    console.log(" case just 2")
 
                     if ((currentStretchCapacity2 + nearestCustomer2.stretchDemand > stretchCapacity2) &&    // Check 2 is over?
                         (currentPersonCapacity2 + nearestCustomer2.personDemand > personCapacity2)) {
-                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -803,12 +817,13 @@ function solveMDVRP(customers, depots) {
                     } else {
                         CheckBool2 = false;     // set checkbool 2 if it out of condition
                     }
+                    console.log(" finish case just 2")
 
                 } else if ((!CheckBool1) && (!CheckBool2) && (CheckBool3)) {   // Just 3
+                    console.log("case just 3")
 
                     if ((currentStretchCapacity3 + nearestCustomer3.stretchDemand > stretchCapacity3) &&    // Check 3 is over?
                         (currentPersonCapacity3 + nearestCustomer3.personDemand > personCapacity3)) {
-                        //console.log("=============Over Capavity============");
                         break;
                     }
 
@@ -823,12 +838,15 @@ function solveMDVRP(customers, depots) {
                     } else {
                         CheckBool3 = false;     // set checkbool 3 if it out of condition
                     }
+                    console.log(" finish case just 3")
                 }
-                
-                if ((!CheckBool1) && (!CheckBool2) && (!CheckBool3)){   // if all check is false after capacity exceed
+
+                if ((!CheckBool1) && (!CheckBool2) && (!CheckBool3)) {   // if all check is false after capacity exceed
+                    console.log(" case all false")
                     break;
                 }
             }
+            console.log("--------------------Finish calculated-------------------");
             console.log("vehicle1 : ", vehicle1.route.map((customer) => customer.id));
             console.log("vehicle2 : ", vehicle2.route.map((customer) => customer.id));
             console.log("vehicle3 : ", vehicle3.route.map((customer) => customer.id));
@@ -837,10 +855,12 @@ function solveMDVRP(customers, depots) {
             console.log("totalDistanceDepot3 : ", totalDistanceDepot3);
             console.log("---------------------------------------------------");
         } while (CheckBool1 || CheckBool2 || CheckBool3);   // If all false -> == false...
+        console.log(" case all false")
         vehicles1.push(vehicle1);
         vehicles2.push(vehicle2);
         vehicles3.push(vehicle3);
     }
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Finish !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     return { vehicles1: vehicles1, vehicles2: vehicles2, vehicles3: vehicles3, priorityDep: priorityDep };
 }
 
@@ -850,27 +870,29 @@ const depots = [
     new Depot(3, 102.795457, 17.379619), // Depot 3   23 Udon
 ];
 
-/*
-// Point set 3
+//let customers = [];
 let customers = [
-    new Customer(1, 15.023672, 105.367127, 2, 5),
-    new Customer(2, 15.867286, 104.635988, 1, 5),
-    new Customer(3, 17.589593, 104.294433, 2, 6),
-    new Customer(4, 17.590998, 103.395112, 1, 5),
-    new Customer(5, 16.730289, 102.576651, 3, 2),
+    new Customer(1, 16.385090, 102.848165, 1, 3),
+    new Customer(2, 15.574469, 102.543969, 2, 5),
+    new Customer(3, 16.758493, 103.477906, 1, 6),
+    new Customer(4, 16.308275, 104.374485, 4, 6),
+    new Customer(5, 15.595031, 104.870806, 2, 2),
+    new Customer(6, 15.553905, 102.784124, 3, 7),    //*
+    new Customer(7, 14.956655, 103.093657,  1, 4),    //*
+    new Customer(8, 15.157644, 104.145004,  2, 4),
+    new Customer(9, 16.395330, 103.355160,  4, 5),
+    new Customer(10, 16.477229, 104.315781,  2, 3)      //*
 ];
-*/
-let customers = [];
 
 function clikRunVrp() {
 
-    
+    /*
     // Block to check Input is correct Pattern ...
     let CustInput = [];
     do {
         CustInput = UnlimitedInput();
         let inputIsValid = true;
-        
+
         for (const CustIn of CustInput) {                                                                                                   // Check Input is Empty?
             const isDataMissing1 = (CustIn.lat == "") && (CustIn.lon == "") && (CustIn.stretchDemand == 0) && (CustIn.personDemand == 0);
             const isDataMissing2 = (CustIn.lat != "" && CustIn.lon != "") && (CustIn.stretchDemand == 0 && CustIn.personDemand == 0);
@@ -910,13 +932,15 @@ function clikRunVrp() {
     } while (!inputIsValid);
 
     customers = CustInput;
-    
+    */
+
     console.log("Customer Dictionary : ", customers);
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // vehicle1 is from warehouse 1
     // vehicle2 is from warehouse 2
     // vehicle3 is from warehouse 3
     const { vehicles1: vehicle1, vehicles2: vehicle2, vehicles3: vehicle3, priorityDep: priorityDep } = solveMDVRP(customers, depots);
+    console.log(" !!!!!!!!!!!!!!!!!!! Complete using MDVRP Function !!!!!!!!!!!!!!!!!!!!!!")
 
     const customersInRoutes1 = vehicle1.map((vehicle) =>    //const customersInRoutes1 = [[2, 1, 3], [4], []];
         vehicle.route.map((customer) => customer.id)
@@ -927,6 +951,7 @@ function clikRunVrp() {
     const customersInRoutes3 = vehicle3.map((vehicle) =>
         vehicle.route.map((customer) => customer.id)
     );
+    console.log("------------------- Generate Routes ------------------")
 
     console.log("Route from depot 1", customersInRoutes1);
     console.log("Route from depot 2", customersInRoutes2);
