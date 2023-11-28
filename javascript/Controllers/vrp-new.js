@@ -1,4 +1,4 @@
-var PriorityEvent = false;
+var PriorityEvent = false;  // bool for priority event
 
 class Customer {
     constructor(id, lat, lon, personDemand, stretchDemand) {
@@ -74,9 +74,9 @@ function findNearestDepot(priorityCustomer, Depot) {
 }
 
 function solveMDVRP(customers, depots) {
-    const depot1 = depots[0];
-    const depot2 = depots[1];
-    const depot3 = depots[2];
+    const depot1 = depots[0];   // wing 1
+    const depot2 = depots[1];   // wing 21
+    const depot3 = depots[2];   // wing 23
 
     var stretchCapacity1 = 0;
     var personCapacity1 = 0;   // Copy from vehicleCapacity
@@ -87,19 +87,19 @@ function solveMDVRP(customers, depots) {
     var stretchCapacity3 = 0;
     var personCapacity3 = 0;
 
-    var totalDistanceDepot1 = 0;
+    var totalDistanceDepot1 = 0;    // store totaldistance  out of loop, because it will compare the least distance
     var totalDistanceDepot2 = 0;
     var totalDistanceDepot3 = 0;
 
-    const vehicles1 = [];   // From warehouse 1
-    const vehicles2 = [];
-    const vehicles3 = [];
-    const unassignedCustomers = [...customers];
+    const vehicles1 = [];   // From wing 1
+    const vehicles2 = [];   // From wing 21
+    const vehicles3 = [];   // From wing 23
+    const unassignedCustomers = [...customers]; // copy customers
 
     const priorityDep = [];
 
     while (unassignedCustomers.length > 0) {
-
+        // Create variable "vehicle" new every loop to store in vehicles.... to return value
         var vehicle1 = new Vehicle(vehicles1.length + 1, stretchCapacity1, personCapacity1);    // Use var cause of can change out of block...
         var vehicle2 = new Vehicle(vehicles2.length + 1, stretchCapacity2, personCapacity2);
         var vehicle3 = new Vehicle(vehicles3.length + 1, stretchCapacity3, personCapacity3);
@@ -121,7 +121,7 @@ function solveMDVRP(customers, depots) {
         let CheckBool3 = true;
 
         do {
-
+            // Block to use PriorityEvent if the PriorityEvent == "true"
             if (PriorityEvent) {
                 var priorityCustomer = unassignedCustomers[0];
 
@@ -144,7 +144,7 @@ function solveMDVRP(customers, depots) {
                 PriorityEvent = false;
                 console.log("Priority Case Successfully !!");
             }
-
+            // Check nearest point of each Warehoused
             const { nearestCustomer: nearestCustomer1, distance: distance1 } = findNearestCustomer(currentCustomer1, unassignedCustomers);
             const { nearestCustomer: nearestCustomer2, distance: distance2 } = findNearestCustomer(currentCustomer2, unassignedCustomers);
             const { nearestCustomer: nearestCustomer3, distance: distance3 } = findNearestCustomer(currentCustomer3, unassignedCustomers);
@@ -152,8 +152,8 @@ function solveMDVRP(customers, depots) {
             const dis13Array = [distance1, distance3];
             const dis12Array = [distance1, distance2];
             const dis23Array = [distance2, distance3];
-
-            if (nearestCustomer1 != null && nearestCustomer2 != null && nearestCustomer3 != null) {
+            
+            if (nearestCustomer1 != null && nearestCustomer2 != null && nearestCustomer3 != null) {     // all nearest don't have null , will be checked in this loop...
                 if ((nearestCustomer1.id == nearestCustomer2.id) && (nearestCustomer2.id == nearestCustomer3.id)) { // all point have same nearest
                     let nearDep = null;
                     let minDis = Infinity;
@@ -225,7 +225,7 @@ function solveMDVRP(customers, depots) {
                 console.log(" break when all don't have nearest Customer ...")
                 break;
             } else {
-                //============================================== Block to set Capacity Dynamic Type =========================================
+                //============================================== Block to set Capacity ***Dynamic*** Type =========================================
 
                 if (!CheckBool1 && !CheckBool2 && !CheckBool3) { // if all checkbox false before capacity set
                     console.log(" all checkbox false before capacity set ...")
@@ -788,18 +788,19 @@ function solveMDVRP(customers, depots) {
         } while (CheckBool1 || CheckBool2 || CheckBool3);   // If all false -> == false...
         vehicles1.push(vehicle1);
         vehicles2.push(vehicle2);
-        vehicles3.push(vehicle3);
+        vehicles3.push(vehicle3);   // When finish each loop will push vehicle -> vehicles(the bigger storage...)
     }
-    return { vehicles1: vehicles1, vehicles2: vehicles2, vehicles3: vehicles3, priorityDep: priorityDep };
+    return { vehicles1: vehicles1, vehicles2: vehicles2, vehicles3: vehicles3, priorityDep: priorityDep };  // Return value as the variable setting
 }
-
+                // This is setting the warehouse or Wing location
 const depots = [
     new Depot(1, 102.081660, 14.933738), // Depot 1   1  Korat
     new Depot(2, 104.861988, 15.249080), // Depot 2   21 Ubon
     new Depot(3, 102.795457, 17.379619), // Depot 3   23 Udon
 ];
 
-let customers = [];
+
+let customers = [];     // Main storage customers value (set "let", beacause it can be changed out of block)
 
 /*
 // set 1&2
@@ -817,15 +818,15 @@ let customers = [
 ];
 */
 
-function clikRunVrp() {
+function clikRunVrp() {     // *** Main function using (Combine all of function in to this block...)
     
     // Block to check Input is correct Pattern ...
-    let CustInput = [];
+    let CustInput = [];     // be setting to Dummy checking sotrage Customer Input
     do {
-        CustInput = UnlimitedInput();
+        CustInput = UnlimitedInput();   // Use function to get input from UI
         let inputIsValid = true;
 
-        for (const CustIn of CustInput) {                                                                                                   // Check Input is Empty?
+        for (const CustIn of CustInput) {               // Check Input is Empty?    ** should Develop this block to check detailed perfectly
             const isDataMissing1 = (CustIn.lat == "") && (CustIn.lon == "") && (CustIn.stretchDemand == 0) && (CustIn.personDemand == 0);
             const isDataMissing2 = (CustIn.lat != "" && CustIn.lon != "") && (CustIn.stretchDemand == 0 && CustIn.personDemand == 0);
 
@@ -861,15 +862,15 @@ function clikRunVrp() {
         if (inputIsValid) {
             break;
         }
-    } while (!inputIsValid);
+    } while (!inputIsValid);    // It will be breaked if inputIsValid == "True"
 
-    customers = CustInput;
-    console.log("Customer Dictionary : ", customers);
+    customers = CustInput;      // It get CustInput it will set to customers Main Variable
+    console.log("Customer Dictionary : ", customers);   // Just debug console
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // vehicle1 is from warehouse 1
     // vehicle2 is from warehouse 2
     // vehicle3 is from warehouse 3
-    const { vehicles1: vehicle1, vehicles2: vehicle2, vehicles3: vehicle3, priorityDep: priorityDep } = solveMDVRP(customers, depots);
+    const { vehicles1: vehicle1, vehicles2: vehicle2, vehicles3: vehicle3, priorityDep: priorityDep } = solveMDVRP(customers, depots);  // Use Main funtion to get results...
     console.log(" !!!!!!!! Complete using MDVRP Function !!!!!!!!!")
 
     const customersInRoutes1 = vehicle1.map((vehicle) =>    //const customersInRoutes1 = [[2, 1, 3], [4], []];
@@ -887,7 +888,7 @@ function clikRunVrp() {
     console.log("Route from depot 3", customersInRoutes3);
     console.log("Priority Depot : ", priorityDep);  // Check how it's come
 
-    var { totalArray: totalDistanceArray1, totalDistance: totalDistance1 } = TotalDIstanceAllRoute(depots[0], customersInRoutes1);
+    var { totalArray: totalDistanceArray1, totalDistance: totalDistance1 } = TotalDIstanceAllRoute(depots[0], customersInRoutes1);  // get distance detailed
     var { totalArray: totalDistanceArray2, totalDistance: totalDistance2 } = TotalDIstanceAllRoute(depots[1], customersInRoutes2);
     var { totalArray: totalDistanceArray3, totalDistance: totalDistance3 } = TotalDIstanceAllRoute(depots[2], customersInRoutes3);
 
@@ -911,19 +912,19 @@ function clikRunVrp() {
         console.log("Total Distance Array Priority : ", totalDistanceArrayPri);
 
         // Block to plus round of depot if priority was used ...
-        if (priorityDep[0] == 1) {
+        if (priorityDep[0] == 1) {                                      // If priotityDepot is wing 1
             var Depot1Round = getRoundDepot(customersInRoutes1) + 1;
             var Depot2Round = getRoundDepot(customersInRoutes2);
             var Depot3Round = getRoundDepot(customersInRoutes3);
             totalDistance1 += totalDistancePri;
             var totalDistanceAll = totalDistance1 + totalDistance2 + totalDistance3;
-        } else if (priorityDep[0] == 2) {
+        } else if (priorityDep[0] == 2) {                               // If priotityDepot is wing 21
             var Depot1Round = getRoundDepot(customersInRoutes1);
             var Depot2Round = getRoundDepot(customersInRoutes2) + 1;
             var Depot3Round = getRoundDepot(customersInRoutes3);
             totalDistance2 += totalDistancePri;
             var totalDistanceAll = totalDistance1 + totalDistance2 + totalDistance3;
-        } else if (priorityDep[0] == 3) {
+        } else if (priorityDep[0] == 3) {                               // If priotityDepot is wing 23
             var Depot1Round = getRoundDepot(customersInRoutes1);
             var Depot2Round = getRoundDepot(customersInRoutes2);
             var Depot3Round = getRoundDepot(customersInRoutes3) + 1;
@@ -950,33 +951,31 @@ function clikRunVrp() {
         const coordinatesPri = [[[depots[priorityDep[0] - 1].lon, depots[priorityDep[0] - 1].lat], [customers[0].lon, customers[0].lat]]];
         drawGraphicPolyLine(newLayer, coordinatesPri, "rgba(255,0,0,0.8)", outlineWidth)
     }
-
-    const route1 = generateRoutes(customersInRoutes1, "W1");
+    
+    const route1 = generateRoutes(customersInRoutes1, "W1");    // Generate Routes of each Wing
     const route2 = generateRoutes(customersInRoutes2, "W21");
     const route3 = generateRoutes(customersInRoutes3, "W23");
 
-    const Time1 = generateTimeMin(totalDistanceArray1);
+    const Time1 = generateTimeMin(totalDistanceArray1);     // Generate Time(minutes) of each Wing
     const Time2 = generateTimeMin(totalDistanceArray2);
     const Time3 = generateTimeMin(totalDistanceArray3);
 
-    const totalStretch1 = generateTotalStretch(customersInRoutes1);
+    const totalStretch1 = generateTotalStretch(customersInRoutes1);     // Generate total Stretc of each Wing
     const totalStretch2 = generateTotalStretch(customersInRoutes2);
     const totalStretch3 = generateTotalStretch(customersInRoutes3);
 
-    const totalPerson1 = generateTotalPerson(customersInRoutes1);
+    const totalPerson1 = generateTotalPerson(customersInRoutes1);       // Generate total Person of each Wing
     const totalPerson2 = generateTotalPerson(customersInRoutes2);
     const totalPerson3 = generateTotalPerson(customersInRoutes3);
 
-    const result1 = getDictResult(route1, Time1, totalPerson1, totalStretch1, totalDistanceArray1);
+    const result1 = getDictResult(route1, Time1, totalPerson1, totalStretch1, totalDistanceArray1);     // Generate Result of each Wing
     console.log("Result 1 : ", result1);
     const result2 = getDictResult(route2, Time2, totalPerson2, totalStretch2, totalDistanceArray2);
     console.log("Result 2 : ", result2);
     const result3 = getDictResult(route3, Time3, totalPerson3, totalStretch3, totalDistanceArray3);
     console.log("Result 3 : ", result3);
 
-
-
-    drawAllPoint();
+    drawAllPoint();                                 // this part draw all point, name & line
     drawAllNamePoint();
     drawRouteLine(depots[0], customersInRoutes1);
     drawRouteLine(depots[1], customersInRoutes2);
@@ -1005,9 +1004,10 @@ function clikRunVrp() {
     wing21Round.innerHTML = Depot2Round;
     wing23Round.innerHTML = Depot3Round;
 
-    var IdOfli = 1
+    ////////////////////////////// BLock to display detailed Routes ////////////////////////////
+    var IdOfli = 1      // variable to use with set detailed of routes...
 
-    if (resultPri != null) {
+    if (resultPri != null) {            // In case of priority
         for (let pri of resultPri) {
             var li = document.createElement("li");
             let variableRoutePri = Object.values(pri)[0];
@@ -1027,7 +1027,7 @@ function clikRunVrp() {
         }
     }
 
-    if (result1 != null) {
+    if (result1 != null) {          // In case of wing 1
         for (let i of result1) {
             var li = document.createElement("li");
             let variableRouteW1 = Object.values(i)[0];
@@ -1048,7 +1048,7 @@ function clikRunVrp() {
         }
     }
 
-    if (result2 != null) {
+    if (result2 != null) {      // In case of wing 21
         for (let j of result2) {
             var li = document.createElement("li");
             let variableRouteW2 = Object.values(j)[0];
@@ -1069,7 +1069,7 @@ function clikRunVrp() {
         }
     }
 
-    if (result3 != null) {
+    if (result3 != null) {      // In case of wing 23
         for (let k of result3) {
             var li = document.createElement("li");
             let variableRouteW2 = Object.values(k)[0];
@@ -1092,7 +1092,7 @@ function clikRunVrp() {
     $('#mainSearch').hide();
 }
 
-function UnlimitedInput() {
+function UnlimitedInput() {     // This function use with unlimited input from User Interface
 
     CustInputs = [];
 
@@ -1127,7 +1127,7 @@ function UnlimitedInput() {
     return CustInputs;
 }
 
-function drawAllNamePoint() {
+function drawAllNamePoint() {       // this function use just with setting custome depot...  || If you want more darw , set in this block.....
     drawGraphicText("Wing 1", newLayer, [depots[0].lon, depots[0].lat], [0, 0, 255], 0)
     drawGraphicText("Wing 21", newLayer, [depots[1].lon, depots[1].lat], [0, 0, 255], 0)
     drawGraphicText("Wing 23", newLayer, [depots[2].lon, depots[2].lat], [0, 0, 255], 0)
